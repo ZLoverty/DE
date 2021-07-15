@@ -39,7 +39,7 @@ In this attempt, I used a binarized black circle as the mask (Fig.~\ref{fig:mask
 I did this because it is more general.
 If the binarized mask works, it is very likely that a more specific mask, such as one cropped from the original image, will work.
 
-\begin{figure}
+\begin{figure}[h]
   \includegraphics{mask-and-result}
   \caption{The mask used for corrTrack in the upper left corner.
   The result of the tracking is shown as colored circles, where different colors denote different times.}
@@ -59,7 +59,6 @@ To improve the quality of the tracking, we can
 \textcolor{red}{These ideas should be tested and assessed in the future.}
 
 \section{Z position}
-
 As I wrote in the \textit{GOALS} note, the Z position of the inner droplet is crucial to understand the system.
 On the one hand, we need the Z motions to interpret the dynamical properties, such as the diffusivity of the inner droplets we have measured in the X-Y plane;
 on the other hand, it is a fingerprint behavior that should be compared with theoretical models.
@@ -71,4 +70,23 @@ But in each period of the scan, only one coordinate can be recorded.
 Since the scan can not go as fast as the frame rate (typically 30 Hz), the resulting data would be sparce.
 Confocal can record Z positions at a much higher rate, but simultaneously recording X-Y positions remains challenging.
 \textcolor{red}{Test both options and assess.}
+
+\subsection{Vertical scan}
+The idea of vertical scan is illustrated in Fig.~\ref{fig:manual-scan}.
+The inner droplet has slightly different lookings when it is in different positions relative to the focal plane.
+When the droplet is below the focal plane, circular fringes can be seen around the droplets.
+When the droplet is in the focal plane, the edge of the droplet is thin and sharp.
+When the droplet is above the focal plane, the edge becomes thick and blurry.
+(not sure if these images are from phase-contrast microscopy or bright field microscopy, need double-check)
+
+\textcolor{red}{Compare 07132021 bright field images with Fig.~\ref{fig:manual-scan}. Need to make the extractImage notebook work properly.}
+
+\begin{figure}
+  \includegraphics{manual-scan.png}
+  \caption{Illustration of vertical scan.}
+  \label{fig:manual-scan}
+\end{figure}
+
+\subsection{Tilted confocal}
+
 \end{document}
