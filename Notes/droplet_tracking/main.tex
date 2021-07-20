@@ -50,13 +50,37 @@ The preliminary result of the tracking is shown in Fig.~\ref{fig:mask-and-result
 While in some frames the software locates the inner droplet correctly, in most frames, however, the detection is erroneous.
 Overall, the tracking does not work well.
 To improve the quality of the tracking, we can
-\begin{itemize}
-  \item improve the image quality by adding fluorescent dyes to the inner droplets;
-  \item use a specific mask, instead of a binarized mask;
-  \item crop the image to avoid false tracking outside the droplets.
-\end{itemize}
+i)improve the image quality by adding fluorescent dyes to the inner droplets,
+ii) use a specific mask, instead of a binarized mask and
+iii) crop the image to avoid false tracking outside the droplets.
 
-\textcolor{red}{These ideas should be tested and assessed in the future.}
+In a new set of images obtained with bright-field microscopy (Fig.~\ref{fig:bright-field-images}), I tested the ideas above.
+As can be seen from the images, the inner droplets stand out from the background much better than the old images, so fluorescence is not necessary.
+We tried 3 different masks:
+i) an actual image of the inner droplet cropped from the first frame of the video,
+ii) a black circle of the same shape as the inner droplet on a white background and
+iii) a white circle of the same shape as the inner droplet on a black background (as shown in Fig.~\ref{fig:3-masks}).
+
+\begin{figure}[h]
+  \includegraphics{3-masks.png}
+  \caption{Three different masks.}
+  \label{fig:3-masks}
+\end{figure}
+
+The raw image is also cropped to avoid false detection outside the outer droplet.
+The results of corrTrack is shown in Fig.~\ref{fig:3-mask-results}.
+The 3 panels show the results obtained using 3 different masks in Fig.~\ref{fig:3-masks} (same order).
+The 3 red circles in each panel indicates the positions in the image that have the highest correlations with the masks.
+None of the 9 circles detect the inner droplet position correctly.
+So I conclude that corrTrack is not an ideal method for tracking the inner droplets in the X-Y plane.
+\textcolor{red}{HoughCircle may be a good method.}
+
+\begin{figure}[h]
+  \includegraphics{3-mask-results.png}
+  \caption{Tracking results using the 3 masks in Fig.~\ref{fig:3-masks}.}
+  \label{fig:3-mask-results}
+\end{figure}
+
 
 \section{Z position}
 As I wrote in the \textit{GOALS} note, the Z position of the inner droplet is crucial to understand the system.
