@@ -33,6 +33,8 @@ Figure~\ref{fig:sample-image}A shows a sample image from an experiment, and the 
 
 \section{X-Y plane tracking}
 
+\subsection{corrTrack}
+
 I use corrTrack as the first attempt to find the inner droplet in the X-Y plane.
 A description of corrTrack can be found in \href{https://github.com/ZLoverty/Python/tree/master/Tracking/corrTrack}{my Github repository}.
 In this attempt, I used a binarized black circle as the mask (Fig.~\ref{fig:mask-and-result} inset), instead of a crop of the original image.
@@ -80,6 +82,9 @@ So I conclude that corrTrack is not an ideal method for tracking the inner dropl
   \caption{Tracking results using the 3 masks in Fig.~\ref{fig:3-masks}.}
   \label{fig:3-mask-results}
 \end{figure}
+
+\subsection{HoughCircle}
+
 
 
 \section{Z position}
