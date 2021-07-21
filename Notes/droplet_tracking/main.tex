@@ -1,4 +1,4 @@
-\documentclass[onecolumn,aps, pre,amsmath,amssymb,longbibliography,12pt]{revtex4-2}
+\documentclass[onecolumn,aps, pre,amsmath,amssymb,longbibliography,11pt]{revtex4-2}
 \usepackage{graphicx}
 % \usepackage{dcolumn}
 \usepackage{bm}
@@ -74,8 +74,7 @@ The results of corrTrack is shown in Fig.~\ref{fig:3-mask-results}.
 The 3 panels show the results obtained using 3 different masks in Fig.~\ref{fig:3-masks} (same order).
 The 3 red circles in each panel indicates the positions in the image that have the highest correlations with the masks.
 None of the 9 circles detect the inner droplet position correctly.
-So I conclude that corrTrack is not an ideal method for tracking the inner droplets in the X-Y plane.
-\textcolor{red}{HoughCircle may be a good method.}
+\textbf{I conclude that corrTrack is not an ideal method for tracking the inner droplets in the X-Y plane.}
 
 \begin{figure}[h]
   \includegraphics{3-mask-results.png}
@@ -83,7 +82,35 @@ So I conclude that corrTrack is not an ideal method for tracking the inner dropl
   \label{fig:3-mask-results}
 \end{figure}
 
-\subsection{HoughCircle}
+\subsection{HoughCircles}
+
+Due to the circular shape, the HoughCircles algorithm may be a good method for tracking the inner droplets.
+Actually, I have used this method to measure the outer and inner droplet sizes, as described in the \textit{Drop size control} note.
+The HoughCircles algorithm detects circular objects in images based on pixel intensity gradient.
+While it can reliably detect the inner droplets, it also very often gives false positives, as shown in Fig.~\ref{fig:HoughCircles_false}.
+
+\begin{figure}[h]
+  \includegraphics{HoughCircles_false.png}
+  \caption{Results of HoughCircles algorithm.}
+  \label{fig:HoughCircles_false}
+\end{figure}
+
+To overcome this challenge, I crop the original image so that the inner droplet makes the majority of the cropped image.
+Using HoughCircles in the cropped image can avoid many false positives that are present in the original image.
+By setting the minDist (the minimal distance between detected circles) large, e.g. the size of the cropped image, I can guarantee that at most one circle is detected (Fig.~\ref{fig:crop}).
+
+\begin{figure}
+  \includegraphics{crop.png}
+  \caption{Detect circle in a cropped image.}
+  \label{fig:crop}
+\end{figure}
+
+To implement the crop \& HoughCircles method on image sequences, an automatic way to determine crop regions is needed.
+Here, as the first and simplest implementation, I assume the displacement of inner droplet between two frames (0.03 s) is negligible.
+The position of droplet detected in the first image is used as the position of the crop region in the second frame.
+This process can repeat to the end of the image sequence.
+\textcolor{red}{In the next version, the crop regions will be predicted base on the instantaneous velocity of the inner droplet.}
+
 
 
 
