@@ -121,11 +121,20 @@ I tried to restart the tracking in the middle of the image sequence and manually
 The problem is intrinsic to the algorithm rather than the crop region.
 For now, I add a column ``validity'' to the trajectory data to indicate the validity of tracking at each frame: 1 for valid and 0 for invalid.
 
-\begin{figure}
+\begin{figure}[h]
   \includegraphics[width=6in]{crop-HoughCircles-montage.jpg}
   \caption{A time series of cropped images in a crop-HoughCircles tracking.}
   \label{fig:crop-HoughCircles-montage}
 \end{figure}
+
+After manually label the valid trajectory, we can plot the correct and incorrect trajectories with different colors (Fig.~\ref{fig:validated-traj}).
+
+\begin{figure}[h]
+  \includegraphics{validated-traj.png}
+  \caption{The trajectory of an inner droplet. Correct trajectory is blue and incorrect trajectory is red.}
+  \label{fig:validated-traj}
+\end{figure} 
+
 
 \section{Z position}
 As I wrote in the \textit{GOALS} note, the Z position of the inner droplet is crucial to understand the system.
