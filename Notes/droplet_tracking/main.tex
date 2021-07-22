@@ -111,8 +111,21 @@ The position of droplet detected in the first image is used as the position of t
 This process can repeat to the end of the image sequence.
 \textcolor{red}{In the next version, the crop regions will be predicted base on the instantaneous velocity of the inner droplet.}
 
+\textbf{Exclude incorrect detections.}
+Despite the effort of cropping, the HoughCircles algorithm sometimes makes mistakes.
+Figure~\ref{fig:crop-HoughCircles-montage} shows a time series of cropped images in a crop-HoughCircles tracking.
+The red circles indicate the results of tracking.
+There are clearly two periods, where the tracking is incorrect: 400--740 and 1420--1760.
+In other frames, the tracking is satisfactory.
+I tried to restart the tracking in the middle of the image sequence and manually pick a crop region, but incorrect detection persists.
+The problem is intrinsic to the algorithm rather than the crop region.
+For now, I add a column ``validity'' to the trajectory data to indicate the validity of tracking at each frame: 1 for valid and 0 for invalid.
 
-
+\begin{figure}
+  \includegraphics[width=6in]{crop-HoughCircles-montage.jpg}
+  \caption{A time series of cropped images in a crop-HoughCircles tracking.}
+  \label{fig:crop-HoughCircles-montage}
+\end{figure}
 
 \section{Z position}
 As I wrote in the \textit{GOALS} note, the Z position of the inner droplet is crucial to understand the system.
