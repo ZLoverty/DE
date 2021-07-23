@@ -7,3 +7,14 @@ In particular, I will be studying
 - the swimming of bacteria on curved surfaces
 
 In this repository, I save the notes, code, illustrations and eventually the draft for the research paper of this project.
+
+## Structure of this repo
+```
+|- DE
+  README.md
+  |- Code
+  |- Illustrations
+  |- Notes
+  |- (Draft)
+  |- Log
+```
