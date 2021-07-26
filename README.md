@@ -1,6 +1,6 @@
 # DE
 DE stands for Double Emulsion.
-It's the experimental system I will be working with at PMMH-ESPCI with Eric Clement, Anke Lindner and Teresa Lopez-Leon.
+It's the experimental system I am working with at PMMH-ESPCI with Eric Clement, Anke Lindner and Teresa Lopez-Leon.
 The project is a combination of the double emulsion system and active matter.
 In particular, I will be studying
 - the diffusion of a droplet in an active bath
@@ -17,4 +17,5 @@ In this repository, I save the notes, code, illustrations and eventually the dra
   |- Notes
   |- (Draft)
   |- Log
+  |- Protocols
 ```
