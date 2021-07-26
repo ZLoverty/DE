@@ -119,7 +119,7 @@ There are clearly two periods, where the tracking is incorrect: 400--740 and 142
 In other frames, the tracking is satisfactory.
 I tried to restart the tracking in the middle of the image sequence and manually pick a crop region, but incorrect detection persists.
 The problem is intrinsic to the algorithm rather than the crop region.
-For now, I add a column ``validity'' to the trajectory data to indicate the validity of tracking at each frame: 1 for valid and 0 for invalid.
+When only a small fraction of tracking (say around 100 frames) is incorrect, I can manually correct them.
 
 \begin{figure}[h]
   \includegraphics[width=6in]{crop-HoughCircles-montage.jpg}
@@ -127,13 +127,16 @@ For now, I add a column ``validity'' to the trajectory data to indicate the vali
   \label{fig:crop-HoughCircles-montage}
 \end{figure}
 
-After manually label the valid trajectory, we can plot the correct and incorrect trajectories with different colors (Fig.~\ref{fig:validated-traj}).
+After the correction, we can plot the 3D trajectory of the inner droplet (Fig.~\ref{fig:3d-traj}).
+For better visualization, the projections on $x$-$y$, $y$-$z$ and $x$-$z$ planes are also plotted.
 
 \begin{figure}[h]
-  \includegraphics{validated-traj.png}
-  \caption{The trajectory of an inner droplet. Correct trajectory is blue and incorrect trajectory is red.}
-  \label{fig:validated-traj}
-\end{figure} 
+  \includegraphics{3d-traj.png}
+  \caption{A 3D trajectory.}
+  \label{fig:3d-traj}
+\end{figure}
+
+
 
 
 \section{Z position}
