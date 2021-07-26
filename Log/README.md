@@ -15,7 +15,10 @@ Summarize the progress regularly to remind myself the next steps.
   |- ... (date logs)  
 ```
 ## Snapshots
+### July 23, 2021
 
+### July 16, 2021
+<a href="July16-2021"><img src="../Notes/drop_size_control/vary-middle.png" alt="vary flow rate" width="500"></a>
 ### July 09, 2021
 <a href="July09-2021"><img src="July09-2021/double_emulsion_generation.jpg" alt="generate double emulsion in PMMH" width="500"></a>
 ### June 06, 2021
