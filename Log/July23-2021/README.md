@@ -16,4 +16,4 @@ The Z motion can be resolved roughly.
 To what extent we can trust the results remains to be assessed.
 
 A preliminary 3D trajectory can be constructed, as shown in the graphic abstract.
-Find more details on this topic in [the note on droplet tracking](../../Notes/droplet_tracking/main.pdf).
+Find more details on this topic in [the note on droplet tracking](../../Notes/droplet_tracking).
