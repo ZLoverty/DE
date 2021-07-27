@@ -10,13 +10,16 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="646.7475mm"
-   height="211.06143mm"
-   viewBox="0 0 646.7475 211.06143"
+   width="127mm"
+   height="41.445545mm"
+   viewBox="0 0 127 41.445545"
    version="1.1"
    id="svg850"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
-   sodipodi:docname="main.svg">
+   sodipodi:docname="main.svg"
+   inkscape:export-filename="/home/zhengyang/Documents/GitHub/DE/Illustrations/project-cover/v0.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300">
   <defs
      id="defs844">
     <filter
@@ -119,9 +122,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="916.48574"
-     inkscape:cy="64.569644"
+     inkscape:zoom="2.3645833"
+     inkscape:cx="240.00002"
+     inkscape:cy="78.322277"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -146,7 +149,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(364.95114,39.096426)">
+     transform="translate(364.95114,-130.51946)">
     <image
        y="-21.633926"
        x="-311.05551"
@@ -2060,10 +2063,11 @@ NwOeKRhgjHp/Wl70dKAxINKRkmhOaRRnr3py9BX/2Q==
        preserveAspectRatio="none"
        height="174.625"
        width="538.95624"
-       style="filter:url(#filter1433)" />
+       style="filter:url(#filter1433)"
+       transform="matrix(0.19636721,0,0,0.19636721,-293.2867,138.19672)" />
     <g
        id="g1458"
-       transform="translate(0,-137.65939)"
+       transform="matrix(0.19636721,0,0,0.19636721,-293.2867,111.16493)"
        style="filter:url(#filter1532)">
       <image
          style="fill:#f0e68c"
