@@ -1,4 +1,6 @@
+![cover](Illustrations\project-cover\v0.png)
 # DE
+
 DE stands for Double Emulsion.
 It's the experimental system I am working with at PMMH-ESPCI with Eric Clement, Anke Lindner and Teresa Lopez-Leon.
 The project is a combination of the double emulsion system and active matter.
