@@ -4,8 +4,6 @@ Producing droplets with desired sizes is of key importance for this project.
 The figure below illustrate the controllable sizes of inner and outer droplets.
 ![various-sizes](latex_note/vary-middle.png)
 
-
-
 ## Hypothesis
 Utada et al. (2005) suggests that the ratio between Q_o and Q_i determines the size of outer droplets.
 Here, Q_i is the sum of middle and inner phase flow rates.
@@ -34,3 +32,7 @@ Inner (solid, r) and outer (empty, R) sizes are shown in the plot below.
 
 The inner size is roughly constant.
 The outer size indeed decreases.
+
+## Conclusion
+We successfully control the inner size while varying the outer size.
+Controlling the outer size remains challenging.
