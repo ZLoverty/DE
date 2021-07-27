@@ -1,4 +1,4 @@
-![cover](Illustrations\project-cover\v0.png)
+![cover](Illustrations/project-cover/v0.png)
 # DE
 
 DE stands for Double Emulsion.
