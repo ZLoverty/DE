@@ -19,7 +19,7 @@ In our double emulsion system, where the inner droplet experiences a buoyant for
 Bouyant force acts as a damping force, making the vertical motion weaker compared to the horizontal motion.
 As a result, the 2D MSD (XY motion) and 3D MSD (XYZ motion) are usually very similar.
 
-The figure below shows both the 2D and the 3D MSD of inner droplet in a 72/8/32 (outer/inner diameter/OD, um) system.
+The figure below shows both the 2D and the 3D MSD of inner droplet in a 72[32]8 (outer[OD]inner, um) system.
 The 2 MSD's are very similar in the long time limit.
 In the short time limit, however, a slightly larger discrepancy is observed, which is likely due to the manual tracking error.
 ![MSD](MSD.png)
@@ -27,7 +27,7 @@ In the short time limit, however, a slightly larger discrepancy is observed, whi
 When the size of inner droplet is larger, the Z motion is even weaker.
 In this case, the manual tracking error is smaller and the dominance of XY motion is stronger.
 As a result, 2D and 3D MSD's are more similar.
-For example, in a 50/11/23 system, the 2 MSD's are hardly distinguishable.
+For example, in a 50[23]11 system, the 2 MSD's are hardly distinguishable.
 ![MSD 50/11](MSD50-11.jpg)
 
 Since Z motion plays little role in the diffusivity, we use 2D MSD for preliminary analysis.
