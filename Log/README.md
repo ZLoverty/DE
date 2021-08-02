@@ -16,7 +16,8 @@ Summarize the progress regularly to remind myself the next steps.
 ```
 ## Contents
 - Date + short description + picture
-
+### July 30, 2021: Visualize inner and outer droplets
+<a href="July23-2021"><img src="July30-2021/outer-ref-demo.gif" alt="outer ref demo" width="500"></a>
 ### July 23, 2021: 3D trajectory
 <a href="July23-2021"><img src="July23-2021/3d-traj.jpg" alt="3D trajectory" width="500"></a>
 ### July 16, 2021: size control
