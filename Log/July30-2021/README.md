@@ -1,4 +1,4 @@
-# July 23, 2021 Research Log
+# July 30, 2021 Research Log
 ![outer ref demo](outer-ref-demo.gif)
 
 ## Visualize inner and outer droplets
