@@ -1,5 +1,5 @@
-# Weekly Research Log
-April 25, 2021
+# April 25, 2021 Research Log
+![abstract](04252021.jpg)
 ## General
 This is a tentative template for the weekly research log I will be writing in my postdoc research in ESPCI. Yes, I plan write a log every week. There are two purposes:
 - the writing process can help me summarize my progress in a timely manner and give me a chance to think through the science again;
@@ -19,4 +19,4 @@ My project will be studying the diffusivity in confined bacterial suspensions us
 
 I have just realized that jupyter notebook is a much more efficient way in writing this log. So move to jupyter from the next log!
 
-I realize that markdown is even better. 
+I realize that markdown is even better.
