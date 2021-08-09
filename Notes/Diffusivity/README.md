@@ -12,6 +12,32 @@ If the diffusivity is used to calculate the effective temperature, it is ~100 ti
 Combine this previous knowledge and our DE system, it becomes interesting to see if the size of a confining droplet (the outer droplet) also changes the effective temperature.
 To investigate this topic further, we measure the diffusivity of inner droplets of fixed size within confining droplets of various sizes.
 
+## A Historical Review
+
+Equilibrium states can be accurately described by a small number of thermodynamic variables, such as temperature and pressure.
+In contrast, such framework does not exist for out-of-equilibrium states.
+
+**Sedimentation and Effective Temperature of Active Colloidal Suspensions**
+[Palacci, PRL (2010)](https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.105.088304)
+
+Effective temperature increases quadratically with particle self-propulsion velocity.
+
+**Effective temperature of a single active particle**
+[Szamel, PRE (2014)](https://journals.aps.org/pre/pdf/10.1103/PhysRevE.90.012111)
+
+Free particle effective temperature determines the stationary state distribution in the presence of a linear potential, but does not for a quadratic potential.
+
+<font color='red'> What is the significance of stationary state distribution? </font>
+
+Equilibrium dynamics give Gaussian stationary state distribution. Non-Gaussianity measures the extent of out-of-equilibrium.
+
+**Driven Brownian particle as a paradigm for a nonequilibrium heat bath: Effective temperature and cyclic work extraction**
+[Wulfert, PRE (2017)](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.95.050103)
+
+> A nonequilibrium FDR may depend on both time and the choice of observable...effective temperature acquires thermodynamical meaning only if these dependences are not too pronounced...
+
+The refs of this paper are interesting. Check them out.
+
 ## Mean Square Displacement (MSD)
 
 ### 2D or 3D
