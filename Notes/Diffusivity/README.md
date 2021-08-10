@@ -14,29 +14,61 @@ To investigate this topic further, we measure the diffusivity of inner droplets 
 
 ## A Historical Review
 
+### Is Temperature well defined in active systems?
+
 Equilibrium states can be accurately described by a small number of thermodynamic variables, such as temperature and pressure.
 In contrast, such framework does not exist for out-of-equilibrium states.
+Although "effective temperature" has been already used to describe the enhanced diffusion in active suspensions (Wu 2000, Palacci 2010), the definition of such temperature remains an issue.
 
 **Sedimentation and Effective Temperature of Active Colloidal Suspensions**
 [Palacci, PRL (2010)](https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.105.088304)
 
 Effective temperature increases quadratically with particle self-propulsion velocity.
 
+
 **Effective temperature of a single active particle**
 [Szamel, PRE (2014)](https://journals.aps.org/pre/pdf/10.1103/PhysRevE.90.012111)
 
-Free particle effective temperature determines the stationary state distribution in the presence of a linear potential, but does not for a quadratic potential.
-
-<font color='red'> What is the significance of stationary state distribution? </font>
-
-Equilibrium dynamics give Gaussian stationary state distribution. Non-Gaussianity measures the extent of out-of-equilibrium.
+- Free particle effective temperature determines the stationary state distribution in the presence of a linear potential, but does not for a quadratic potential.
+- Equilibrium dynamics give Gaussian stationary state distribution. Non-Gaussianity measures the extent of out-of-equilibrium.
 
 **Driven Brownian particle as a paradigm for a nonequilibrium heat bath: Effective temperature and cyclic work extraction**
 [Wulfert, PRE (2017)](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.95.050103)
 
 > A nonequilibrium FDR may depend on both time and the choice of observable...effective temperature acquires thermodynamical meaning only if these dependences are not too pronounced...
 
-The refs of this paper are interesting. Check them out.
+For example, in glassy systems, the structural relaxation and local vibration time scales are well separated. If we measure the temperature of the system at different time scales, we may obtain different results.
+
+One way of dealing with time dependent properties is to only consider time-integrated quantities. Alternatively, one can regard effective temperature as a spectral quantity.
+
+**Generalized Energy Equipartition in Harmonic Oscillators Driven by Active Baths**
+[Maggi, PRL (2014)](https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.113.238303)
+
+- Experiment studying the dynamics of beads in active suspensions confined by a harmonic potential, focusing on the generalized energy equipartition.
+
+> A harmonic degree of freedom contributes an average potential energy that takes the equilibrium form for small curvatures and decreases when the relaxation time in the harmonic well starts to be comparable to the persistence time of active forces.
+
+- Relaxation time in harmonic well vs. persistence time of active force: a useful time scale comparison
+
+**How Far from Equilibrium Is Active Matter?**
+[Fodor, PRL (2016)](https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.117.038103)
+
+> At short time and space scales, the persistent motion of active particles typically precludes the existence of effective temperatures, while at larger scales, FDTs can sometimes be recovered.
+
+> For instance, motility-induced phase separation (MIPS), which leads to the liquid-gas coexistence of repulsive self-propelled particles, is not associated to the emergence of steady-state mass currents.
+
+- Large time scale allows the use of FDT, consistent with [Wulfert, PRE (2017)](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.95.050103).
+
+<font color='blue'>**Comments:** Literature points out that FDT can be recovered at larger time scales.</font>
+
+## Tasks
+
+- [ ] Equipartition theorem
+- [ ] Detailed balance
+- [ ] Does MIPS have steady-state mass currents?
+
+
+
 
 ## Mean Square Displacement (MSD)
 
@@ -69,5 +101,3 @@ In the figure below, I plot the 2D MSD's of these experiments.
 
 The data show potential concentration-diffusivity and dropsize-diffusivity correlations.
 To draw quantitative conclusion, better parameter control is needed.
-
-~~Based on pure observation, smaller droplets move more vigorously. This is to be confirmed.~~
