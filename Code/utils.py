@@ -1,5 +1,6 @@
 from corrLib import readdata
 import pandas as pd
+import numpy as np
 
 def search_key_files(folder, key_ext='raw'):
     """
@@ -43,5 +44,7 @@ def read_dropSize(dropSize_dir):
     s = pd.read_excel(io=dropSize_dir)
     outer = np.around(s['outer'][5], 1)
     inner = np.around(s['inner'][5], 1)
+    a = np.around(s['a'][5], 1)
+    b = np.around(s['b'][5], 1)
     
-    return outer, inner
+    return outer, inner, a, b
