@@ -61,6 +61,18 @@ One way of dealing with time dependent properties is to only consider time-integ
 
 <font color='blue'>**Comments:** Literature points out that FDT can be recovered at larger time scales.</font>
 
+### Understand the motions of probes
+
+**Rapid-prototyping a Brownian particle in an active bath**
+[Park, Soft Matter (2020)](https://pubs.rsc.org/en/content/articlepdf/2020/sm/d0sm00828a)
+
+> while experimentally the probability distribution functions of particle position and displacement in bacteria systems are Gaussian in some studies and non-Gaussian in others, the relevant differences of experimental conditions are unclear17 and analysis is problematical.
+
+- The Gaussianity of PDF has long been an indicator of equilibrium in dynamical systems. While active suspensions are non-equilibrium systems, probes in them sometimes show Gaussian PDF. This paper suggests that the non-Gaussianity is not a necessary consequence of an active bath, but depends on the relative time scales of "active kick" and the "interval between kicks"
+- The idea is interesting but hard to validify in bacterial systems.
+
+<font color='red'>**Comments:** Plot PDF of inner droplets.</font>
+
 ## Tasks
 
 - [ ] Equipartition theorem
