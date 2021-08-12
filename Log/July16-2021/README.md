@@ -1,5 +1,5 @@
 # July 16, 2021 Research Log
-![vary flow rate](../../Notes/drop_size_control/vary-middle.png)
+![vary flow rate](vary-middle.png)
 
 ## Control the droplet size
 
