@@ -34,3 +34,22 @@ def fit_for_outer_drop_z(a, b, r, ri, traj):
     plt.scatter(c, err, s=100, marker='x', c='red')
     
     return float(c)
+
+def plot_traj_overlay(traj, img):
+    """Plot particle trajectory on the initial frame of an image sequence
+    This function visualize the strength of fluctuation relative to the confinement size
+    
+    Args:
+    traj -- DataFrame comprising columns x and y
+    img -- an array like image
+    
+    Returns:
+    fig -- the figure object
+    """
+    fig = plt.figure(figsize=(3, 3/img.shape[1]*img.shape[0]), dpi=200)
+    ax = fig.add_axes([0,0,1,1])
+    ax.imshow(img, cmap='gray')
+    ax.axis('off')
+    ax.scatter(traj.x, traj.y, s=0.7, c=np.arange(len(traj))/len(traj))
+    plt.close()
+    return fig
