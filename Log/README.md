@@ -17,8 +17,12 @@ Summarize the progress regularly to remind myself the next steps.
 ## Contents
 - Date + short description + picture
 
+### Aug 20, 2021: Fit *z* position to Boltzmann distribution
+<a href="Aug20-2021"><img src="Aug20-2021/z-pdf.png" alt="z-pdf" width="500"></a>
+
 ### Aug 13, 2021: Effective temperature, puzzling
 <a href="Aug13-2021"><img src="Aug13-2021/rtp.png" alt="rtp" width="500"></a>
+
 ### Aug 06, 2021: Meeting with Anke, data table
 <a href="Aug06-2021"><img src="Aug06-2021/table.png" alt="table" width="500"></a>
 
