@@ -4,8 +4,8 @@ One objective of DE project is to measure the effective "temperature" of an acti
 The motion of a passive object provides information about a system.
 For example, in [Stokes-Einstein relation](https://en.wikipedia.org/wiki/Einstein_relation_(kinetic_theory)), the diffusivity of a spherical particle through a viscous liquid is a measure of temperature.
 Wu and Libchaber (2000) showed that the diffusion of a sphere in bacterial suspensions is much stronger than its Brownian motion.
-If the diffusivity is used to calculate the effective temperature, it is ~100 times higher than room temperature.
-~~They also observed that a he diffusion coefficient has 1/R dependence on particle size R.~~
+If the diffusivity is used to calculate the effective temperature, it is \~100 times higher than room temperature.
+~They also observed that a he diffusion coefficient has 1/R dependence on particle size R.~
 
 
 
@@ -66,45 +66,49 @@ One way of dealing with time dependent properties is to only consider time-integ
 **Rapid-prototyping a Brownian particle in an active bath**
 [Park, Soft Matter (2020)](https://pubs.rsc.org/en/content/articlepdf/2020/sm/d0sm00828a)
 
-> while experimentally the probability distribution functions of particle position and displacement in bacteria systems are Gaussian in some studies and non-Gaussian in others, the relevant differences of experimental conditions are unclear17 and analysis is problematical.
+> while experimentally the probability distribution functions of particle position and displacement in bacteria systems are Gaussian in some studies and non-Gaussian in others, the relevant differences of experimental conditions are unclear and analysis is problematical.
 
 - The Gaussianity of PDF has long been an indicator of equilibrium in dynamical systems. While active suspensions are non-equilibrium systems, probes in them sometimes show Gaussian PDF. This paper suggests that the non-Gaussianity is not a necessary consequence of an active bath, but depends on the relative time scales of "active kick" and the "interval between kicks"
 - The idea is interesting but hard to validify in bacterial systems.
 
-<font color='red'>**Comments:** Plot PDF of inner droplets.</font>
 
-## Tasks
+## Probability Density Functions (PDF)
 
-- [ ] Equipartition theorem
-- [ ] Detailed balance
-- [ ] Does MIPS have steady-state mass currents?
+We measure the statistics of inner droplet motions, including z position PDF and displacement PDF, to get effective temperature.
+These PDFs will also tell us how much the system deviates from equilibrium.
 
+### Z Position PDF
 
+Think of the inner droplet as a molecule in gravitational potential in z direction.
+The z position PDF takes **Boltzmann distribution**: P(z)=P0*exp(-E/kT), where E is the potential energy of a certain state (z).
 
+The figure below shows the PDF(z) of "small" (left) and "big" (right) inner droplets.
+Thinner gray lines are different runs of experiment and thicker black lines are the averages.
+The insets show the photos of the double emulsions, as well as the trajectories of the inner droplets.
+Two observations: (i) PDF(z) of "big" inner droplet is more similar to Boltzmann distribution; (ii) the effective temperature (obtained by fitting the PDF with linear function) is on the order to 10^4 K.
+
+![PDFz](pdfz.png)
+
+### Displacement PDF
+
+Non-Gaussianity is a characteristic of displacement PDF of tracers in active bath (Leptos 2009).
+I measured the displacement PDF of small inner droplets (r = 4.5 um).
+~I don't know how to interpret these PDF since they result from combined effects of active stress and buoyancy potential.~
+
+![PDFdx](pdf-dx.png)
 
 ## Mean Square Displacement (MSD)
 
 ### 2D or 3D
-In our double emulsion system, where the inner droplet experiences a buoyant force, the inner droplet motion is not isotropic.
-Bouyant force acts as a damping force, making the vertical motion weaker compared to the horizontal motion.
-As a result, the 2D MSD (XY motion) and 3D MSD (XYZ motion) are usually very similar.
+2D MSD (XY motion) and 3D MSD (XYZ motion) are usually very similar, because the motion in z is much weaker than in XY.
+This is consistent with the results from Cristian, as shown below.
 
-The figure below shows both the 2D and the 3D MSD of inner droplet in a 72[32]8 (outer[OD]inner, um) system.
-The 2 MSD's are very similar in the long time limit.
-In the short time limit, however, a slightly larger discrepancy is observed, which is likely due to the manual tracking error.
-![MSD](MSD.png)
+![MSD-xyz](MSD-xyz.png)
 
-When the size of inner droplet is larger, the Z motion is even weaker.
-In this case, the manual tracking error is smaller and the dominance of XY motion is stronger.
-As a result, 2D and 3D MSD's are more similar.
-For example, in a 50[23]11 system, the 2 MSD's are hardly distinguishable.
-![MSD 50/11](MSD50-11.jpg)
-
-Since Z motion plays little role in the diffusivity, we use 2D MSD for preliminary analysis.
 
 ### Droplet Size Effect
 The diffusion of inner droplets varies drastically from experiment to experiment.
-Potential control parameters are **outer droplet size**, **inner droplet size** and **bacterial concentration**.
+Potential control parameters are **outer droplet size (R)**, **inner droplet size (r)** and **bacterial concentration (n)**. These parameters are indicated in the legend as R/r[n]
 
 So far, 3 sets of control parameters have been tested.
 In the figure below, I plot the 2D MSD's of these experiments.
