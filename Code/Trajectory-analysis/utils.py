@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import os
+import pandas as pd
 
 def intersection(lst1, lst2):
     """
@@ -53,3 +55,28 @@ def plot_traj_overlay(traj, img):
     ax.scatter(traj.x, traj.y, s=0.7, c=np.arange(len(traj))/len(traj))
     plt.close()
     return fig
+
+def center_traj(log_entry, folder):
+    '''load trajectory and shift trajectory to a coordinate system with origin at the top of outer droplet'''
+    R = log_entry[('analysis', 'OD')] / 2
+    r = log_entry[('analysis', 'ID')] / 2
+    a = log_entry[('analysis', 'a')]
+    b = log_entry[('analysis', 'b')]
+    traj = load_xyz_traj(log_entry, folder)
+    traj['x'] = traj['x'] - a
+    traj['y'] = traj['y'] - b
+    traj['z'] = R - r - ((R-r)**2 - traj['x']**2 - traj['y']**2) ** 0.5
+    return traj
+
+def r3(x, a):
+    return a * x ** 3
+
+def load_xyz_traj(log_entry, folder):
+    '''Use log entry to load trajectory data from xyz-traj.csv'''
+    date = '{:08d}'.format(log_entry[('params', 'Date')])
+    subfolder = log_entry[('params', 'Subfolder')]
+    traj_dir = os.path.join(folder, date, subfolder, 'crop_HoughCircles', 'xyz-traj.csv')
+    if os.path.exists(traj_dir):
+        return pd.read_csv(traj_dir)
+    else:
+        print('Data not found')
