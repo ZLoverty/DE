@@ -1,4 +1,4 @@
-# mmmm dd, 2021 Research Log
+# Aug 27, 2021 Research Log
 ![graphical abstract](MSCA-logo.png)
 
 ## Describe progress

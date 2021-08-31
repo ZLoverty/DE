@@ -17,7 +17,7 @@ Summarize the progress regularly to remind myself the next steps.
 ## Contents
 - Date + short description + picture
 
-### Aug 20, 2021: Write MSCA proposal
+### Aug 27, 2021: Write MSCA proposal
 <a href="Aug27-2021"><img src="Aug27-2021/MSCA-logo.png" alt="MSCA" width="500"></a>
 
 ### Aug 20, 2021: Fit *z* position to Boltzmann distribution
