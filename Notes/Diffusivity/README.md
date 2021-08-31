@@ -12,65 +12,33 @@ If the diffusivity is used to calculate the effective temperature, it is \~100 t
 Combine this previous knowledge and our DE system, it becomes interesting to see if the size of a confining droplet (the outer droplet) also changes the effective temperature.
 To investigate this topic further, we measure the diffusivity of inner droplets of fixed size within confining droplets of various sizes.
 
-## A Historical Review
+## Some Questions
 
-### Is Temperature well defined in active systems?
+### 1. Is Temperature well defined in active systems? [Yes, under certain conditions]
 
 Equilibrium states can be accurately described by a small number of thermodynamic variables, such as temperature and pressure.
-In contrast, such framework does not exist for out-of-equilibrium states.
-Although "effective temperature" has been already used to describe the enhanced diffusion in active suspensions (Wu 2000, Palacci 2010), the definition of such temperature remains an issue.
+In contrast, such framework does not exist for out-of-equilibrium systems.
+Efforts have been made to generalize temperature and pressure to active matter systems,
+and it has been shown that **effective temperature can be used** when certain conditions are met:
 
-**Sedimentation and Effective Temperature of Active Colloidal Suspensions**
-[Palacci, PRL (2010)](https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.105.088304)
+- **long observation time:** passive tracer show diffusive motions only at long lag times (compared to active particle swimming time scale)
+- **Boltzmann statistics holds:** the position distribution should be exponential function of potential energy. Active matter breaks detailed balance, so Boltzmann statistics does not necessarily hold. The break-down of Boltzmann statistics is most evident when specially designed boundaries breaks the symmetry of active bath, such as the rectification effects and spontaneous flow in microchannels. For examples, see Refs.[11]-[20] in [Maggi 2014](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.113.238303).
 
-Effective temperature increases quadratically with particle self-propulsion velocity.
+### 2. What PDF do we expect to see in our DE systems?
 
+We analyze **position** and **displacement** PDFs in **xy** and **z**.
+4 different combinations are to be addressed.
+- **Position xy:** in small motion limit, should be Gaussian because of the spring-like restoration force
+- **Position z:** Boltzmann with gravitational potential
+- **Displacement xy:** UK
+- **Displacement z:** UK
 
-**Effective temperature of a single active particle**
-[Szamel, PRE (2014)](https://journals.aps.org/pre/pdf/10.1103/PhysRevE.90.012111)
+What is the difference between position and displacement PDFs? [They are the same when \<x\>=0]
 
-- Free particle effective temperature determines the stationary state distribution in the presence of a linear potential, but does not for a quadratic potential.
-- Equilibrium dynamics give Gaussian stationary state distribution. Non-Gaussianity measures the extent of out-of-equilibrium.
+### 3. What if Boltzmann distribution does not hold?
 
-**Driven Brownian particle as a paradigm for a nonequilibrium heat bath: Effective temperature and cyclic work extraction**
-[Wulfert, PRE (2017)](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.95.050103)
-
-> A nonequilibrium FDR may depend on both time and the choice of observable...effective temperature acquires thermodynamical meaning only if these dependences are not too pronounced...
-
-For example, in glassy systems, the structural relaxation and local vibration time scales are well separated. If we measure the temperature of the system at different time scales, we may obtain different results.
-
-One way of dealing with time dependent properties is to only consider time-integrated quantities. Alternatively, one can regard effective temperature as a spectral quantity.
-
-**Generalized Energy Equipartition in Harmonic Oscillators Driven by Active Baths**
-[Maggi, PRL (2014)](https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.113.238303)
-
-- Experiment studying the dynamics of beads in active suspensions confined by a harmonic potential, focusing on the generalized energy equipartition.
-
-> A harmonic degree of freedom contributes an average potential energy that takes the equilibrium form for small curvatures and decreases when the relaxation time in the harmonic well starts to be comparable to the persistence time of active forces.
-
-- Relaxation time in harmonic well vs. persistence time of active force: a useful time scale comparison
-
-**How Far from Equilibrium Is Active Matter?**
-[Fodor, PRL (2016)](https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.117.038103)
-
-> At short time and space scales, the persistent motion of active particles typically precludes the existence of effective temperatures, while at larger scales, FDTs can sometimes be recovered.
-
-> For instance, motility-induced phase separation (MIPS), which leads to the liquid-gas coexistence of repulsive self-propelled particles, is not associated to the emergence of steady-state mass currents.
-
-- Large time scale allows the use of FDT, consistent with [Wulfert, PRE (2017)](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.95.050103).
-
-<font color='blue'>**Comments:** Literature points out that FDT can be recovered at larger time scales.</font>
-
-### Understand the motions of probes
-
-**Rapid-prototyping a Brownian particle in an active bath**
-[Park, Soft Matter (2020)](https://pubs.rsc.org/en/content/articlepdf/2020/sm/d0sm00828a)
-
-> while experimentally the probability distribution functions of particle position and displacement in bacteria systems are Gaussian in some studies and non-Gaussian in others, the relevant differences of experimental conditions are unclear and analysis is problematical.
-
-- The Gaussianity of PDF has long been an indicator of equilibrium in dynamical systems. While active suspensions are non-equilibrium systems, probes in them sometimes show Gaussian PDF. This paper suggests that the non-Gaussianity is not a necessary consequence of an active bath, but depends on the relative time scales of "active kick" and the "interval between kicks"
-- The idea is interesting but hard to validify in bacterial systems.
-
+- Is my PDF(z) data convincing enough?
+- This is where we are. How do we proceed?
 
 ## Probability Density Functions (PDF)
 
