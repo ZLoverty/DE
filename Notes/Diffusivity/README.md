@@ -1,29 +1,83 @@
 # Diffusivity and Effective Temperature
-One objective of DE project is to measure the effective "temperature" of an active bath.
+We want to measure the effective temperature of an active bath.
 
-The motion of a passive object provides information about a system.
-For example, in [Stokes-Einstein relation](https://en.wikipedia.org/wiki/Einstein_relation_(kinetic_theory)), the diffusivity of a spherical particle through a viscous liquid is a measure of temperature.
-Wu and Libchaber (2000) showed that the diffusion of a sphere in bacterial suspensions is much stronger than its Brownian motion.
-If the diffusivity is used to calculate the effective temperature, it is \~100 times higher than room temperature.
-~They also observed that a he diffusion coefficient has 1/R dependence on particle size R.~
+Such an idea has been employed in early experimental works (Wu 2000, Palacci 2010), where the dynamical statistics of passive tracers are exactly the same as Brownian motion, except that it has  a higher effective temperature, i.e. a broader position distribution. **The active bath can be essentially treated as "a hot passive bath".**
 
+This idea has been shown to have some limitations. In some cases, Boltzmann distribution breaks down due to comparable length and velocity scales between active particles and external potential (Tailleur 2009, Argun 2016). In some cases, due to complex confining walls, there are multiple effective temperature in the same system (Maggi 2014).
 
-
-Combine this previous knowledge and our DE system, it becomes interesting to see if the size of a confining droplet (the outer droplet) also changes the effective temperature.
-To investigate this topic further, we measure the diffusivity of inner droplets of fixed size within confining droplets of various sizes.
+Some questions have to be answered before we can proceed with actual measurements of effective temperature.
 
 ## Some Questions
 
-### 1. Is Temperature well defined in active systems? [Yes, under certain conditions]
+### 1. How to measure the effective temperature of an active bath?
 
-Equilibrium states can be accurately described by a small number of thermodynamic variables, such as temperature and pressure.
-In contrast, such framework does not exist for out-of-equilibrium systems.
-Efforts have been made to generalize temperature and pressure to active matter systems,
-and it has been shown that **effective temperature can be used** when certain conditions are met:
+Two ways: (i) fluctuation-dissipation relation; (ii) Boltzmann distribution.
 
-- **long observation time:** passive tracer show diffusive motions only at long lag times (compared to active particle swimming time scale)
-- **Boltzmann statistics holds:** the position distribution should be exponential function of potential energy. Active matter breaks detailed balance, so Boltzmann statistics does not necessarily hold. The break-down of Boltzmann statistics is most evident when specially designed boundaries breaks the symmetry of active bath, such as the rectification effects and spontaneous flow in microchannels. For examples, see Refs.[11]-[20] in [Maggi 2014](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.113.238303).
+In a free active bath, MSDs of passive tracers exhibit a crossover from superdiffusive motion to diffusive motion. An effective diffusivity can be recovered by fitting the diffusive regime. The effective temperature can be then found by **fluctuation-dissipation relation**. ([Wu 2000](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.84.3017))
 
+![diffusive crossover](diffusive-crossover.svg)
+
+However, such diffusive regimes are not always easily found. For example, in our DE system, where the inner droplet is subject to an external potential, the diffusive regime can hardly be seen. Instead, a plateau in MSD is observed, as shown below.
+
+![MSD plateau](MSD-plateau.svg)
+
+In this case, we may still recover an effective temperature by relating the average potential energy with kT, say U=kT/2=m'g\<dz\> at long time limit.
+
+Alternatively, we can look at the position distribution of passive tracers. In an external potential field U, the position distribution of particle is correlated with the potential by P(x)\~exp(-U/kT). In the same field, higher temperature leads to broader distribution. The effective temperature can be obtained by simply fitting the position distribution P(x). However, the Boltzmann distribution fails sometimes.
+
+---
+**When does Boltzmann statistics break down?**<br>
+Active matter breaks detailed balance, so Boltzmann statistics does not necessarily hold. The break-down of Boltzmann statistics is most evident when specially designed boundaries breaks the symmetry of active bath, such as the rectification effects and spontaneous flow in microchannels. For examples, see Refs.[11]-[20] in [Maggi 2014](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.113.238303).
+
+**An example of Boltzmann statistics breakdown similar to our DE system**
+[Argun 2016](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.94.062150)<br>
+The authors study the position distribution of passive tracer in an active bath under an external harmonic potential.
+
+![setup](Argun2016-setup.svg)
+
+As a control experiment, they first measure the position distribution in a thermal bath.
+As expected, no matter how they change the trap stiffness, the position PDF is Gaussian, i.e. **Boltzmann statistics hold**.
+
+![thermal position PDF](thermal-position-PDF.svg)
+
+Then they replace thermal bath with active bath.
+They find that when trap stiffness is weak, Gaussian distribution is still there, as shown in (d).
+However, as the trap length scale become comparable to the active swimming length scale $L_a$, PDF start to deviate from Boltzmann distribution, as seen in (e), (f).
+
+![active position PDF](active-position-PDF.svg)
+---
+
+Indeed, the breakdown of Boltzmann distribution also happens in our DE system.
+The figure below shows the PDF(z) of "small" (left) and "big" (right) inner droplets.
+Thinner gray lines are different runs of experiment and thicker black lines are the averages.
+The insets show the photos of the double emulsions, as well as the trajectories of the inner droplets.
+Two observations: (i) PDF(z) of "big" inner droplet is more similar to Boltzmann distribution; (ii) the effective temperature (obtained by fitting the PDF with linear function) is on the order to 10^4 K.
+
+![PDFz](pdfz.png)
+
+**We notice some problems:**
+- We have two ways to measure the effective temperature of an active bath. Are they the same or correlated in any way?
+- When Boltzmann distribution breaks down, how do we interpret the position distribution, as to extract an effective temperature?
+
+To test if the two effective temperatures are equivalent, I synthesize a probability distribution that follows Boltzmann distribution in buoyancy potential Pz (Pz\~exp(-U/kT)). The detailed parameters are
+```
+T = 300000 # K
+k = 1.38e-23
+r = 10e-6 # m
+m = (4/3) * np.pi * r**3 * (770-1000)
+g = 9.8
+z = np.linspace(0, 20, 100) * 1e-6 # m
+Pz1 = np.exp(m*g*z/k/T)
+Pz = Pz1 / np.trapz(Pz1, z)
+```
+Below I plot the distribution in a log-lin axis
+
+![two effective temp](two-effective-temperatures.svg)
+
+When using the potential energy U=kT/2=m'g\<z\> method, the temperature is, however, an order of magnitude higher than the set value.  
+
+
+## Some unfinished work
 ### 2. What PDF do we expect to see in our DE systems?
 
 We analyze **position** and **displacement** PDFs in **xy** and **z**.
@@ -33,7 +87,9 @@ We analyze **position** and **displacement** PDFs in **xy** and **z**.
 - **Displacement xy:** UK
 - **Displacement z:** UK
 
-What is the difference between position and displacement PDFs? [They are the same when \<x\>=0]
+**What is the difference between position and displacement PDFs?**<br>
+[They are the same when \<x\>=0]
+- Several papers claim active matter is non-equilibrium by showing non-Gaussian displacement PDF (Leptos 2009, Yang 2016)
 
 ### 3. What if Boltzmann distribution does not hold?
 

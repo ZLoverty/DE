@@ -57,7 +57,9 @@ def plot_traj_overlay(traj, img):
     return fig
 
 def center_traj(log_entry, folder):
-    '''load trajectory and shift trajectory to a coordinate system with origin at the top of outer droplet'''
+    '''load trajectory and shift trajectory to a coordinate system with origin at the top of outer droplet
+    This function assumes inner droplets are always sliding on the outer surfaces.
+    Z positions are calculated based on xy positions.'''
     R = log_entry[('analysis', 'OD')] / 2
     r = log_entry[('analysis', 'ID')] / 2
     a = log_entry[('analysis', 'a')]
