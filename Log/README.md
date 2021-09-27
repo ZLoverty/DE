@@ -17,6 +17,11 @@ Summarize the progress regularly to remind myself the next steps.
 ## Contents
 - Date + short description + picture
 
+### Sept 24, 2021: Trip to Bordeaux (Gulliver)
+<a href="Sept24-2021"><img src="Sept24-2021/bordeaux.jpg" alt="bordeaux" width="500"></a>
+### Sept 17, 2021: Trip to Italy
+<a href="Sept17-2021"><img src="Sept17-2021/Taormina-beach.jpg" alt="Taormina beach" width="500"></a>
+### Sept 03, 2021: Meeting with supervisors 
 ### Aug 27, 2021: Write MSCA proposal
 <a href="Aug27-2021"><img src="Aug27-2021/MSCA-logo.png" alt="MSCA" width="500"></a>
 
