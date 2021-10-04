@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="74.166054mm"
+   height="64.229591mm"
+   viewBox="0 0 74.166054 64.229591"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="project-overview.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.6218096"
+     inkscape:cx="-3.6372944"
+     inkscape:cy="78.692365"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="976"
+     inkscape:window-x="1920"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="bg-triangle"
+     sodipodi:insensitive="true"
+     transform="translate(-58.567157,-135.90187)">
+    <g
+       id="g923">
+      <path
+         inkscape:connector-curvature="0"
+         id="path890"
+         d="M 85.339104,200.02996 H 132.55741 L 120.43462,179.03213 H 98.381258 Z"
+         style="opacity:1;fill:#486a7b;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.20299999;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path885"
+         d="M 85.339104,200.02996 98.381258,179.03213 H 70.865742 l -12.122784,20.99783 z"
+         style="opacity:1;fill:#6b4d82;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.20299999;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill" />
+      <path
+         transform="scale(0.26458333)"
+         id="path895"
+         d="m 309.45312,604.58008 -41.61328,72.07617 h 187.34571 l -41.61328,-72.07617 z"
+         style="opacity:1;fill:#c2bf6d;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.7672441;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
+         inkscape:connector-curvature="0" />
+      <path
+         transform="scale(0.26458333)"
+         id="path880"
+         d="M 309.45312,604.58008 H 413.57227 L 361.51172,514.41211 Z"
+         style="opacity:1;fill:#c29b6d;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.7672441;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-58.567157,-135.90187)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.93888855px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#9db1bb;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="97.153427"
+       y="184.37587"
+       id="text899"><tspan
+         sodipodi:role="line"
+         id="tspan897"
+         x="97.153427"
+         y="184.37587"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52777767px;font-family:calibri;-inkscape-font-specification:'calibri Bold';fill:#9db1bb;fill-opacity:1;stroke-width:0.26458332">Microfluidics</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.93888855px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#b5a4c2;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="70.600563"
+       y="184.19987"
+       id="text899-9"><tspan
+         sodipodi:role="line"
+         id="tspan897-6"
+         x="70.600563"
+         y="184.19987"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52777767px;font-family:calibri;-inkscape-font-specification:'calibri Bold';fill:#b5a4c2;fill-opacity:1;stroke-width:0.26458332">3D imaging</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.46944427px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#856e96;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="66.215477"
+       y="189.77477"
+       id="text939"><tspan
+         sodipodi:role="line"
+         id="tspan937"
+         x="66.215477"
+         y="189.77477"
+         style="fill:#856e96;fill-opacity:1;stroke-width:0.26458332">3D tracking system</tspan><tspan
+         sodipodi:role="line"
+         x="66.215477"
+         y="192.86157"
+         style="fill:#856e96;fill-opacity:1;stroke-width:0.26458332"
+         id="tspan943">tilted confocal</tspan><tspan
+         sodipodi:role="line"
+         x="66.215477"
+         y="195.94838"
+         style="fill:#856e96;fill-opacity:1;stroke-width:0.26458332"
+         id="tspan945">holography</tspan><tspan
+         sodipodi:role="line"
+         x="66.215477"
+         y="199.03519"
+         style="fill:#856e96;fill-opacity:1;stroke-width:0.26458332"
+         id="tspan949">...</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.46944427px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#67818d;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="96.125435"
+       y="189.83179"
+       id="text939-7"><tspan
+         sodipodi:role="line"
+         x="96.125435"
+         y="189.83179"
+         style="fill:#67818d;fill-opacity:1;stroke-width:0.26458332"
+         id="tspan945-7">double emulsions</tspan><tspan
+         sodipodi:role="line"
+         x="96.125435"
+         y="192.91859"
+         style="fill:#67818d;fill-opacity:1;stroke-width:0.26458332"
+         id="tspan1047">encapsulated active bath</tspan><tspan
+         sodipodi:role="line"
+         x="96.125435"
+         y="196.0054"
+         style="fill:#67818d;fill-opacity:1;stroke-width:0.26458332"
+         id="tspan983">well controlled system</tspan><tspan
+         sodipodi:role="line"
+         x="96.125435"
+         y="199.09221"
+         style="fill:#67818d;fill-opacity:1;stroke-width:0.26458332"
+         id="tspan949-4">...</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.93888855px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#fffed5;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="95.819946"
+       y="162.29898"
+       id="text899-9-1"><tspan
+         sodipodi:role="line"
+         id="tspan897-6-8"
+         x="95.819946"
+         y="162.29898"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.82222223px;font-family:calibri;-inkscape-font-specification:'calibri Bold';text-align:center;text-anchor:middle;fill:#fffed5;fill-opacity:1;stroke-width:0.26458332"
+         dy="3">Motions of spheres</tspan><tspan
+         sodipodi:role="line"
+         x="95.819946"
+         y="168.4726"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.82222223px;font-family:calibri;-inkscape-font-specification:'calibri Bold';text-align:center;text-anchor:middle;fill:#fffed5;fill-opacity:1;stroke-width:0.26458332"
+         id="tspan1003">and complex particles</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.46944427px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#e0dd9f;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="79.801712"
+       y="173.23625"
+       id="text939-5"><tspan
+         sodipodi:role="line"
+         x="79.801712"
+         y="173.23625"
+         style="fill:#e0dd9f;fill-opacity:1;stroke-width:0.26458332"
+         id="tspan949-3">statistics: MSD, VACF, PDF...</tspan><tspan
+         sodipodi:role="line"
+         x="79.801712"
+         y="176.32306"
+         style="fill:#e0dd9f;fill-opacity:1;stroke-width:0.26458332"
+         id="tspan1041">modeling trajectories</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.46944427px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffebd5;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="83.285439"
+       y="159.06445"
+       id="text1045"><tspan
+         sodipodi:role="line"
+         id="tspan1043"
+         x="83.285439"
+         y="159.06445"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52777767px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#ffebd5;fill-opacity:1;stroke-width:0.26458332">Applications</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.46944427px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#e0c29f;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-91.194115"
+       y="152.94705"
+       id="text1051"
+       transform="rotate(-60.515493)"><tspan
+         sodipodi:role="line"
+         id="tspan1049"
+         x="-91.194115"
+         y="152.94705"
+         style="fill:#e0c29f;fill-opacity:1;stroke-width:0.26458332">Drug delivery</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.46944427px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#e0c29f;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-88.599983"
+       y="159.58936"
+       id="text1055"
+       transform="rotate(-60.529102)"><tspan
+         sodipodi:role="line"
+         id="tspan1053"
+         x="-88.599983"
+         y="159.58936"
+         style="fill:#e0c29f;fill-opacity:1;stroke-width:0.26458332">robotics</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.46944427px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#e0c29f;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-91.715851"
+       y="155.35876"
+       id="text1059"
+       transform="rotate(-61.046749)"><tspan
+         sodipodi:role="line"
+         id="tspan1057"
+         x="-91.715851"
+         y="155.35876"
+         style="fill:#e0c29f;fill-opacity:1;stroke-width:0.26458332">therapeutics</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.96386003px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#e0c29f;fill-opacity:1;stroke:none;stroke-width:0.53184217"
+       x="-90.78463"
+       y="160.62877"
+       id="text1063"
+       transform="rotate(-62.145421)"><tspan
+         sodipodi:role="line"
+         id="tspan1061"
+         x="-90.78463"
+         y="160.62877"
+         style="fill:#e0c29f;fill-opacity:1;stroke-width:0.53184217">...</tspan></text>
+  </g>
+</svg>
