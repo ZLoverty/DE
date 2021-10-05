@@ -72,8 +72,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.5845912"
-     inkscape:cx="311.25194"
-     inkscape:cy="113.03847"
+     inkscape:cx="297.68395"
+     inkscape:cy="115.40614"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -90,7 +90,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -105,7 +105,7 @@
        id="path843"
        inkscape:connector-curvature="0" />
     <path
-       style="opacity:1;fill:#e0c29f;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.20299999;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
+       style="opacity:1;fill:#e0c29f;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.903;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
        d="m 106.61492,98.410522 h 67.77073 v 25.974838 h -67.77073 l -5.92681,-6.46366 -0.0327,-12.63409 z"
        id="rect817-3"
        inkscape:connector-curvature="0"
@@ -125,13 +125,13 @@
      transform="translate(-9.3438974,-88.357397)">
     <path
        style="opacity:1;fill:#87cefa;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.7672441;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
-       d="m 365.39453,511.0918 c 0,0 0.58067,-33.90131 3.31316,-50.5725 0.9945,-6.06755 1.35484,-12.69065 4.73308,-17.82794 6.91357,-10.51345 61.68784,-24.76979 61.68784,-24.76979 0,0 -54.67113,-5.62857 -62.00338,-17.82794 -2.03186,-3.38061 -5.63762,-20.09459 -6.31078,-23.98096 -3.03186,-17.50407 -1.76611,-42.12498 -1.41992,-42.16345 H 97.142578 V 511.0918 Z"
+       d="M 61.826172,0 V 177.14258 H 321.59961 c 0,0 8.11321,-33.90108 10.8457,-50.57227 0.9945,-6.06755 4.37567,-12.69083 7.75391,-17.82812 2.56009,-3.89313 10.38862,-15.270164 20.85644,-12.302737 8.67548,2.459329 13.01686,13.092187 22.03418,13.091797 13.24394,-2.6e-4 23.98021,-10.736531 23.98047,-23.980469 8.1e-4,-13.244701 -10.73577,-23.982159 -23.98047,-23.982422 -10.28464,0.01055 -13.11662,12.928196 -22.03418,13.646783 -9.74101,0.784943 -18.27781,-2.99513 -20.85644,-7.285454 -2.03186,-3.38061 -7.08075,-21.879256 -7.75391,-25.765626 C 329.41345,24.659993 321.25342,0.03847 321.59961,0 Z"
+       transform="matrix(0.26458333,0,0,0.26458333,9.3438974,88.357397)"
        id="rect815"
-       transform="scale(0.26458333)"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="csscsscccc" />
+       sodipodi:nodetypes="cccssscccssccc" />
     <path
-       style="opacity:1;fill:#a9a9a9;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.20299999;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
+       style="opacity:1;fill:#a9a9a9;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.903;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
        d="M 9.4453974,98.410522 H 77.216119 l 15.328253,10.769288 0.20949,3.54409 -15.537745,11.66146 H 9.4453974 Z"
        id="rect817"
        inkscape:connector-curvature="0"
@@ -143,26 +143,13 @@
        height="7.9375958"
        x="92.739594"
        y="107.14623" />
-    <circle
-       style="opacity:1;fill:#87cefa;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.322;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
-       id="path845"
-       cx="110.70284"
-       cy="110.99251"
-       r="6.3449588" />
-    <ellipse
-       style="opacity:1;fill:#a9a9a9;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.60369635;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
+    <path
+       style="opacity:1;fill:#a9a9a9;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.28168702;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
+       d="m 383.9375,66.802734 c -7.45519,0.0091 -8.89198,12.09961 -16.52734,12.09961 h -60.89063 v 13.75 h 61.68164 c 6.84527,0 9.03785,10.115946 15.73633,10.121096 9.67106,-3.9e-4 17.511,-8.051939 17.51172,-17.984378 3.3e-4,-9.933201 -7.83992,-17.985941 -17.51172,-17.986328 z"
+       transform="matrix(0.26458333,0,0,0.26458333,9.3438974,88.357397)"
        id="path847"
-       cx="110.92711"
-       cy="110.79095"
-       rx="4.6334901"
-       ry="4.7587194" />
-    <rect
-       style="opacity:1;fill:#a9a9a9;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.29766497;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
-       id="rect849"
-       width="20.342607"
-       height="3.638057"
-       x="90.443718"
-       y="109.23339" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="csccsccc" />
     <circle
        style="opacity:1;fill:#87cefa;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.322;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
        id="path845-6"
@@ -199,9 +186,7 @@
          id="tspan880"
          x="50.769009"
          y="113.05089"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';stroke-width:0.26458332">Q<tspan
-   style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';baseline-shift:sub"
-   id="tspan892">i</tspan></tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';stroke-width:0.26458332">oil</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.46944427px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
@@ -212,9 +197,9 @@
          id="tspan880-7"
          x="82.521057"
          y="98.670296"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';stroke-width:0.26458332">Q<tspan
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';stroke-width:0.26458332">bac<tspan
    style="font-size:64.99999762%;baseline-shift:sub"
-   id="tspan935">m</tspan></tspan></text>
+   id="tspan935" /></tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.46944427px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
@@ -225,9 +210,7 @@
          id="tspan880-3"
          x="110.85725"
          y="96.072807"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';stroke-width:0.26458332">Q<tspan
-   style="font-size:64.99999762%;baseline-shift:sub"
-   id="tspan937">o</tspan></tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';stroke-width:0.26458332">oil</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.66528207;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend)"
        d="M 65.794842,111.07863 H 77.858609"
