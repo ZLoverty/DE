@@ -57,7 +57,9 @@ USAGE
 EDIT
 ====
 10062021 -- Initial commit.
-
+10072021 -- Add date stamp to the extracted folders.
+            Number format changes to %04d. "{:04d}_yyyy-mm-dd"
+            Change the condition to ignore folder. Now ignore everything that has less than 2 "_"'s.
 """
 
 def check_necessary_files(folder):
@@ -85,11 +87,12 @@ folder = sys.argv[1]
 
 sfL = next(os.walk(folder))[1]
 for sf in sfL:
-    if sf == 'extract':
+    if len(sf.split('_')) < 3:
         continue
     print('processing {}'.format(sf))
+    date = sf.split('_')[0]
     n = sf.split('_')[-1]
-    extract_folder = os.path.join(folder, 'extract', n)
+    extract_folder = os.path.join(folder, 'extract', '{0:04d}_{1}'.format(int(n), date))
     img_folder = os.path.join(folder, sf)
 
     if 'ref' in sf.split('_'):
