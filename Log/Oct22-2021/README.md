@@ -47,3 +47,23 @@ Even without the tracking system, it is better to manually keep the inner drople
 
 ### 3. A lot of 2D trajectory data in x-y and x-z [[video]](https://drive.google.com/file/d/11GrSBeDcYSCBOc6Ivlsi0lKb_ykynC2F/view?usp=sharing)
 Suggestions on how to make a clean surface to image the side view of the droplets?
+
+## Feedbacks from Teresa
+Edited after the meeting on 10/26.
+
+### 1. Clogging and dead volume in the devices
+- If large clogs cannot be cleared from the outlet, we can push water from the outlet and make the clogs exit through the inlet syringe needles.
+- We can cut the base of syringe needles to reduce the dead volume in the device and improve the mixing of bacteria with water in the device.
+
+### 2. Weird bubbles in inner droplets
+- Those bubbles are likely water droplets stabilized by SPAN80. They form "crystals" and fluctuate collectively.
+
+### 3. Size control
+- There are some theoretical results for droplets.
+
+### 4. Do we have enough surfactant to stabilize large water droplets?
+- There is a limit amount of surfactant, beyond which the surfactant are no longer able to stabilize the droplets, but instead form small micelles.
+- The limit concentration is the CMC.
+  - [SPAN 80 properties](https://www.chembk.com/en/chem/Span-80): CMC=0.43e-3 mol/L, Mw=428.603 g/mol
+  - hexadecane properties: density=0.773 g/ml
+  - the CMC in weight fraction is 0.02%, two orders of magnitude smaller than the concentration we are using. So increasing SPAN 80 concentration won't stabilize the droplets better. 
