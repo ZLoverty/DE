@@ -806,19 +806,19 @@ pre.editor-colors .fold-marker:after {
         <body class='markdown-preview' data-use-github-style><h1 id="research-log-november-5-2021">Research Log November 5, 2021</h1>
 <h2 id="results">Results</h2>
 <h3 id="1-videos-of-double-emulsions-in-x-z-plane">1. Videos of double emulsions in X-Z plane</h3>
-<p>How many, distribution of inner and outer sizes</p>
 <h5 id="some-interesting-observations">Some interesting observations</h5>
 <ul>
-<li>Droplets sometimes suspend in the middle, instead of falling to the bottom <a href="https://drive.google.com/file/d/1Ez53i1fpOHm_dpOOg7TctQUnP-h840ic/view?usp=sharing">[video]</a></li>
-<li>Inner droplets disappear after several minutes of imaging <a href="https://drive.google.com/file/d/1x2-R9Q-4yt_RF7itIDZVpICp19f4wjie/view?usp=sharing">[video]</a></li>
-<li>A trick to produce double emulsions in microscope specimen: tapping <a href="https://drive.google.com/file/d/17MzMtGCHkqfK-UjqAf7ESyY3mBHYoSir/view?usp=sharing">[video]</a></li>
+<li><strong>Droplets suspend</strong> in the middle sometimes, instead of falling to the bottom <a href="https://drive.google.com/file/d/1Ez53i1fpOHm_dpOOg7TctQUnP-h840ic/view?usp=sharing">[video]</a></li>
+<li><strong>Inner droplets disappear</strong> after several minutes of imaging <a href="https://drive.google.com/file/d/1x2-R9Q-4yt_RF7itIDZVpICp19f4wjie/view?usp=sharing">[video]</a></li>
+<li>A trick to produce double emulsions in microscope specimen: <strong>tapping</strong> <a href="https://drive.google.com/file/d/1I5yhVX9U4lV9AFpVKsskS2nauE08BxFf/view?usp=sharing">[video]</a></li>
 </ul>
-<h5 id="preliminary-analysis-of-the-x-z-videos-will-discuss-in-the-meeting-with-slides">Preliminary analysis of the X-Z videos (will discuss in the meeting with slides)</h5>
-<h5 id="parameter-space">Parameter space</h5>
+<h5 id="preliminary-analysis-of-the-x-z-videos-471042">Preliminary analysis of the X-Z videos (47/10[42])</h5>
+<p><img alt="analysis of the first track in XZ plane" src="C:\Users\liuzy\Documents\Github\DE\Log\Nov05-2021\analysis_of_inner_droplet_motion.svg"></p>
+<h5 id="parameter-space-orange-denotes-easy-to-analyze">Parameter space (orange denotes "easy to analyze")</h5>
 <p><img alt="nov9 parameter space" src="C:\Users\liuzy\Documents\Github\DE\Log\Nov05-2021\experiment_parameter_distribution_summary_11092021.png"></p>
 <h3 id="2-device-is-under-development">2. Device is under development</h3>
 <p>Cut the base of syringe needles to reduce the volume inside the device. Easier to clog the device when applying glue.</p>
-<p><img alt="smaller device" src="C:\Users\liuzy\Documents\Github\DE\Log\Nov05-2021\smaller_device.jpg"></p>
+<p><img alt="smaller device" src="C:\Users\liuzy\Documents\Github\DE\Log\Nov05-2021\smaller_device.svg"></p>
 <h2 id="questions">Questions</h2>
 <h3 id="1-improve-the-image-quality-for-tracking">1. Improve the image quality for tracking</h3>
 <ul>
@@ -828,5 +828,41 @@ pre.editor-colors .fold-marker:after {
 </ul>
 </li>
 </ul>
-<h3 id="2-confocal-disk-speed-limits-our-imaging-fps">2. Confocal disk speed limits our imaging FPS.</h3></body>
+<h3 id="2-confocal-disk-speed-limits-our-imaging-fps">2. Confocal disk speed limits our imaging FPS.</h3>
+<h2 id="feedbacks">Feedbacks</h2>
+<h3 id="1-particle-dynamics-in-confined-bacterial-suspensions">1. particle dynamics in confined bacterial suspensions</h3>
+<p>After the discussion on the <strong>1 micron particle dynamics in confined bacterial suspensions</strong>, some questions can be asked:</p>
+<ul>
+<li><strong>In the short time regime, all the MSD curves collapse, regardless of bacterial concentration (OD) and droplet size. Is this also true for unconfined bacterial suspensions? What are the bacteria really doing in droplets and how exactly they interact with passive particles?</strong> To tackle these questions, we will (i) study the dynamics of particles in bulk bacterial suspensions of different concentrations and (ii) study the flow fields of bacterial suspensions in droplets of different sizes at different concentrations. <em>#In the collective motion regime, the short time dynamics might be universal.</em></li>
+<li><strong>Smoothing trajectory data is necessary, since it removes unphysically large fluctuations at short times. However, over-smoothing can lead to artificial coherence in the motion, which hinders the real fluctuations in the system. The question is: what is the best way to smooth the trajectory data?</strong> After discussion, we realized that this parameter can be chosen by experimenting some smoothing window sizes. The criterion for a good window size is: <strong>the smoothing window size does not affect the velocity correlation time</strong>. As visualized in the sketch below, when smoothing window size is very small, the measured correlation time should be independent of the choice of the window size. When the window size is so large that it exceeds the real time scale of the particle dynamics, the measured correlation time will become dependent on the choice of window size.</li>
+</ul>
+<p><img alt="smoothing window criterion" src="C:\Users\liuzy\Documents\Github\DE\Log\Nov05-2021\smoothing_window_criterion.svg"></p>
+<h3 id="2-suspended-droplets">2. Suspended droplets</h3>
+<p>The <a href="https://drive.google.com/file/d/1Ez53i1fpOHm_dpOOg7TctQUnP-h840ic/view?usp=sharing"><strong>suspended droplet</strong></a>  also raised some questions and hypotheses. It is not clear to us how the gravity is balanced, but the next we see this phenomenon, the following should be carefully checked:</p>
+<ul>
+<li><strong>wetting:</strong> is the droplet wetting any surface of the glass chamber?</li>
+<li><strong>flow:</strong> the flow generated by bacterial collective motion in the droplets can lead to drag force, which helps the big aqueous droplets suspend in lighter oil. Though, it would be a surprise to me if this drag can completely counter the gravity.</li>
+</ul>
+<h3 id="3-active-droplets">3. Active droplets</h3>
+<p>Ideas about <strong>active droplets</strong> were exchanged. A fun experiment conceived by Cristian is to study the fluctuations of a bacterial droplet confined in an oil droplet, as sketched below. This W/O/W double emulsion system provides a well defined potential well for the <strong>active droplet</strong> and thus makes quantifying the activity possible. The W/O/W double emulsions are more stable compared to the inverse (O/W/O) double emulsions. <a href="https://drive.google.com/file/d/1I4tMaZw23_NutxnIyEoQMw4HjDgfd-a1/view?usp=sharing">Fluctuations (several microns) of bacterial droplets</a> have already been observed in O/W/O double emulsion systems.</p>
+<p><img alt="w/o/w double emulsion" src="C:\Users\liuzy\Documents\Github\DE\Log\Nov05-2021\WOW_double_emulsion.svg"></p>
+<h1 id="plans">Plans</h1>
+<ul>
+<li>Experiment<ul>
+<li>More inner droplet videos to <strong>fill the parameter space</strong></li>
+<li><strong>3D tracking of fluorescent particles</strong> in confined and unconfined bacterial suspensions, to answer the questions we raised in <a href="#1.-particle-dynamics-in-confined-bacterial-suspensions">particle dynamics in confined bacterial suspensions</a>. The following experiment can help us understand the data better:<ul>
+<li>the dynamics of particles in bulk bacterial suspensions of different concentrations</li>
+<li>the flow fields of bacterial suspensions in droplets of different sizes at different concentrations</li>
+<li>dynamics of particles before the onset of collective motions</li>
+</ul>
+</li>
+<li>Test new devices</li>
+</ul>
+</li>
+<li>Analysis<ul>
+<li>Determine a good smoothing window size by examining the relation between <strong>correlation time</strong> and <strong>smoothing window size</strong></li>
+<li>Analyze inner droplet motions in the videos we already have</li>
+</ul>
+</li>
+</ul></body>
       </html>
