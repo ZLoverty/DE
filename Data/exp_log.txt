@@ -1,5 +1,23 @@
-Before 08132021 -- Motions of inner droplets in active bath (double emulsions)
+Before 08132021 -- Motions of inner droplets in active bath in XY plane at low concentration (double emulsions)
+=======
+OCTOBER
+=======
 10152021 -- Run double emulsion device and encounter wetting issue 
 10192021 -- Run double emulsion device at various inner flow rates. In the dripping regime, inner flow rate shows little effect on the size of inner droplets
 10202021 -- Run double emulsion device. Took a necking video. The device got clogged. Also took a video showing the growth of bacterial cluster.
 10212021 -- Cristian took some tracks of (i) particle in bulk water (ii) particle in confined bacterial suspensions
+10262021 -- Motions of inner droplets in XZ plane / We investigate the cluster issue in bacterial samples.
+10272021 -- Motions of inner droplets in XZ plane. Decide to use shaking to produce droplets and double emulsions and study since microfluidic device has issues that requires longer development.
+
+========
+NOVEMBER
+========
+11012021 -- Continue x-z inner droplet motion imaging.
+11022021 -- Continue x-z inner droplet motion imaging.
+11032021 -- Continue x-z inner droplet motion imaging.
+11102021 -- Double emulsions XZ plane - Lower bacterial concentrations concentrations
+11112021 -- Double emulsions XZ plane - Lower bacterial concentrations concentrations. Activity is low today.
+11162021 -- Particle motion in confined bacterial suspension
+11172021 -- Particle motion in confined bacterial suspension, decided to use 2 um particles
+11182021 -- 2 um particle motion in confined bacterial suspension
+
