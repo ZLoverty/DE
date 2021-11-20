@@ -1,4 +1,4 @@
-Track n°,Slice n°,X,Y,Distance,Velocity,Pixel Value
+particle,frame,x,y,Distance,Velocity,Pixel Value
 1,1,317,225,-1.000,-1.000,44432
 1,2,309,218,1.371,0.686,44184
 1,3,305,225,1.040,0.520,38458
