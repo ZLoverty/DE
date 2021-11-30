@@ -1,4 +1,6 @@
 Before 08132021 -- Motions of inner droplets in active bath in XY plane at low concentration (double emulsions)
+Before 10152021 -- MSCA proposal and trips
+
 =======
 OCTOBER
 =======
@@ -20,4 +22,9 @@ NOVEMBER
 11162021 -- Particle motion in confined bacterial suspension
 11172021 -- Particle motion in confined bacterial suspension, decided to use 2 um particles
 11182021 -- 2 um particle motion in confined bacterial suspension
+11222021 -- Inner droplet motion, same droplet in both XY and XZ plane
+11232021 -- Prototype of W/O/W fluctuation experiment
 
+========
+DECEMBER
+========
