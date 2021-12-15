@@ -14,7 +14,16 @@ Some structural edits:
 - Dec 15, 2021 -- i) use main readme.md for to-do's, ii) put notes in *obsidian* style, i.e. .md's in the Notes folder and all images mix in *img* folder.
 
 ## To-do list
-- Masked PIV note
+- PIV related analysis
+  - autocorrelation time
+  - spatial autocorrelation length
+  - order parameter: any oscillatory motions detected?
+  - compare BF and fluorescence image PIV
+  - temporal evolution of velocity: does bacterial activity decay with time in droplets? What's the typical time scale?
+
+Although it's important to determine the best PIV parameters, it's not a trivial work and significantly delay the downstream analysis. Therefore, I will proceed with the current PIV data, and come back to the question of best parameters when the whole analysis work flow is set up.
+## DONE
+- [Masked PIV note](Notes\Masked_PIV.md)
 ## "Thermometer" in an active bath
 
 #### Project summary
