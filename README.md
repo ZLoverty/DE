@@ -10,6 +10,11 @@ In particular, I will be studying
 
 In this repository, I save the notes, code, illustrations and eventually the draft for the research paper of this project.
 
+Some structural edits:
+- Dec 15, 2021 -- i) use main readme.md for to-do's, ii) put notes in *obsidian* style, i.e. .md's in the Notes folder and all images mix in *img* folder.
+
+## To-do list
+- Masked PIV note
 ## "Thermometer" in an active bath
 
 #### Project summary
@@ -22,7 +27,12 @@ In this study, we combine microfluidic techniques and advanced imaging technique
 - whether boundary conditions, especially curvature, affect the temperature
 - to what extent thermodynamic tools can be generalized to active matter systems
 
-## ...
+## Collective motion in droplets
+
+## Sliding on soft interface
+
+## Wobbling in droplets
+
 
 ## Structure of this repo
 ```

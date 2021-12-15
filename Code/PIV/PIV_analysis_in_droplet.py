@@ -13,7 +13,7 @@ import pandas as pd
 # %% codecell
 frame_a = io.imread(os.path.join('test_images', 'confocal_images', '03125.tif'))
 frame_b = io.imread(os.path.join('test_images', 'confocal_images', '03126.tif'))
-# %% codecell
+
 winsize = 20 # pixels, interrogation window size in frame A
 searchsize = 30  # pixels, search area size in frame B
 overlap = 10 # pixels, 50% overlap
