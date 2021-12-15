@@ -15,15 +15,16 @@ Some structural edits:
 
 ## To-do list
 - PIV related analysis
-  - autocorrelation time
-  - spatial autocorrelation length
+  - spatial autocorrelation length: this can be the first observable for temporal activity evolution
   - order parameter: any oscillatory motions detected?
   - compare BF and fluorescence image PIV
   - temporal evolution of velocity: does bacterial activity decay with time in droplets? What's the typical time scale?
 
 Although it's important to determine the best PIV parameters, it's not a trivial work and significantly delay the downstream analysis. Therefore, I will proceed with the current PIV data, and come back to the question of best parameters when the whole analysis work flow is set up.
+
 ## DONE
 - [Masked PIV note](Notes\Masked_PIV.md)
+- [autocorrelation time](PIV_velocity_autocorrelation.md)
 ## "Thermometer" in an active bath
 
 #### Project summary
