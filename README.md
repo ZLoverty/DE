@@ -14,11 +14,16 @@ Some structural edits:
 - Dec 15, 2021 -- i) use main readme.md for to-do's, ii) put notes in *obsidian* style, i.e. .md's in the Notes folder and all images mix in *img* folder.
 
 ## To-do list
+- PIV should be run again with `PIV_masked()` instead of `piv_drop`, batch script needs to be implemented
 - PIV related analysis
   - spatial autocorrelation length: this can be the first observable for temporal activity evolution
   - order parameter: any oscillatory motions detected?
   - compare BF and fluorescence image PIV
   - temporal evolution of velocity: does bacterial activity decay with time in droplets? What's the typical time scale?
+- experiment
+  - if we see an oscillatory motion at the equator, we should be able to see it on one side too!
+- data
+  - have all the `NothingToSay` Drive backed up and try to use a merged file system solution, such as [mergerfs](https://github.com/trapexit/mergerfs)
 
 Although it's important to determine the best PIV parameters, it's not a trivial work and significantly delay the downstream analysis. Therefore, I will proceed with the current PIV data, and come back to the question of best parameters when the whole analysis work flow is set up.
 
@@ -43,8 +48,7 @@ In this study, we combine microfluidic techniques and advanced imaging technique
 
 ## Wobbling in droplets
 
-
-## Structure of this repo
+## Structure of this repos
 ```
 |- DE
   README.md
