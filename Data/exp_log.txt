@@ -17,8 +17,8 @@ NOVEMBER
 11012021 -- Continue x-z inner droplet motion imaging.
 11022021 -- Continue x-z inner droplet motion imaging.
 11032021 -- Continue x-z inner droplet motion imaging.
-11102021 -- Double emulsions XZ plane - Lower bacterial concentrations concentrations
-11112021 -- Double emulsions XZ plane - Lower bacterial concentrations concentrations. Activity is low today.
+11102021 -- Double emulsions XZ plane - Lower bacterial concentrations
+11112021 -- Double emulsions XZ plane - Lower bacterial concentrations. Activity is low today.
 11162021 -- Particle motion in confined bacterial suspension
 11172021 -- Particle motion in confined bacterial suspension, decided to use 2 um particles
 11182021 -- 2 um particle motion in confined bacterial suspension
@@ -29,3 +29,5 @@ NOVEMBER
 DECEMBER
 ========
 12012021 -- Test if AD62 forms clusters in BMB
+12062021 -- Test RP437, several AD62 in droplet activity test.
+12092021 -- AD62 cluster test, some good videos with water instead of MB.
