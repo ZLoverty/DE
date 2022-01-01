@@ -10,26 +10,26 @@ In particular, I will be studying
 
 In this repository, I save the notes, code, illustrations and eventually the draft for the research paper of this project.
 
-Some structural edits:
+**Some structural edits:**
 - Dec 15, 2021 -- i) use main readme.md for to-do's, ii) put notes in *obsidian* style, i.e. .md's in the Notes folder and all images mix in *img* folder.
 
 ## To-do list
-- PIV should be run again with `PIV_masked()` instead of `piv_drop`, batch script needs to be implemented
-- PIV related analysis
+- [Analysis of collective motions in droplets](Notes\Analysis_of_collective_motions_in_droplets.md)
+  - **PIV should be run again with `PIV_masked()` instead of `piv_drop`, batch script needs to be implemented**
+  - **compare BF and fluorescence image PIV**
+  - **temporal evolution of velocity: does bacterial activity decay with time in droplets? What's the typical time scale?**
   - spatial autocorrelation length: this can be the first observable for temporal activity evolution
+  - temporal autocorrelation
   - order parameter: any oscillatory motions detected?
-  - compare BF and fluorescence image PIV
-  - temporal evolution of velocity: does bacterial activity decay with time in droplets? What's the typical time scale?
+
 - experiment
   - if we see an oscillatory motion at the equator, we should be able to see it on one side too!
 - data
   - have all the `NothingToSay` Drive backed up and try to use a merged file system solution, such as [mergerfs](https://github.com/trapexit/mergerfs)
+  - validity of PIV measurement, the velocity seems to be too small.
 
 Although it's important to determine the best PIV parameters, it's not a trivial work and significantly delay the downstream analysis. Therefore, I will proceed with the current PIV data, and come back to the question of best parameters when the whole analysis work flow is set up.
 
-## DONE
-- [Masked PIV note](Notes\Masked_PIV.md)
-- [autocorrelation time](PIV_velocity_autocorrelation.md)
 ## "Thermometer" in an active bath
 
 #### Project summary

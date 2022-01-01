@@ -65,10 +65,27 @@ Below are some plots comparing the overall velocity field, velocity PDF and runn
 
 We know that after a couple of hours, most bacteria in droplets stop moving and droplets look like "frozen". But, is there a more **precise time scale** for this "freezing" process? What is the **major cause** of this phenomenon? Here we examine **bacterial activity over time** in several different droplets and try to estimate this time scale.
 
+### A. Experiment
 
+My experiment comprises **4 10-minute videos of the same droplet** whose diameter is 55 um (snapshots can be found in the following figure 21-24). 21 and 23 are bright field images, 22 and 24 are confocal images. Images were taken in order from 21 to 24, and the time delay between two videos was less than one minute and should be _negligible_.
+19-20 are also bright field and confocal images of the same droplet with smaller size. The size of the droplet is comparable to PIV box size and may detoriote the PIV quality. Therefore, we only use 21-24 for the analysis.
+
+![](img/19-24.svg)
+
+### B. Results and discussion
+
+Below is the mean velocity of PIV velocities in videos 21-24.
+
+![mean velocity evolution](../images/2022/01/velocity_in_droplet.svg)
+
+We note a few things from this measurement:
+1. **velocity decay is most pronounced in the first 10 min**, later on the velocity remains constant for 30 min
+2. Confocal measures a **higher** mean velocity
+3. Confocal laser **does not** seem to harm bacterial activity
+4. the **sudden drop of velocity** in the middle of yellow curve is not expected, watch video to find out why.
 
 ## III. Spatial and temporal correlation
 
 We see collective motions in bulk and under confinement. Are they the same or different in any aspects? Let us try to understand this by looking at the spatial and temporal correlation functions.
 
-## IV. 
+## IV.
