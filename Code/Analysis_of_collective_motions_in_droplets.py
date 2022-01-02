@@ -122,7 +122,12 @@ plt.quiver(pivData.x, pivData.y, -tu[0], tu[1], color='red', width=0.0025)
 plt.quiver(pivData.x, pivData.y, tu[0], tu[1], color='red', width=0.0025)
 
 # %% codecell
-
+# 12092021 - 22 and 24 order parameter
+folder = r"C:\Users\liuzy\Documents\12092021\circulation_order_parameter"
+data = pd.read_csv(os.path.join(folder, "22.csv"))
+plt.plot(data.frame/50, savgol_filter(data.OP, 11, 3))
+plt.xlabel("time (s)")
+plt.ylabel("order parameter")
 
 # %% codecell
 

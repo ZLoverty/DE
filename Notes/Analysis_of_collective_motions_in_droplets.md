@@ -145,8 +145,10 @@ With the change in tangent unit vector field computation, we can now examine the
 
 Using the formula given in III.A, we get an order parameter for the PIV data in the example $\phi=0.23$. According to Wioland 2013, $\phi>0$ indicates the **existence of a coherent circulation**.
 
-<font color="red">Waiting for more results</font>
+The whole video No.22 shows noisy order parameter oscillation between -0.4 and 0.4. The positivity is not pronounced compared to the noise.
 
-## III. Spatial and temporal correlation
+![order parameter 22](../images/2022/01/order-parameter-22.png)
+
+## IV. Spatial and temporal correlation
 
 We see collective motions in bulk and under confinement. Are they the same or different in any aspects? Let us try to understand this by looking at the spatial and temporal correlation functions.
