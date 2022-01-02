@@ -84,8 +84,69 @@ We note a few things from this measurement:
 3. Confocal laser **does not** seem to harm bacterial activity
 4. the **sudden drop of velocity** in the middle of yellow curve is not expected, watch video to find out why.
 
+## III. Order parameter
+
+### A. Order parameter in literatures
+> 1. Wioland, H., Woodhouse, F. G., Dunkel, J., Kessler, J. O. & Goldstein, R. E. Confinement Stabilizes a Bacterial Suspension into a Spiral Vortex. Phys. Rev. Lett. 110, 268102 (2013).
+>
+> ![wioland2013](../images/2022/01/wioland2013.png)
+
+### B. Compute order parameter from my PIV data
+#### 1. Compute tangent unit vecotr field
+To compute the order parameter above, we first need to compute the tangent unit vector $t_i$. Let $x$, $y$ be the point of interest, $x_1$, $y_1$ be the tangent unit vector, we know that $x_1$ and $y_1$ should satisfy
+$$
+xx_1 + yy_1 = 0 \\
+x_1^2 + y_1^2 = 1
+$$
+We can set $x_1$ arbitrarily and $y_1$ can be calculated. Then $x_1$ and $y_1$ can be rescaled to meet the unit vector requirement. For example, we have $(x, y)=(1, 1)$. Set $x_1=1$, we get $y_1=-1$. Then rescale $x_1$ and $y_1$ by the length of $(x_1, y_1)$, $l=\sqrt{x_1^2+y_1^2}$ to get the unit vector. This is illustrated in the following figure.
+
+![example tu](../images/2022/01/example-tu.png)
+
+Here I notice that it's important to set the sign of $x_1$. For example, if we set $x_1=-1$ in the first place, the arrow in the above figure would be in the opposite direction (the red arrow). If we set all $x_1$'s to $-1$ for example, we end up with a vector field like the following, which is not coherent and is clearly wrong.
+
+![all -1 vectors](../images/2022/01/all-1-vectors.png)
+
+To make the arrow direction coherent through out the whole droplet, roughly speaking, we need to set half of the $x_1$'s positive and the rest negative. In my code, this is taken care of by the following lines:
+```python
+ind = np.logical_or(r[1] > 0, np.logical_and(r[1] == 0, r[0] < 0))
+x1 = -1 * np.ones(len(point[0]))
+x1[ind] = 1
+```
+**numpy logical functions** help determines the signs of each $x_1$ in batch. With this modification, we get the correct vector field.
+
+![correct tangent vectors](../images/2022/01/correct-tangent-vectors.png)
+
+On a mesh grid (like PIV data), the tangent unit vector field is the following
+
+![meshgrid tu](../images/2022/01/meshgrid-tu.png)
+
+#### 2. Compute order parameter from PIV data
+
+> **An aside**
+>
+> When I plot the tangent unit vectors on top of an image, they no longer look like circulation, but rather and extension flow.
+>
+> ![error coords tu](../images/2022/01/error-coords-tu.png)
+>
+> Red is the tangent unit vector we just computed. Yellow arrows are the PIV data. **This is clearly an error caused by coordinates inconsistency**.
+> To understand this inconsistency, see the sketch of coordinate systems below
+>
+> ![ordinary and image coordinates](../images/2022/01/ordinary-and-image-coordinates.png)
+> The conversion between these two systems is not a simple rotation, but consists a mirror reflection. This makes the $x_1$ initiation rule opposite.
+> ```python
+> ind = np.logical_or(r[1] > 0, np.logical_and(r[1] == 0, r[0] > 0))
+> x1 = np.ones(point.shape[1:])
+> x1[ind] = -1
+> ```
+
+With the change in tangent unit vector field computation, we can now examine the circulating flow inside droplets.
+
+![compare velocity with azimuthal](../images/2022/01/compare-velocity-with-azimuthal.png)
+
+Using the formula given in III.A, we get an order parameter for the PIV data in the example $\phi=0.23$. According to Wioland 2013, $\phi>0$ indicates the **existence of a coherent circulation**.
+
+<font color="red">Waiting for more results</font>
+
 ## III. Spatial and temporal correlation
 
 We see collective motions in bulk and under confinement. Are they the same or different in any aspects? Let us try to understand this by looking at the spatial and temporal correlation functions.
-
-## IV.
