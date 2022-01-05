@@ -31,3 +31,8 @@ DECEMBER
 12012021 -- Test if AD62 forms clusters in BMB
 12062021 -- Test RP437, several AD62 in droplet activity test.
 12092021 -- AD62 cluster test, some good videos with water instead of MB.
+
+=======
+JANUARY
+=======
+01052021 -- Circulation in droplets (i) more droplet sizes (ii) image at multiple layers.
