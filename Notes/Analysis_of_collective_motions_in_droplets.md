@@ -173,9 +173,12 @@ The whole video No.22 shows noisy order parameter oscillation between -0.4 and 0
 **Quantitatively,**
 
 ### B. Window size effect
+
+
 ### C. PIV on bacteria directly: is this a justified method?
 
-**Using bacteria directly as tracer particles for PIV is still not well accepted by the community**, according to my experience with the previous two papers (Science Advances 2021 and Soft Matter 2021).
+**Using bacteria directly as tracer particles for PIV is still not well accepted by the community**, according to my experience with the previous two papers (Science Advances 2021 and Soft Matter 2021). We've got questions from reviewer, e.g. does PIV works well when some bacteria in the interrogation window are moving much faster than the mean velocity? What is being measured in PIV when there is a strong inhomogeneity of velocity? **However, PIV on bacteria, or more generally active swimmers, has been used by many previous studies, too.** <font color="red">Fill here a list of active matter studies using active swimmers as tracer particles.</font> **In addition, we have tested PIV algorithms on some simulated images with elliptical objects moving in random directions, and the velocity measured is indeed very close to the mean velocity of all objects.** 
+
 ## IV. Spatial and temporal correlation
 
 We see collective motions in bulk and under confinement. Are they the same or different in any aspects? Let us try to understand this by looking at the spatial and temporal correlation functions.
@@ -195,3 +198,4 @@ To do list
 - For high bacterial concentration: Compare flow time scale with inner droplet motion time scale
 - For low bacterial concentration: need a "zero control", a double emulsion without bacteria
 - Should I include one more ring near the droplet edge?
+- I can apply all the analysis in the GNF study here, e.g. density fluctuation, flow field vorticity, divergence, etc.
