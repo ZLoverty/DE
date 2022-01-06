@@ -4,7 +4,7 @@ In this note, I summarize the analysis on the collective motions of bacteria in 
 
 ## I. Masked PIV
 
-The need for masked PIV arises from the study of bacterial flow field in droplets. Unlike previous bulk experiments, where the whole field of view is filled with bacteria, the images I have now usually have all bacteria confined in parts of the images. The followings are typical images I obtained recently, with one or more droplets in each image.
+**The need for masked PIV arises from the study of bacterial flow field in droplets.** Unlike previous bulk experiments, where the whole field of view is filled with bacteria, the images I have now usually have all bacteria confined in parts of the images. The followings are typical images I obtained recently, with one or more droplets in each image.
 
 ![typical droplet images](img/PIV_mask_required.png)
 
@@ -21,7 +21,7 @@ Following this masking procedure, PIV analysis is performed in the rectangular R
 
 #### 2. Flexible mask
 
-This rectangle + circle masking works well for single droplet images. However, for images containing multiple droplets, or more complicated morphological features, more flexible masks are required. For example, rectangle + circle is not sufficient for masking the second image, where multiple droplets present. In this scenario, I can manually draw a **mask image** in ImageJ based on the raw image, and pass this image to PIV algorithm as a mask. Below is the second image and its corresponding mask, as an example.
+**In images with more complicated morphological features, more flexible masks are required.** For example, when there are multiple droplets in one image, the Rectangle + circle method is not sufficient. **In this scenario, I can manually draw a mask image in ImageJ based on the raw image, and pass this image to PIV algorithm as a mask.** An example is shown below.
 
 ![mask2](img/mask2.svg)
 
@@ -33,6 +33,10 @@ As can be seen in the result below, yellow PIV arrows are found in both big drop
 
 ![flex mask](img/flex_mask_piv.jpg)
 
+**Moreover, this method makes it possible to apply masks with arbitrary morphologies (not just circles).** For example, I made a freehand drawing as shown in the left panel below and use it to mask the velocity field in the middle panel. The resulting masked velocity field is plotted on top of the mask in the right panel.
+
+![freehand_mask_piv](/assets/freehand_mask_piv.svg)
+
 ### B. Masking procedure
 
 There are several ways to use the mask. To mask the raw images before applying PIV or to mask the final velocity result, or to do both. How much do these options affect the final result of the PIV analysis? We test the following procedures:
@@ -43,9 +47,7 @@ There are several ways to use the mask. To mask the raw images before applying P
 
 The test code can be found in `Masked_PIV.py`. Use Hydrogen to view the results by `Run all`.
 
-Results:
-- Procedures 1 and 2 gives very similar results.
-- Procedure 1 runs a little bit faster, so we implement `PIV_masked()` function with it.
+**In conclusion, the two procedures produce very similar results, except that procedure 1 runs a little bit faster.**
 
 Below are some plots comparing the overall velocity field, velocity PDF and running speed:
 
@@ -157,10 +159,6 @@ The whole video No.22 shows noisy order parameter oscillation between -0.4 and 0
 
 **So far the best way to validify PIV analysis is visual inspection.** Such inspection is two-fold. First, we can compare hand measured velocity with PIV results quantitatively. This can be done for a few frames, and doing it for all the data is unfeasible. _Actually, that's why we use PIV, because it's more efficient with large data set._ Second, we can plot PIV arrows on top of corresponding images and see roughly if the directions and magnitude make sense.
 
-
-#### 2. Make overlay movies
-**A python function `matplotlib.pyplot.quiver(...)` is used to plot the velocity field of PIV.** By default, `quiver` automatically determines a proper scale for each velocity field. This is kind of similar to the contrast autoscaling for images, which makes sure that an image is not too dark or too bright, and patterns can be seen. While autoscaling is always good for a single image, for a video with many frames it's better to fix the scale, because a direct feeling of relative magnitude is important in a dynamic process. For example, if we fix the light intensity scale, we will know if the overall light intensity changes from one frame to another. **`quiver` provides a "complicated" method to control the scale, by combining keywords `scale` and `scale_units`.** `scale` is the number of data units per arrow length unit, e.g., m/s per plot width. `scale_units` is the arrow length unit, and can be `{'width', 'height', 'dots', 'inches', 'x', 'y', 'xy'}`. See the [official document of `quiver`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.quiver.html) for more detailed information. **In the `piv_overlay.py` script, we have access to the PIV data information and the output image information.** We know the how many arrows we are going to plot, on what height and width. We want the arrows to be large so that we can see them clearly. We also don't want to make them too large to block other arrows. A good choice of maximum arrow length is the PIV box size, i.e. width / ncol. **To set this, we let `scale_units='width'`, and let `scale=max(u.max(), v.max())*ncol`.** The interpretation of this setting is: the largest velocity component has length of width / (number of columns). Note that this only needs to be set once for an image sequence. From the second PIV data, we use constant `scale`.
-
 #### 1. Make overlay movies
 **A python function `matplotlib.pyplot.quiver(...)` is used to plot the velocity field of PIV.** By default, `quiver` automatically determines a proper scale for each velocity field. This is kind of similar to the contrast autoscaling for images, which makes sure that an image is not too dark or too bright, and patterns can be seen. While autoscaling is always good for a single image, for a video with many frames it's better to fix the scale, because a direct feeling of relative magnitude is important in a dynamic process. For example, if we fix the light intensity scale, we will know if the overall light intensity changes from one frame to another. **`quiver` provides a "complicated" method to control the scale, by combining keywords `scale` and `scale_units`.** `scale` is the number of data units per arrow length unit, e.g., m/s per plot width. `scale_units` is the arrow length unit, and can be `{'width', 'height', 'dots', 'inches', 'x', 'y', 'xy'}`. See the [official document of `quiver`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.quiver.html) for more detailed information. **In the `piv_overlay.py` script, we have access to the PIV data information and the output image information.** We know the how many arrows we are going to plot, on what height and width. We want the arrows to be large so that we can see them clearly. We also don't want to make them too large to block other arrows. A good choice of maximum arrow length is the PIV box size, i.e. width / ncol. **To set this, we let `scale_units='width'`, and let `scale=max(u.max(), v.max())*ncol`.** The interpretation of this setting is: the largest velocity component has length of width / (number of columns). Note that this only needs to be set once for an image sequence. From the second PIV data, we use constant `scale`.
 
@@ -174,10 +172,16 @@ The whole video No.22 shows noisy order parameter oscillation between -0.4 and 0
 
 ### B. Window size effect
 
+<font color="red">Analyze same images using different box size and compare results.</font>
 
 ### C. PIV on bacteria directly: is this a justified method?
 
-**Using bacteria directly as tracer particles for PIV is still not well accepted by the community**, according to my experience with the previous two papers (Science Advances 2021 and Soft Matter 2021). We've got questions from reviewer, e.g. does PIV works well when some bacteria in the interrogation window are moving much faster than the mean velocity? What is being measured in PIV when there is a strong inhomogeneity of velocity? **However, PIV on bacteria, or more generally active swimmers, has been used by many previous studies, too.** <font color="red">Fill here a list of active matter studies using active swimmers as tracer particles.</font> **In addition, we have tested PIV algorithms on some simulated images with elliptical objects moving in random directions, and the velocity measured is indeed very close to the mean velocity of all objects.** 
+**Using bacteria directly as tracer particles for PIV is still not well accepted by the community**, according to my experience with the previous two papers (Science Advances 2021 and Soft Matter 2021). We've got questions from reviewer, e.g. does PIV works well when some bacteria in the interrogation window are moving much faster than the mean velocity? What is being measured in PIV when there is a strong inhomogeneity of velocity? **However, PIV on bacteria, or more generally active swimmers, has been used by many previous studies, too.** <font color="red">Fill here a list of active matter studies using active swimmers as tracer particles.</font> **In addition, we have tested PIV algorithms on some simulated images, and obtained results very close to the ground truth.** Two scenarios are tested: i) objects moving in random directions with 0 mean velocity; ii) objects moving in the same direction with different velocities. **Lastly, using the PIV method, we can determine the critical transition conditions, which are consistent with independent measurements from our aspects (e.g. tracer diffusion).** With these, we hope to convince the readers that PIV using bacteria as tracers is a valid experimental method.
+
+### D. Zero control
+
+**To assess the uncertainty of the PIV algorithm, I take a video of a "frozen" bacterial droplet and apply PIV on it.** As suggested by the description "frozen", the bacteria inside the droplet barely move. Therefore, the expected velocity is zero. _This is why I call this test a zero control._ The full video can be found [here](remember_to_put_the_link). You can also find a low frame rate animation below. (Scharnowski, S. & Kähler, C. J. Particle image velocimetry - Classical operating rules from today’s perspective. Optics and Lasers in Engineering 135, 106185 (2020).)
+
 
 ## IV. Spatial and temporal correlation
 

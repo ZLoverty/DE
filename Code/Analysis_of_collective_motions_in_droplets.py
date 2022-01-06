@@ -4,6 +4,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 from scipy.signal import savgol_filter
+from pivLib import read_piv
+from skimage import io
+from corrLib import divide_windows
 # %% codecell
 folder = r"C:\Users\liuzy\Documents\12092021"
 mv_folder = os.path.join(folder, "mean_velocity")
@@ -130,7 +133,24 @@ plt.xlabel("time (s)")
 plt.ylabel("order parameter")
 
 # %% codecell
+winsize = 40
+overlap = 20
+maski = io.imread(os.path.join("test_files", "freehand_mask.tif")) > 0
+mask = divide_windows(maski, windowsize=[winsize, winsize], step=winsize-overlap)[2] >= 1
 
+
+x, y, u, v = read_piv(os.path.join("test_files", "06972-06973.csv"))
+# xm = x * mask
+# ym = y * mask
+u[~mask] = np.nan
+v[~mask] = np.nan
+plt.imshow(maski)
+plt.figure()
+plt.imshow(maski*0, vmin=-1000, cmap='gray')
+plt.quiver(x, y, um, vm, color='red', width=0.0025)
+plt.figure()
+plt.imshow(maski)
+plt.quiver(x, y, u, v, color='red', width=0.0025)
 
 # %% codecell
 
