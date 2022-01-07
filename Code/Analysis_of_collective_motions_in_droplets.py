@@ -153,13 +153,183 @@ plt.imshow(maski)
 plt.quiver(x, y, u, v, color='red', width=0.0025)
 
 # %% codecell
+v = pd.read_csv(os.path.join("test_files", "zero_control.csv"))
+plt.plot(v.frame/50, v.mean_v*0.16)
+plt.xlabel("time (s)")
+plt.ylabel("mean velocity (um/s)")
+# %% codecell
+def PIV_masked(I0, I1, winsize, overlap, dt, mask):
+    """Apply PIV analysis on masked images
+    Args:
+    I0, I1 -- adjacent images in a sequence
+    winsize, overlap, dt -- PIV parameters
+    mask -- a boolean array, False marks masked region and True marks the region of interest
+    mask_procedure -- the option chosen to apply the mask, used for testing, remove in the future.
+    Returns:
+    frame_data -- x, y, u, v DataFrame, here x, y is wrt original image, (u, v) are in px/s
 
+    This function is rewritten based on the PIV_droplet() function in piv_droplet.py script.
+    The intended usage is just to pass one additional `mask` parameter, on top of conventional parameter set.
+
+    EDIT
+    ====
+    Dec 14, 2021 -- Initial commit.
+    Dec 15, 2021 -- After testing 2 masking procedure, option 1 is better.
+                    Two procedures produce similar results, but option 1 is faster.
+                    So this function temporarily uses option 1, until a better procedure comes.
+
+    MASKING PROCEDURE
+    =================
+    Option 1:
+    i) Mask on raw image: I * mask, perform PIV
+    ii) Divide mask into windows: mask_w
+    iii) use mask_w to mask resulting velocity field: u[~mask_w] = np.nan
+    ---
+    Option 2:
+    i) Perform PIV on raw images
+    ii) Divide mask into windows:mask_w
+    iii) use mask_w to mask resulting velocity field: u[~mask_w] = np.nan
+    ---
+    """
+    assert(mask.shape==I0.shape)
+    mask = mask >= mask.mean() # convert mask to boolean array
+    I0_mask = I0 * mask
+    I1_mask = I1 * mask
+    x, y, u, v = PIV(I0_mask, I1_mask, winsize, overlap, dt)
+    mask_w = divide_windows(mask, windowsize=[winsize, winsize], step=winsize-overlap)[2] >= 1
+    assert(mask_w.shape==x.shape)
+    u[~mask_w] = np.nan
+    v[~mask_w] = np.nan
+    return x, y, u, v
+# %% codecell
+# How to convert mask to mask_w (windowed mask)
+mask = io.imread(os.path.join("test_files", "freehand_mask.tif"))
+mask_binary = mask > mask.mean()
+mask_w01 = divide_windows(mask_binary, windowsize=[winsize, winsize], step=winsize-overlap)[2] >= 0.1
+mask_w05 = divide_windows(mask_binary, windowsize=[winsize, winsize], step=winsize-overlap)[2] >= 0.5
+mask_w1 = divide_windows(mask_binary, windowsize=[winsize, winsize], step=winsize-overlap)[2] >= 1
+fig, ax = plt.subplots(ncols=4, nrows=1, dpi=150)
+for ax1, m, t in zip(ax, [mask_binary, mask_w01, mask_w05, mask_w1], ['mask', 'thre=0.1', 'thre=0.5', 'thre=1']):
+    ax1.imshow(m)
+    ax1.axis('off')
+    ax1.set_title(t)
+# %% codecell
+for w in [40, 30, 20, 10]:
+    print(r"python piv_drop.py D:\Github\DE\Code\test_files\raw_images D:\Github\DE\Code\test_files\w{0} {0} {1} 0.02 D:\Github\DE\Code\test_files\mask.tif".format(w, w//2))
+# %% codecell
+fig, axs = plt.subplots(nrows=2, ncols=5, dpi=200)
+img = io.imread(os.path.join("test_files", "raw_images", "00000.tif"))
+for w, ax in zip(range(10, 110, 10), axs.flatten()):
+    overlap = w // 2
+    piv = pd.read_csv(os.path.join("test_files", "w{0:d}_o{1:d}".format(w, overlap), "00000-00001.csv")).dropna()
+    v = ((piv.u ** 2 + piv.v ** 2) ** 0.5).mean() * 0.16
+    ax.imshow(img*0, vmin=-1000, cmap='gray')
+    ax.quiver(piv.x, piv.y, piv.u, piv.v, scale_units="width", scale=900)
+    ax.set_xlim([80, 440])
+    ax.set_ylim([50, 410])
+    ax.axis('off')
+    ax.set_title("w={:d}".format(w))
+    ax.text(130, 0, r"$\bar v=$ {:.2f} um/s".format(v), fontsize=6)
+# %% codecell
+fig, ax = plt.subplots(nrows=1, ncols=2, dpi=200, sharey=True)
+for w in range(10, 110, 10):
+    overlap = w // 2
+    piv = pd.read_csv(os.path.join("test_files", "w{0:d}_o{1:d}".format(w, overlap), "00000-00001.csv")).dropna()
+    hist, bin_edges = np.histogram(piv.u.dropna()*0.16, density=True, bins=np.linspace(-10, 10, 10))
+    ax[0].plot(bin_edges[:-1], hist, label="w={:d}".format(w))
+    hist, bin_edges = np.histogram(piv.v.dropna()*0.16, density=True, bins=np.linspace(-10, 10, 10))
+    ax[1].plot(bin_edges[:-1], hist, label="w={:d}".format(w))
+ax[0].set_xlabel("velocity (um/s)")
+ax[0].set_ylabel("PDF")
+ax[0].set_title("u distribution")
+ax[1].set_xlabel("velocity (um/s)")
+ax[1].set_ylabel("PDF")
+ax[1].legend(fontsize=7)
+ax[1].set_title("v distribution")
+# %% codecell
+fig, axs = plt.subplots(nrows=2, ncols=5, dpi=200)
+img = io.imread(os.path.join("test_files", "raw_images", "00000.tif"))
+for w, ax in zip(range(10, 110, 10), axs.flatten()):
+    overlap = w - 5
+    piv = pd.read_csv(os.path.join("test_files", "w{0:d}_o{1:d}".format(w, overlap), "00000-00001.csv")).dropna()
+    v = ((piv.u ** 2 + piv.v ** 2) ** 0.5).mean() * 0.16
+    ax.imshow(img*0, vmin=-1000, cmap='gray')
+    ax.quiver(piv.x, piv.y, piv.u, piv.v, scale_units="width", scale=900)
+    ax.set_xlim([80, 440])
+    ax.set_ylim([50, 410])
+    ax.axis('off')
+    ax.set_title("w={:d}".format(w))
+    ax.text(130, 0, r"$\bar v=$ {:.2f} um/s".format(v), fontsize=6)
+# %% codecell
+fig, ax = plt.subplots(nrows=1, ncols=2, dpi=200, sharey=True)
+for w in range(10, 110, 10):
+    overlap = w - 5
+    piv = pd.read_csv(os.path.join("test_files", "w{0:d}_o{1:d}".format(w, overlap), "00000-00001.csv")).dropna()
+    hist, bin_edges = np.histogram(piv.u.dropna()*0.16, density=True, bins=np.linspace(-10, 10, 10))
+    ax[0].plot(bin_edges[:-1], hist, label="w={:d}".format(w))
+    hist, bin_edges = np.histogram(piv.v.dropna()*0.16, density=True, bins=np.linspace(-10, 10, 10))
+    ax[1].plot(bin_edges[:-1], hist, label="w={:d}".format(w))
+ax[0].set_xlabel("velocity (um/s)")
+ax[0].set_ylabel("PDF")
+ax[0].set_title("u distribution")
+ax[1].set_xlabel("velocity (um/s)")
+ax[1].set_ylabel("PDF")
+ax[1].legend(fontsize=7)
+ax[1].set_title("v distribution")
 
 # %% codecell
-
+# mean velocity
+for w in [10, 20, 30, 40, 50]:
+    piv = pd.read_csv(os.path.join("test_files", "w{:d}".format(w), "00000-00001.csv")).dropna()
+    v = ((piv.u ** 2 + piv.v ** 2) ** 0.5).mean()
+    print("{0:d} | {1:.2f}".format(w, v))
 # %% codecell
+# order parameter
+def order_parameter_wioland2013(pivData, center):
+    """Compute order parameter with PIV data and droplet center coords using the method from wioland2013.
+    Args:
+    pivData -- DataFrame of x, y, u, v
+    center -- 2-tuple droplet center coords
+    Return:
+    OP -- float, max to 1
+    """
+    point = (pivData.x, pivData.y)
+    tu = tangent_unit(point, center)
+    # \Sigma vt
+    sum_vt = (pivData.u * tu[0] + pivData.v * tu[1]).sum()
+    sum_v = ((pivData.u**2 + pivData.v**2) ** 0.5).sum()
+    # OP = (sum_vt/sum_v - 2/np.pi) / (1 - 2/np.pi)
+    OP = sum_vt/sum_v
+    return OP
+def tangent_unit(point, center):
+    """Compute tangent unit vector based on point coords and center coords.
+    Args:
+    point -- 2-tuple
+    center -- 2-tuple
+    Returns:
+    tu -- tangent unit vector
+    """
+    point = np.array(point)
+    # center = np.array(center)
+    r = np.array((point[0] - center[0], point[1] - center[1]))
+    # the following two lines set the initial value for the x of the tangent vector
+    ind = np.logical_or(r[1] > 0, np.logical_and(r[1] == 0, r[0] > 0))
+    x1 = np.ones(point.shape[1:])
+    x1[ind] = -1
+    # avoid divided by 0
+    r[1][r[1]==0] = np.nan
 
-
+    y1 = - x1 * r[0] / r[1]
+    length = (x1**2 + y1**2) ** 0.5
+    return np.array([x1, y1]) / length
+# %% codecell
+center = (259, 228)
+for w in [10, 20, 30, 40, 50]:
+    piv = pd.read_csv(os.path.join("test_files", "w{:d}".format(w), "00006-00007.csv"))
+    OP = order_parameter_wioland2013(piv, center)
+    print("{0:d} | {1:.2f}".format(w, OP))
+# %% codecell
+(17.9**2 + 41.2**2) ** 0.5
 # %% codecell
 
 # %% codecell

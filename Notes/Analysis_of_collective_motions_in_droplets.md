@@ -37,6 +37,13 @@ As can be seen in the result below, yellow PIV arrows are found in both big drop
 
 ![freehand_mask_piv](/assets/freehand_mask_piv.svg)
 
+It may be noticed that for the masked PIV in the images above, there is a gap between the mask contour and the PIV arrow contour. This gap is caused by the way I convert the pixel mask into PIV window mask. There is a threshold setting in this process, determining what kind of windows are considered "transparent" and what windows are considered "opaque". In code, this thresholding is implemented as the following:
+```python
+mask_w = divide_windows(mask, windowsize=[winsize, winsize], step=winsize-overlap)[2] >= 1
+```
+Setting threshold to 1 leads to the most conservative mask (smallest transparent region), which causes the gap between the contours. To close the gap to include more velocities in the mask, simply set the threshold to 0.5. The figure below illustrates the effect of the threshold.
+
+![different threshold for mask](../images/2022/01/different-threshold-for-mask.png)
 ### B. Masking procedure
 
 There are several ways to use the mask. To mask the raw images before applying PIV or to mask the final velocity result, or to do both. How much do these options affect the final result of the PIV analysis? We test the following procedures:
@@ -168,19 +175,53 @@ The whole video No.22 shows noisy order parameter oscillation between -0.4 and 0
 
 #### 2. Manually measure velocity
 
-**Quantitatively,**
+**Quantitatively, we can manually measure the displacement of certain image elements and compare it with the PIV data.** In the example image above, for example, there is a bright spot in the upper middle of the droplet, which is moving down and a little to the right. A zoom in view of the motion is shown below. The red line in the second frame indicates the displacement of the bright spot (~4.9 px) over 2 frames (0.04 s), the instantaneous velocity can be calculated as $4.9/0.04=102$ px/s.
 
+![manual measure velocity](../images/2022/01/manual_measure.gif)
+
+Now we look at the PIV data.
+
+![this window](../images/2022/01/this-window.png)
+
+The center of the yellow box above is measured to be 275, 127. The closest PIV box is at 278.5, 126.5. The velocity is $\sqrt{17.9^2+41.2^2}=44.9$ px/s. Although this is  
+
+![compare with piv data](../images/2022/01/compare-with-piv-data.png)
 ### B. Window size effect
+**Window size (more formally interrogation window size, $w$) is arguably the most important parameter in a PIV analysis.** In principle, it should be large enough to contain many moving particles, so that the correlation functions of images indicate the displacement of particles. On the other hand, it should be much smaller than the velocity field structure, so that the structure of interest won't be averaged out. **Usually, there is a range of window size, within which PIV analysis always give consistent results.** In this section, we seek such range by exploring different window sizes (and overlap).
+#### 1. Fix overlap as half window size
+Typically, I fix the overlap as half of the window size. In this test, I vary the window size from 10 px to 100 px (1 px = 0.16 um). The resulting velocity fields are summarized in the figure below.
 
-<font color="red">Analyze same images using different box size and compare results.</font>
+![vary box size 1](../images/2022/01/vary-box-size-1.png)
+
+**The velocity fields of $w=10$ and $w=20$ look very similar and their mean velocities are almost the same! This is indicative that 10-20 is the "sweet range" of PIV on this image set. Above 20, however, the results seem to lose important velocity structures due to over averaging.** Actually, most outstanding velocity features persist up to $w=40$.
+
+I also plot the velocity probability density function (PDF) of the PIV data above. When $w\le20$, PDF's have similar shapes. When $w>20$, the large velocity tails drastically fall down, again indicative of over averaging.
+
+![PDF 1](../images/2022/01/pdf-1.png)
+
+#### 2. Fix distance between arrows
+
+In the previous section, we notice that as the window size increases, the number of arrows decreases. As a result, we only have 34 arrows when $w=100$. This small number of arrows may lead to a lack of statistics issue. To make all the number of arrows consistent throughout all the window sizes, I set `overlap` to be $w-5$. Below is the resulting velocity fields.
+
+![vary box size 2](../images/2022/01/vary-box-size-2.png)
+
+**Now it's clear that lacking statistics is not what makes the PIV inaccurate. Rather, it's the box size that is causing over averaging errors.** Similar conclusion is drawn from the PDF's.
+
+![pdf 2](../images/2022/01/pdf-2.png)
+
+**According to this test, I will use $w=20, o=10$ as an empirical rule of thump (for 40x lens).**
 
 ### C. PIV on bacteria directly: is this a justified method?
 
-**Using bacteria directly as tracer particles for PIV is still not well accepted by the community**, according to my experience with the previous two papers (Science Advances 2021 and Soft Matter 2021). We've got questions from reviewer, e.g. does PIV works well when some bacteria in the interrogation window are moving much faster than the mean velocity? What is being measured in PIV when there is a strong inhomogeneity of velocity? **However, PIV on bacteria, or more generally active swimmers, has been used by many previous studies, too.** <font color="red">Fill here a list of active matter studies using active swimmers as tracer particles.</font> **In addition, we have tested PIV algorithms on some simulated images, and obtained results very close to the ground truth.** Two scenarios are tested: i) objects moving in random directions with 0 mean velocity; ii) objects moving in the same direction with different velocities. **Lastly, using the PIV method, we can determine the critical transition conditions, which are consistent with independent measurements from our aspects (e.g. tracer diffusion).** With these, we hope to convince the readers that PIV using bacteria as tracers is a valid experimental method.
+**Using bacteria directly as tracer particles for PIV is still not well accepted by the community**, according to my experience with the previous two papers (Science Advances 2021 and Soft Matter 2021). We've got questions from reviewer, e.g. does PIV works well when some bacteria in the interrogation window are moving much faster than the mean velocity? What is being measured in PIV when there is a strong inhomogeneity of velocity? **However, PIV on bacteria, or more generally active swimmers, has been used by many previous studies, too.** See refs 1-8 for examples. **In addition, we have tested PIV algorithms on some simulated images, and obtained results very close to the ground truth.** Two scenarios are tested: i) objects moving in random directions with 0 mean velocity; ii) objects moving in the same direction with different velocities. **Lastly, using the PIV method, we can determine the critical transition conditions, which are consistent with independent measurements from our aspects (e.g. tracer diffusion).** With these, we hope to convince the readers that PIV using bacteria as tracers is a valid experimental method.
 
 ### D. Zero control
 
 **To assess the uncertainty of the PIV algorithm, I take a video of a "frozen" bacterial droplet and apply PIV on it.** As suggested by the description "frozen", the bacteria inside the droplet barely move. Therefore, the expected velocity is zero. _This is why I call this test a zero control._ The full video can be found [here](remember_to_put_the_link). You can also find a low frame rate animation below. (Scharnowski, S. & Kähler, C. J. Particle image velocimetry - Classical operating rules from today’s perspective. Optics and Lasers in Engineering 135, 106185 (2020).)
+
+The mean velocity of the zero control video is shown in the following plot. The mean velocity is not exactly zero, due to both detection error and the tiny fluctuations of the droplet. **However, compared to the mean velocity of bacteria in a typical active droplet (2.6-3.2 um/s), the mean velocity of this frozen droplet (0.5 um/s) is noticeably smaller.** I will consider 0.5 um/s the magnitude of the detection error of PIV.
+
+![mean velocity of frozen droplet](../images/2022/01/mean-velocity-of-frozen-droplet.png)
 
 
 ## IV. Spatial and temporal correlation
@@ -194,12 +235,20 @@ We see collective motions in bulk and under confinement. Are they the same or di
 
 
 
+## References
+
+1. Wioland, H., Lushi, E. & Goldstein, R. E. Directed collective motion of bacteria under channel confinement. New J. Phys. 18, 075002 (2016).
+2. Wioland, H., Woodhouse, F. G., Dunkel, J. & Goldstein, R. E. Ferromagnetic and antiferromagnetic order in bacterial vortex lattices. Nature Phys 12, 341–345 (2016).
+3. Wioland, H., Woodhouse, F. G., Dunkel, J., Kessler, J. O. & Goldstein, R. E. Confinement Stabilizes a Bacterial Suspension into a Spiral Vortex. Phys. Rev. Lett. 110, 268102 (2013).
+4. Wensink, H. H. et al. Meso-scale turbulence in living fluids. Proceedings of the National Academy of Sciences 109, 14308–14313 (2012).
+5. Sokolov, A., Aranson, I. S., Kessler, J. O. & Goldstein, R. E. Concentration Dependence of the Collective Dynamics of Swimming Bacteria. Phys. Rev. Lett. 98, 158102 (2007).
+6. Lushi, E., Wioland, H. & Goldstein, R. E. Fluid flows created by swimming bacteria drive self-organization in confined suspensions. Proc Natl Acad Sci USA 111, 9733–9738 (2014).
+7. Cisneros, L. H., Kessler, J. O., Ganguly, S. & Goldstein, R. E. Dynamics of swimming bacteria: Transition to directional order at high concentration. Phys. Rev. E 83, 061907 (2011).
+8. Cisneros, L. H., Cortez, R., Dombrowski, C., Goldstein, R. E. & Kessler, J. O. Fluid dynamics of self-propelled microorganisms, from individuals to concentrated populations. Exp Fluids 43, 737–753 (2007).
 
 
 
 # Appendix A
 To do list
 - For high bacterial concentration: Compare flow time scale with inner droplet motion time scale
-- For low bacterial concentration: need a "zero control", a double emulsion without bacteria
-- Should I include one more ring near the droplet edge?
 - I can apply all the analysis in the GNF study here, e.g. density fluctuation, flow field vorticity, divergence, etc.

@@ -1,0 +1,4 @@
+Params
+winsize: 70
+overlap: 35
+dt: 0.02
