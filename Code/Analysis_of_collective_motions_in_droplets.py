@@ -6,7 +6,7 @@ import os
 from scipy.signal import savgol_filter
 from pivLib import read_piv
 from skimage import io
-from corrLib import divide_windows
+from corrLib import divide_windows, readdata
 # %% codecell
 folder = r"C:\Users\liuzy\Documents\12092021"
 mv_folder = os.path.join(folder, "mean_velocity")
@@ -330,6 +330,150 @@ for w in [10, 20, 30, 40, 50]:
     print("{0:d} | {1:.2f}".format(w, OP))
 # %% codecell
 (17.9**2 + 41.2**2) ** 0.5
+# %% codecell
+# velocity profile
+def velocity_profile_radial(pivData, center):
+    """Compute radial velocity profile of PIV in droplet
+    Args:
+    pivData - DataFrame of x, y, u, v
+    center - 2-tuple center of droplet
+    Returns:
+    vp - velocity profile, DataFrame of r, v_r
+    """
+    pivData = pivData.dropna()
+    d = ((pivData.x - center[0]) ** 2 + (pivData.y - center[1]) ** 2) ** 0.5
+    pivData = pivData.assign(d=d)
+    # determine the range and interval of velocity profile
+    N = 10 # number of points in the profile
+    bin_edges = np.linspace(0, pivData.d.max(), N+1)
+    v_list = []
+    n_list = []
+    for minn, maxx in zip(bin_edges[:-1], bin_edges[1:]):
+        in_range = pivData.loc[(pivData.d>minn)&(pivData.d<=maxx)]
+        n_list.append(len(in_range))
+        v = ((in_range.u ** 2 + in_range.v ** 2) ** 0.5).mean()
+        v_list.append(v)
+    vp = pd.DataFrame({"r": bin_edges[1:], "v": v_list, "n": n_list})
+    return vp
+# %% codecell
+for i in range(0, 10, 2):
+    pivData = pd.read_csv(os.path.join("test_files", "w20_o10", "{0:05d}-{1:05d}.csv".format(i, i+1)))
+    center = (259, 228)
+    vp = velocity_profile_radial(pivData, center)
+    plt.plot(vp.r*0.16, vp.v*0.16)
+plt.xlabel("radius (um)")
+plt.ylabel("mean velocity (um/s)")
+plt.figure()
+plt.plot(vp.r, vp.n)
+
+# %% codecell
+np.linspace(0, 10)
+# %% codecell
+# max velocity first 1000 data
+piv_folder = r"C:\Users\liuzy\Documents\12092021\piv_drop\22"
+l = readdata(piv_folder, "csv")
+v_list = []
+for num, i in l[1000:1200].iterrows():
+    pivData = pd.read_csv(i.Dir).dropna()
+    vmax = (pivData.u ** 2 + pivData.v ** 2).max() ** 0.5
+    v_list.append(vmax)
+plt.plot(v_list)
+# %% codecell
+# is the velocity field symmetric azimuthally?
+# if so, we should have completely random azimuthal velocity profile
+# otherwise, the azimuthal velocity profile would show some special distribution
+
+# %% codecell
+def velocity_profile_azimuthal(pivData, center):
+    """Compute radial velocity profile of PIV in droplet
+    Args:
+    pivData - DataFrame of x, y, u, v
+    center - 2-tuple center of droplet
+    Returns:
+    vp - velocity profile, DataFrame of r, v_r
+    """
+    pivData = pivData.dropna()
+    theta = np.arctan2(pivData.y - center[1], pivData.x - center[0])
+    pivData = pivData.assign(theta=theta)
+    # determine the range and interval of velocity profile
+    N = 10 # number of points in the profile
+    bin_edges = np.linspace(-np.pi, np.pi, N+1)
+    interval = 2 * np.pi / N
+    v_list = []
+    n_list = []
+    for t in bin_edges[:-1]:
+        minn = t
+        maxx = t + interval
+        in_range = pivData.loc[(pivData.theta>minn)&(pivData.theta<=maxx)]
+        n_list.append(len(in_range))
+        v = ((in_range.u ** 2 + in_range.v ** 2) ** 0.5).mean()
+        v_list.append(v)
+    vp = pd.DataFrame({"theta": bin_edges[:-1], "v": v_list, "n": n_list})
+    return vp
+# %% codecell
+pivData = pd.read_csv(os.path.join("test_files", "w20_o10", "{0:05d}-{1:05d}.csv".format(8, 9)))
+center = (259, 228)
+vp = velocity_profile_azimuthal(pivData, center)
+plt.plot(vp.theta, vp.v)
+# %% codecell
+# plot polar chart
+N = len(vp)
+theta = np.linspace(-np.pi, np.pi, N, endpoint=False)
+radii = vp.v * 0.16
+width = 2 * np.pi / N
+colors = plt.cm.viridis(radii / radii.max())
+ax = plt.subplot(projection='polar')
+ax.bar(theta, radii, width=width, bottom=0.0, color=colors, alpha=0.5)
+# %% codecell
+# test np.arctan2
+t = np.linspace(-np.pi, np.pi)
+y = np.sin(t)
+x = np.cos(t)
+theta = np.arctan2(y, x)
+plt.plot(t, theta)
+# %% codecell
+# The bottom seem to have larger velocity always? Try a random frame
+piv_folder = r"C:\Users\liuzy\Documents\12092021\piv_drop\22"
+i = 11020
+pivData = pd.read_csv(os.path.join(piv_folder, "{0:05d}-{1:05d}.csv".format(i, i+1)))
+center = (259, 228)
+vp = velocity_profile_azimuthal(pivData, center)
+# %% codecell
+N = len(vp)
+theta = np.linspace(-np.pi, np.pi, N, endpoint=False)
+radii = vp.v
+width = 2 * np.pi / N
+colors = plt.cm.viridis(radii / radii.max())
+ax = plt.subplot(projection='polar')
+ax.bar(theta, radii, width=width, bottom=0.0, color=colors, alpha=0.5)
+# %% codecell
+# Not always large at bottom, but seem to be some slower dynamics...
+# Let's make a video to find out
+piv_folder = r"C:\Users\liuzy\Documents\12092021\piv_drop\22"
+save_folder = r"C:\Users\liuzy\Documents\12092021\azimuthal_profile"
+l = readdata(piv_folder, "csv")
+center = (259, 228)
+for num, i in l.iterrows():
+    pivData = pd.read_csv(i.Dir)
+    vp = velocity_profile_azimuthal(pivData, center)
+    N = len(vp)
+    theta = np.linspace(-np.pi, np.pi, N, endpoint=False)
+    radii = vp.v
+    width = 2 * np.pi / N
+    colors = plt.cm.viridis(radii / radii.max())
+    ax = plt.subplot(projection='polar')
+    ax.bar(theta, radii, width=width, bottom=0.0, color=colors, alpha=0.5)
+    ax.set_ylim([0, 60])
+    plt.savefig(os.path.join(save_folder, "{:05d}.jpg".format(num)))
+    plt.close()
+# %% codecell
+dir(ax)
+# %% codecell
+
+# %% codecell
+
+# %% codecell
+
 # %% codecell
 
 # %% codecell

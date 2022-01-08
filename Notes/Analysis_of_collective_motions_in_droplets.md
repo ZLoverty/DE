@@ -183,7 +183,7 @@ Now we look at the PIV data.
 
 ![this window](../images/2022/01/this-window.png)
 
-The center of the yellow box above is measured to be 275, 127. The closest PIV box is at 278.5, 126.5. The velocity is $\sqrt{17.9^2+41.2^2}=44.9$ px/s. Although this is  
+The center of the yellow box above is measured to be 275, 127. The closest PIV box is at 278.5, 126.5. The velocity is $\sqrt{17.9^2+41.2^2}=44.9$ px/s. **Although this is smaller than the manual measurement (102 px/s), the factor of 2 difference is acceptable.** We only measure the displacement of a specific spot, whereas PIV measures the displacement of a box. So it makes sense that the average displacement is lowered by the pixels around the bright spot.
 
 ![compare with piv data](../images/2022/01/compare-with-piv-data.png)
 ### B. Window size effect
@@ -223,8 +223,40 @@ The mean velocity of the zero control video is shown in the following plot. The 
 
 ![mean velocity of frozen droplet](../images/2022/01/mean-velocity-of-frozen-droplet.png)
 
+## IV. Velocity profiles
 
-## IV. Spatial and temporal correlation
+**Velocity profiles provide a different degree of averaging of velocity fields.** It's more detailed compared to the average over the whole velocity field, but is less detailed compared to the velocity field. In a 2D image of droplets, we can compute velocity profiles along two directions: radial and azimuthal. On top of directions, we can look at both velocity magnitude and velocity azimuthal component.
+
+### A. Radial profile of velocity
+$$
+\bar{v}(r) = \left< |\bm{v}(x, y)| \right>_{r<\sqrt{x^2+y^2}<r+\Delta r}
+$$
+
+![vp 1](../images/2022/01/vp-1.png)
+
+### B. Radial profile of azimuthal velocity
+
+$$
+\bar{v}(r) = \left< \bm{v}(x, y)\cdot\bm{t}(x, y) \right>_{r<\sqrt{x^2+y^2}<r+\Delta r}
+$$
+
+### C. Azimuthal profile of velocity
+
+Use polar chart.
+
+$$
+\bar{v}(\theta) = \left< |\bm{v}(x, y)| \right>_{\theta<\arctan{\frac{y}{x}}<\theta+\Delta\theta}
+$$
+
+![vp 2](../images/2022/01/vp-2.png)
+
+### D. Azimuthal profile of azimuthal velocity
+
+$$
+\bar{v}(\theta) = \left< \bm{v}(x, y)\cdot\bm{t}(x, y) \right>_{\theta<\arctan{\frac{y}{x}}<\theta+\Delta\theta}
+$$
+
+## V. Spatial and temporal correlation
 
 We see collective motions in bulk and under confinement. Are they the same or different in any aspects? Let us try to understand this by looking at the spatial and temporal correlation functions.
 
