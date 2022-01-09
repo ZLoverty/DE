@@ -228,33 +228,65 @@ The mean velocity of the zero control video is shown in the following plot. The 
 **Velocity profiles provide a different degree of averaging of velocity fields.** It's more detailed compared to the average over the whole velocity field, but is less detailed compared to the velocity field. In a 2D image of droplets, we can compute velocity profiles along two directions: radial and azimuthal. On top of directions, we can look at both velocity magnitude and velocity azimuthal component.
 
 ### A. Radial profile of velocity
+The radial profile of velocity considers velocity distribution in radial direction, as illustrated below. Formally, the mean velocity $\bar v$ at radial position $r$ can be expressed as the following.
+
 $$
 \bar{v}(r) = \left< |\bm{v}(x, y)| \right>_{r<\sqrt{x^2+y^2}<r+\Delta r}
 $$
+![vp illustration 1](../images/2022/01/vp-illustration-1.png)
+
+The following curves show the radial velocity profiles from 5 instantaneous velocity fields.
 
 ![vp 1](../images/2022/01/vp-1.png)
 
+To get more statistically meaningful velocity profile, I average the velocity profiles measured from 15000 PIV data from a 10-minute video.
+
+![mean vp 1](../images/2022/01/mean-vp-1.png)
+
 ### B. Radial profile of azimuthal velocity
+In Hamby et al. 2018 (Ref. 9), the velocities are predominately in azimuthal direction, which come together to form oscillatory circulations in droplets. We expect to see similar preference in our system, so we also compute the profiles of the azimuthal component. The formal definition of the _radial profile of azimuthal velocity_ is given below.
 
 $$
 \bar{v}(r) = \left< \bm{v}(x, y)\cdot\bm{t}(x, y) \right>_{r<\sqrt{x^2+y^2}<r+\Delta r}
 $$
 
+Below are velocity profiles of some instantaneous frames.
+
+![azi vp](../images/2022/01/azi-vp.png)
+
+Average over the whole video _again_. Although the velocities are not completely averaged out, the magnitudes of the averaged velocities are already ~3 orders of magnitude lower than the highest instantaneous velocity. **Thus, the small average velocity can be considered as 0, i.e. there is no preferred circulation direction over long time.** The circulation, if exists, has too be reversing all the time.
+
+![azi vp average](../images/2022/01/azi-vp-average.png)
+
+
 ### C. Azimuthal profile of velocity
 
-Use polar chart.
-
+Instead of a familiar Cartesian curve plot, I use a polar chart to visualize the azimuthal velocity profile. The idea is to put data into a geometry that is similar to where the original data comes from (i.e. a 2D circle). The heights of the portions represent the velocity magnitudes in the angle ranges. A formal definition of the angular average velocity is given below:
 $$
 \bar{v}(\theta) = \left< |\bm{v}(x, y)| \right>_{\theta<\arctan{\frac{y}{x}}<\theta+\Delta\theta}
 $$
+Below is a snapshot of azimuthal velocity profile from a certain frame.
 
 ![vp 2](../images/2022/01/vp-2.png)
 
-### D. Azimuthal profile of azimuthal velocity
+We notice a strong azimuthal velocity inhomogeneity in the velocity profile above. Does this distribution (where velocity at 0$\degree$ is largest) persist throughout the whole experiment? To answer this question, I average the azimuthal velocity profiles over 15000 PIV data _again_, and obtain the following _averaged_ velocity profile. **Although the velocity profile from an instantaneous velocity field shows strong inhomogeneity, it can be averaged out over a long time.**
 
+![azimuthal average vp 3](../images/2022/01/azimuthal-average-vp-3.png)
+
+### D. Azimuthal profile of azimuthal velocity
+Formal definition:
 $$
 \bar{v}(\theta) = \left< \bm{v}(x, y)\cdot\bm{t}(x, y) \right>_{\theta<\arctan{\frac{y}{x}}<\theta+\Delta\theta}
 $$
+Here I only plot the averaged velocity profile for long time.
+
+![azi vp 4](../images/2022/01/azi-vp-4.png)
+
+To conclude the velocity profile measurement, I make the following tentative points:
+
+- Radially, the velocity magnitudes have a robust and nonmonotonic distribution, with a peak near the edge of droplets
+- Azimuthally, the velocity magnitude at the bottom half seems to be larger than that at the top half.
+- No constant circulation (in a single direction) is detected. However, this does not exclude the possibilities of oscillatory circulation or completely chaotic motion.
 
 ## V. Spatial and temporal correlation
 
@@ -277,6 +309,7 @@ We see collective motions in bulk and under confinement. Are they the same or di
 6. Lushi, E., Wioland, H. & Goldstein, R. E. Fluid flows created by swimming bacteria drive self-organization in confined suspensions. Proc Natl Acad Sci USA 111, 9733–9738 (2014).
 7. Cisneros, L. H., Kessler, J. O., Ganguly, S. & Goldstein, R. E. Dynamics of swimming bacteria: Transition to directional order at high concentration. Phys. Rev. E 83, 061907 (2011).
 8. Cisneros, L. H., Cortez, R., Dombrowski, C., Goldstein, R. E. & Kessler, J. O. Fluid dynamics of self-propelled microorganisms, from individuals to concentrated populations. Exp Fluids 43, 737–753 (2007).
+9. Hamby, A. E., Vig, D. K., Safonova, S. & Wolgemuth, C. W. Swimming bacteria power microspin cycles. Sci. Adv. 4, eaau0125 (2018).
 
 
 

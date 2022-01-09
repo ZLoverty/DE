@@ -385,7 +385,7 @@ plt.plot(v_list)
 
 # %% codecell
 def velocity_profile_azimuthal(pivData, center):
-    """Compute radial velocity profile of PIV in droplet
+    """Compute azimuthal velocity profile of PIV in droplet
     Args:
     pivData - DataFrame of x, y, u, v
     center - 2-tuple center of droplet
@@ -469,11 +469,173 @@ for num, i in l.iterrows():
 # %% codecell
 dir(ax)
 # %% codecell
-
+string_list = ["a", "b", "c"]
+" && ".join(string_list)
 # %% codecell
-
+piv_folder = r"C:\Users\liuzy\Documents\12092021\piv_drop\22"
+l = readdata(piv_folder, "csv")
+vp_list = []
+for num, i in l.iterrows():
+    pivData = pd.read_csv(i.Dir)
+    center = (259, 228)
+    vp = velocity_profile_radial(pivData, center).set_index("r")
+    vp_list.append(vp)
+vp_df = pd.concat(vp_list, axis=1)
+vp_mean = vp_df.mean(axis=1).to_frame("v")
+plt.plot(vp_mean.index*0.16, vp_mean.v*0.16)
+plt.xlabel("radius (um)")
+plt.ylabel("mean velocity (um/s)")
 # %% codecell
+piv_folder = r"C:\Users\liuzy\Documents\12092021\piv_drop\22"
+l = readdata(piv_folder, "csv")
+vp_list = []
+for num, i in l.iterrows():
+    pivData = pd.read_csv(i.Dir)
+    center = (259, 228)
+    vp = velocity_profile_azimuthal(pivData, center).set_index("theta")
+    vp_list.append(vp)
+vp_df = pd.concat(vp_list, axis=1)
+vp_mean = vp_df["v"].mean(axis=1).to_frame("v")
 
+N = len(vp_mean)
+theta = np.linspace(-np.pi, np.pi, N, endpoint=False)
+radii = vp_mean.v
+width = 2 * np.pi / N
+colors = plt.cm.viridis(radii / radii.max())
+ax = plt.subplot(projection='polar')
+ax.bar(theta, radii, width=width, bottom=0.0, color=colors, alpha=0.5)
 # %% codecell
+vp_df["v"].T.reset_index()
 
+vp_df["v"].T.reset_index()[:300].drop(columns="index").plot()
+plt.legend()
+# %% codecell
+def azimuthal_velocity_profile_radial(pivData, center):
+    """Compute radial velocity profile of azimuthal velocity from PIV in droplet
+    Args:
+    pivData - DataFrame of x, y, u, v
+    center - 2-tuple center of droplet
+    Returns:
+    vp - velocity profile, DataFrame of r, v_r
+    """
+    pivData = pivData.dropna()
+    tu = tangent_unit((pivData.x, pivData.y), center)
+    d = ((pivData.x - center[0]) ** 2 + (pivData.y - center[1]) ** 2) ** 0.5
+    pivData = pivData.assign(d=d, tu=tu[0], tv=tu[1])
+    # determine the range and interval of velocity profile
+    N = 10 # number of points in the profile
+    bin_edges = np.linspace(0, pivData.d.max(), N+1)
+    v_list = []
+    n_list = []
+    for minn, maxx in zip(bin_edges[:-1], bin_edges[1:]):
+        in_range = pivData.loc[(pivData.d>minn)&(pivData.d<=maxx)]
+        n_list.append(len(in_range))
+        v = (in_range.tu * in_range.u + in_range.tv * in_range.v).mean()
+        v_list.append(v)
+    vp = pd.DataFrame({"r": bin_edges[1:], "v": v_list, "n": n_list})
+    return vp
+# %% codecell
+def tangent_unit(point, center):
+    """Compute tangent unit vector based on point coords and center coords.
+    Args:
+    point -- 2-tuple
+    center -- 2-tuple
+    Returns:
+    tu -- tangent unit vector
+    """
+    point = np.array(point)
+    # center = np.array(center)
+    r = np.array((point[0] - center[0], point[1] - center[1]))
+    # the following two lines set the initial value for the x of the tangent vector
+    ind = np.logical_or(r[1] > 0, np.logical_and(r[1] == 0, r[0] > 0))
+    x1 = np.ones(point.shape[1:])
+    x1[ind] = -1
+    # avoid divided by 0
+    r[1][r[1]==0] = np.nan
+
+    y1 = - x1 * r[0] / r[1]
+    length = (x1**2 + y1**2) ** 0.5
+    return np.array([x1, y1]) / length
+# %% codecell
+pivData = pd.read_csv(os.path.join("test_files", "00000-00001.csv"))
+center = (259, 228)
+point = (pivData.x, pivData.y)
+tu = tangent_unit(point, center)
+# %% codecell
+plt.figure(dpi=150)
+plt.quiver(point[0], point[1], tu[0], tu[1])
+# %% codecell
+pivData = pd.read_csv(os.path.join("test_files", "00000-00001.csv"))
+center = (259, 228)
+vp = azimuthal_velocity_profile_radial(pivData, center)
+plt.plot(vp.r, vp.v)
+# %% codecell
+folder = r"C:\Users\liuzy\Documents\12092021\piv_drop\22"
+center = (259, 228)
+l = readdata(folder, "csv")
+vp_list = []
+for num, i in l.iterrows():
+    pivData = pd.read_csv(i.Dir)
+    vp = azimuthal_velocity_profile_radial(pivData, center)
+    vp_list.append(vp.set_index("r")["v"])
+vp_df = pd.concat(vp_list, axis=1)
+vp_mean = vp_df.mean(axis=1).to_frame("v")
+plt.plot(vp_mean.index*0.16, vp_mean.v*0.16)
+plt.xlabel("r (um)")
+plt.ylabel("azimuthal velocity (um/s)")
+# %% codecell
+def azimuthal_velocity_profile_azimuthal(pivData, center):
+    """Compute azimuthal velocity profile of azimuthal velocity from PIV in droplet
+    Args:
+    pivData - DataFrame of x, y, u, v
+    center - 2-tuple center of droplet
+    Returns:
+    vp - velocity profile, DataFrame of r, v_r
+    """
+    pivData = pivData.dropna()
+    tu = tangent_unit((pivData.x, pivData.y), center)
+    theta = np.arctan2(pivData.y - center[1], pivData.x - center[0])
+    pivData = pivData.assign(theta=theta, tu=tu[0], tv=tu[1])
+    # determine the range and interval of velocity profile
+    N = 10 # number of points in the profile
+    bin_edges = np.linspace(-np.pi, np.pi, N+1)
+    interval = 2 * np.pi / N
+    v_list = []
+    n_list = []
+    for t in bin_edges[:-1]:
+        minn = t
+        maxx = t + interval
+        in_range = pivData.loc[(pivData.theta>minn)&(pivData.theta<=maxx)]
+        n_list.append(len(in_range))
+        v = (in_range.u * in_range.tu + in_range.v * in_range.tv).mean()
+        v_list.append(v)
+    vp = pd.DataFrame({"theta": bin_edges[:-1], "v": v_list, "n": n_list})
+    return vp
+# %% codecell
+piv_folder = r"C:\Users\liuzy\Documents\12092021\piv_drop\22"
+l = readdata(piv_folder, "csv")
+vp_list = []
+for num, i in l.iterrows():
+    pivData = pd.read_csv(i.Dir)
+    center = (259, 228)
+    vp = azimuthal_velocity_profile_azimuthal(pivData, center).set_index("theta")
+    vp_list.append(vp)
+vp_df = pd.concat(vp_list, axis=1)
+vp_mean = vp_df["v"].mean(axis=1).to_frame("v")
+
+N = len(vp_mean)
+theta = np.linspace(-np.pi, np.pi, N, endpoint=False)
+radii = vp_mean.v
+width = 2 * np.pi / N
+colors = plt.cm.viridis(radii / radii.max())
+ax = plt.subplot(projection='polar')
+ax.bar(theta, radii, width=width, bottom=0.0, color=colors, alpha=0.5)
+# %% codecell
+vp_mean.v
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
 # %% codecell
