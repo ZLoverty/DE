@@ -96,9 +96,24 @@ We note a few things from this measurement:
 ## III. Order parameter
 
 ### A. Order parameter in literatures
-> 1. Wioland, H., Woodhouse, F. G., Dunkel, J., Kessler, J. O. & Goldstein, R. E. Confinement Stabilizes a Bacterial Suspension into a Spiral Vortex. Phys. Rev. Lett. 110, 268102 (2013).
->
+#### 1. Wioland 2013 (Ref. 3)
+
 > ![wioland2013](../images/2022/01/wioland2013.png)
+
+But note that this order parameter does not reflect any information about the oscillatory motion. By taking the absolute value of $v_i \cdot t_i$, no matter $v_i$ is parallel or antiparallel to $t_i$, the outcome is the same.
+
+#### 2. Hamby 2018 (Ref. 9)
+
+> ![hamby2018OP](../images/2022/01/hamby2018op.png)
+
+According to the description, the formal definition of the order parameter ($\psi$) should be
+
+$$
+\psi = \frac{\sum_i \bm{v}_i\cdot \bm{t}_i}{\sum_i|\bm{v}_i|}
+$$
+
+where $\bm{v}_i$ is the local velocity of bacterial suspensions in droplets (PIV data), $\bm{t}_i$ is the azimuthal unit vector at the same point of $\bm{n}_i$. In this definition, if all the velocities align perfectly with the positive azimuthal direction, forming a clockwise (CW) circulation, $\psi=1$. If all the velocities are antiparallel to the positive azimuthal direction, forming a counter clockwise (CCW) circulation, $\psi=-1$. In cases where uniform circulations are not pronounced, i.e. chaotic flows, $\psi \approx 0$.
+
 
 ### B. Compute order parameter from my PIV data
 #### 1. Compute tangent unit vecotr field
@@ -129,9 +144,12 @@ On a mesh grid (like PIV data), the tangent unit vector field is the following
 
 ![meshgrid tu](../images/2022/01/meshgrid-tu.png)
 
-#### 2. Compute order parameter from PIV data
+**As illustrated above, CW direction is defined as the positive direction.**
 
-> **An aside**
+
+#### 2. Compute order parameter (Wioland 2013)
+
+> ##### Aside: Coordinates inconsistency
 >
 > When I plot the tangent unit vectors on top of an image, they no longer look like circulation, but rather and extension flow.
 >
@@ -158,7 +176,11 @@ The whole video No.22 shows noisy order parameter oscillation between -0.4 and 0
 
 ![order parameter 22](../images/2022/01/order-parameter-22.png)
 
-<font color="red">But note that this order parameter does not reflect any information about the oscillatory motion. By taking the absolute value of $v_i \cdot t_i$, no matter $v_i$ is parallel or antiparallel to $t_i$, the outcome is the same. </font>
+<font color="red">When looking at the oscillation of OP, a shorter time scale is desired. According to Hamby 2018, the period of the circulation is several seconds.</font>
+
+#### 3. Compute order parameter (Hamby 2018)
+
+<font color="red">Awaits...</font>
 
 ## IV. Validity of PIV analysis
 
