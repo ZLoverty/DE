@@ -99,6 +99,7 @@ def order_parameter_wioland2013(pivData, center):
     Return:
     OP -- float, max to 1
     """
+    pivData = pivData.dropna()
     point = (pivData.x, pivData.y)
     tu = tangent_unit(point, center)
     # \Sigma vt
@@ -110,9 +111,9 @@ def order_parameter_wioland2013(pivData, center):
 
 # %% codecell
 from skimage import io
-pivData = pd.read_csv(os.path.join("test_files", "00000-00001.csv"))
+pivData = pd.read_csv(os.path.join("test_files", "00000-00001.csv")).dropna()
 img = io.imread(os.path.join("test_files", "22.tif"))
-center = (259, 227)
+center = (259, 228)
 order_parameter_wioland2013(pivData, center)
 
 # %% codecell
@@ -121,7 +122,7 @@ tu = tangent_unit(point, center)
 plt.figure(dpi=150)
 plt.imshow(img, cmap='gray')
 plt.quiver(pivData.x, pivData.y, pivData.u, pivData.v, color='yellow', width=0.005)
-plt.quiver(pivData.x, pivData.y, -tu[0], tu[1], color='red', width=0.0025)
+plt.quiver(pivData.x, pivData.y, tu[0], tu[1], color='red', width=0.0025)
 # plt.axis('off')
 
 # %% codecell
@@ -568,10 +569,13 @@ tu = tangent_unit(point, center)
 plt.figure(dpi=150)
 plt.quiver(point[0], point[1], tu[0], tu[1])
 # %% codecell
-pivData = pd.read_csv(os.path.join("test_files", "00000-00001.csv"))
-center = (259, 228)
-vp = azimuthal_velocity_profile_radial(pivData, center)
-plt.plot(vp.r, vp.v)
+for i in range(0, 10, 2):
+    pivData = pd.read_csv(os.path.join("test_files", "w20_o10", "{0:05d}-{1:05d}.csv".format(i, i+1)))
+    center = (259, 228)
+    vp = azimuthal_velocity_profile_radial(pivData, center)
+    plt.plot(vp.r*0.16, vp.v*0.16)
+plt.xlabel("r (um)")
+plt.ylabel("azimuthal velocity (um/s)")
 # %% codecell
 folder = r"C:\Users\liuzy\Documents\12092021\piv_drop\22"
 center = (259, 228)
@@ -652,8 +656,6 @@ pivData = pd.read_csv(os.path.join("test_files", "00000-00001.csv")).dropna()
 center = (259, 228)
 order_parameter_hamby2018(pivData, center)
 # %% codecell
-os.getcwd()
-# %% codecell
 plt.figure(dpi=250)
 img = io.imread(os.path.join("test_files", "22.tif"))
 plt.imshow(img, cmap='gray')
@@ -662,7 +664,20 @@ plt.quiver(pivData.x, pivData.y, pivData.u, pivData.v, color="yellow", width=0.0
 plt.quiver(pivData.x, pivData.y, tu[0], tu[1], color="red", width=0.0015)
 # plt.axis("off")
 # %% codecell
-pivData
+folder = r"C:\Users\liuzy\Documents\12092021\piv_drop\22"
+l = readdata(folder, "csv")
+OP_list = []
+frame_list = []
+for num, i in l[:3000].iterrows():
+    pivData = pd.read_csv(i.Dir).dropna()
+    OP = order_parameter_hamby2018(pivData, center)
+    frame = int(i.Name.split("-")[0])
+    frame_list.append(frame)
+    OP_list.append(OP)
+plt.figure(dpi=100)
+plt.plot(np.array(frame_list)/50, savgol_filter(np.array(OP_list), 11, 3))
+plt.xlabel("time (s)")
+plt.ylabel("$\psi$")
 # %% codecell
 # investigate the coordinate system issue
 # a 3x3 velocity field going clockwise

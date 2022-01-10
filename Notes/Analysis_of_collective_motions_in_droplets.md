@@ -1,6 +1,17 @@
 # Analysis of Collective Motions in Droplets
 
-In this note, I summarize the analysis on the collective motions of bacteria in droplets. Most analysis will be performed on the PIV data. More ambitiously, I can try to compare PIV analysis with the optical flow methods in Hamby2018.
+In this note, I summarize the analysis on the collective motions of bacteria in droplets. Most analysis will be performed on the PIV data. The data analysis essentially reduces the number of dimensions of the original data, i.e. the velocity field over time. The data have 3 dimensions: $\theta$, $r$ and $t$. $\theta$ and $r$ are spatial, and $t$ is temporal. In our analysis, one or more dimensions are averaged out, leaving a smaller and more condense set of quantities, which makes our perception of data easier.
+
+The following table lists several such quantities that can be computed from PIV data, along with the number of dimensions reduced.
+| Quantities | Dim reduced     | Comment |
+| :------------- | :------------- | :---  |
+| velocity field    | 0      | original data |
+| velocity profile | 1 or 2  | reduce one spatial dimension |
+| correlation length  | 2 or 3  |  "or" because quantities can be calculated for a single frame, or average over a long time. |
+| correlation time   | 2 or 3  |   |
+| mean velocity  | 2 or 3  |   |
+| order parameter   | 2 or 3  |   |
+| ...   |   |   |
 
 ## I. Masked PIV
 
@@ -189,7 +200,7 @@ Below I plot together the azimuthal unit vector field (red) and the velocity fie
 
 ![compare velocity with azimuthal](../images/2022/01/compare-velocity-with-azimuthal.png)
 
-Using the formula given in definition, we get an order parameter for the PIV data in the example $\phi=0.23$. _Although I feel the alignment is very good already._ According to Wioland 2013, $\phi>0$ indicates the **existence of a coherent circulation**. <font color="red">Replace the illustration and analysis with a more updated PIV, where more area near the edge is included, and verify that the vector outside the droplet are not included as 0 when averaging.</font>
+Using the formula given in definition, we get an order parameter for the PIV data in the example $\phi=0.26$. _Although I feel the alignment is very good already._ According to Wioland 2013, $\phi>0$ indicates the **existence of a coherent circulation**. <font color="red">Note that the OP is calculated based on PIV with finer grid (20/10). For illustration purpose, however, I keep the grid above. The OP's from two PIV's turn out to be very close (0.23 vs. 0.26).</font>
 
 The whole video No.22 shows noisy order parameter oscillation between -0.4 and 0.4. The positivity is not pronounced compared to the noise.
 
@@ -378,6 +389,11 @@ We see collective motions in bulk and under confinement. Are they the same or di
 
 
 # Appendix A
-To do list
-- For high bacterial concentration: Compare flow time scale with inner droplet motion time scale
-- I can apply all the analysis in the GNF study here, e.g. density fluctuation, flow field vorticity, divergence, etc.
+- <font color="red">What to expect when expand the system dimension from 2D to 3D?</font>
+
+# Appendix B: title numbering and color scheme
+- In this document, these numbering are used in order (I, II, III...), (A, B, C...), (1, 2, 3...), (i, ii, iii...),(a, b, c...). 5 levels are sufficient for the moment. If more are needed in the future, I will need to google...
+- I currently use 3 colors in this document. But more may be added.
+  - Black: the default color
+  - <font color="red">Red: question, issue or something that need urgent modification</font>
+  - <font color="blue">Blue: to be elaborated, either in the same document or elsewhere</font>
