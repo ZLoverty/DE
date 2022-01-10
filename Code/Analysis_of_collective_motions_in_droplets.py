@@ -7,6 +7,7 @@ from scipy.signal import savgol_filter
 from pivLib import read_piv
 from skimage import io
 from corrLib import divide_windows, readdata
+from de_utils import tangent_unit
 # %% codecell
 folder = r"C:\Users\liuzy\Documents\12092021"
 mv_folder = os.path.join(folder, "mean_velocity")
@@ -57,12 +58,14 @@ def tangent_unit(point, center):
     ind = np.logical_or(r[1] > 0, np.logical_and(r[1] == 0, r[0] > 0))
     x1 = np.ones(point.shape[1:])
     x1[ind] = -1
-    # avoid divided by 0
-    r[1][r[1]==0] = np.nan
+    y1 = np.zeros(point.shape[1:])
+    x1[(r[1]==0)] = 0
+    y1[(r[1]==0)&(r[0]>0)] = -1
+    y1[(r[1]==0)&(r[0]<0)] = 1
 
-    y1 = - x1 * r[0] / r[1]
+    y1[r[1]!=0] = np.divide(x1 * r[0], r[1], where=r[1]!=0)[r[1]!=0]
     length = (x1**2 + y1**2) ** 0.5
-    return np.array([x1, y1]) / length
+    return np.divide(np.array([x1, y1]), length, out=np.zeros_like(np.array([x1, y1])), where=length!=0)
 # %% codecell
 
 t = np.linspace(0, 2*np.pi, 20)
@@ -548,12 +551,12 @@ def tangent_unit(point, center):
     r = np.array((point[0] - center[0], point[1] - center[1]))
     # the following two lines set the initial value for the x of the tangent vector
     ind = np.logical_or(r[1] > 0, np.logical_and(r[1] == 0, r[0] > 0))
-    x1 = np.ones(point.shape[1:])
-    x1[ind] = -1
+    x1 = - np.ones(point.shape[1:])
+    x1[ind] = 1
     # avoid divided by 0
     r[1][r[1]==0] = np.nan
 
-    y1 = - x1 * r[0] / r[1]
+    y1 = x1 * r[0] / r[1]
     length = (x1**2 + y1**2) ** 0.5
     return np.array([x1, y1]) / length
 # %% codecell
@@ -631,11 +634,52 @@ colors = plt.cm.viridis(radii / radii.max())
 ax = plt.subplot(projection='polar')
 ax.bar(theta, radii, width=width, bottom=0.0, color=colors, alpha=0.5)
 # %% codecell
-vp_mean.v
+def order_parameter_hamby2018(pivData, center):
+    """Computes order parameter using the definition in Hamby 2018.
+    Args:
+    pivData - DataFrame of x, y, u, v
+    center - 2-tuple center of droplet
+    Returns:
+    OP - order parameter
+    """
+    pivData = pivData.dropna()
+    tu = tangent_unit((pivData.x, pivData.y), center)
+    pivData = pivData.assign(tu=tu[0], tv=tu[1])
+    OP = (pivData.u * pivData.tu + pivData.v * pivData.tv).sum() / ((pivData.u ** 2 + pivData.v ** 2) ** 0.5).sum()
+    return OP
 # %% codecell
+pivData = pd.read_csv(os.path.join("test_files", "00000-00001.csv")).dropna()
+center = (259, 228)
+order_parameter_hamby2018(pivData, center)
 # %% codecell
+os.getcwd()
 # %% codecell
+plt.figure(dpi=250)
+img = io.imread(os.path.join("test_files", "22.tif"))
+plt.imshow(img, cmap='gray')
+tu = tangent_unit((pivData.x, pivData.y), center)
+plt.quiver(pivData.x, pivData.y, pivData.u, pivData.v, color="yellow", width=0.004)
+plt.quiver(pivData.x, pivData.y, tu[0], tu[1], color="red", width=0.0015)
+# plt.axis("off")
 # %% codecell
+pivData
 # %% codecell
+# investigate the coordinate system issue
+# a 3x3 velocity field going clockwise
+x = np.array([[0, 1, 2], [0, 1, 2], [0, 1, 2]])
+y = np.array([[0, 0, 0], [1, 1, 1], [2, 2, 2]])
+u = np.array([[1, 1, 0], [0, 0, 0], [0, -1, -1]])
+v = np.array([[0, 0, 1], [-1, 0, 1], [-1, 0, 0]])
 # %% codecell
+# quiver synthetic PIV
+plt.imshow(np.random.rand(3, 3), vmin=-1000, cmap='gray')
+plt.quiver(x, y, u, v)
 # %% codecell
+x = np.array([[0, 1, 2], [0, 1, 2], [0, 1, 2]])
+y = np.array([[0, 0, 0], [1, 1, 1], [2, 2, 2]])
+u = np.array([[1, 1, 0], [0, 0, 0], [0, -1, -1]])
+v = np.array([[0, 0, -1], [-1, 0, 1], [-1, 0, 0]])
+plt.imshow(np.random.rand(3, 3), vmin=-1000, cmap='gray')
+# plt.quiver(x, y, u, v)
+tu = tangent_unit((x, y), (1, 1))
+plt.quiver(x, y, tu[0], tu[1], color="red")

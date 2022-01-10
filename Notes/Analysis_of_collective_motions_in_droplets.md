@@ -95,27 +95,7 @@ We note a few things from this measurement:
 
 ## III. Order parameter
 
-### A. Order parameter in literatures
-#### 1. Wioland 2013 (Ref. 3)
-
-> ![wioland2013](../images/2022/01/wioland2013.png)
-
-But note that this order parameter does not reflect any information about the oscillatory motion. By taking the absolute value of $v_i \cdot t_i$, no matter $v_i$ is parallel or antiparallel to $t_i$, the outcome is the same.
-
-#### 2. Hamby 2018 (Ref. 9)
-
-> ![hamby2018OP](../images/2022/01/hamby2018op.png)
-
-According to the description, the formal definition of the order parameter ($\psi$) should be
-
-$$
-\psi = \frac{\sum_i \bm{v}_i\cdot \bm{t}_i}{\sum_i|\bm{v}_i|}
-$$
-
-where $\bm{v}_i$ is the local velocity of bacterial suspensions in droplets (PIV data), $\bm{t}_i$ is the azimuthal unit vector at the same point of $\bm{n}_i$. In this definition, if all the velocities align perfectly with the positive azimuthal direction, forming a clockwise (CW) circulation, $\psi=1$. If all the velocities are antiparallel to the positive azimuthal direction, forming a counter clockwise (CCW) circulation, $\psi=-1$. In cases where uniform circulations are not pronounced, i.e. chaotic flows, $\psi \approx 0$.
-
-
-### B. Compute order parameter from my PIV data
+### A. Technical: generate azimuthal unit vector field
 #### 1. Compute tangent unit vecotr field
 To compute the order parameter above, we first need to compute the tangent unit vector $t_i$. Let $x$, $y$ be the point of interest, $x_1$, $y_1$ be the tangent unit vector, we know that $x_1$ and $y_1$ should satisfy
 $$
@@ -146,41 +126,103 @@ On a mesh grid (like PIV data), the tangent unit vector field is the following
 
 **As illustrated above, CW direction is defined as the positive direction.**
 
+#### 2. Pay attention to coordinate system inconsistency
 
-#### 2. Compute order parameter (Wioland 2013)
+When I plot the tangent unit vectors on top of an image, they no longer look like circulation, but rather and extension flow.
 
-> ##### Aside: Coordinates inconsistency
->
-> When I plot the tangent unit vectors on top of an image, they no longer look like circulation, but rather and extension flow.
->
-> ![error coords tu](../images/2022/01/error-coords-tu.png)
->
-> Red is the tangent unit vector we just computed. Yellow arrows are the PIV data. **This is clearly an error caused by coordinates inconsistency**.
-> To understand this inconsistency, see the sketch of coordinate systems below
->
-> ![ordinary and image coordinates](../images/2022/01/ordinary-and-image-coordinates.png)
-> The conversion between these two systems is not a simple rotation, but consists a mirror reflection. This makes the $x_1$ initiation rule opposite.
-> ```python
-> ind = np.logical_or(r[1] > 0, np.logical_and(r[1] == 0, r[0] > 0))
-> x1 = np.ones(point.shape[1:])
-> x1[ind] = -1
-> ```
+![error coords tu](../images/2022/01/error-coords-tu.png)
 
-With the change in tangent unit vector field computation, we can now examine the circulating flow inside droplets.
+Red is the tangent unit vector we just computed. Yellow arrows are the PIV data. **This is clearly an error caused by coordinates inconsistency**.
+To understand this inconsistency, see the sketch of coordinate systems below
+
+![ordinary and image coordinates](../images/2022/01/ordinary-and-image-coordinates.png)
+The conversion between these two systems is not a simple rotation, but consists a mirror reflection. This makes the $x_1$ initiation rule opposite.
+```python
+ind = np.logical_or(r[1] > 0, np.logical_and(r[1] == 0, r[0] > 0))
+x1 = np.ones(point.shape[1:])
+x1[ind] = -1
+```
+---
+Here is an investigation of the coordinate system inconsistency using simpler synthetic data.
+
+First, we synthesize a 3x3 velocity field with clockwise circulation.
+
+![synthetic velocity field](../images/2022/01/synthetic-velocity-field.png)
+
+The corresponding PIV data is
+
+![synthetic PIV](../images/2022/01/synthetic-piv.png)
+
+When we use `quiver(x, y, u, v)` to show the velocity field, we get
+
+![quiver synthetic](../images/2022/01/quiver-synthetic.png)
+
+While the positive directions are correct, the velocity field I get is opposite from my design in y direction. There are two possible mistakes: i) x, y are reversed, i.e. x is vertical and y is horizontal, ii) y velocity is plotted in the opposite way, i.e. (0, 1) is plotted as an upward vector in `quiver`.
+
+To test, we make a small change in the `v` matrix: replace the upper right 1 by -1:
+
+![new syn PIV](../images/2022/01/new-syn-piv.png)
+
+then `quiver(x, y, u, v)`, we get
+
+![new quiver syn](../images/2022/01/new-quiver-syn.png)
+
+The upper right arrow points to the opposite direction. Now it's clear that hypothesis (ii) is right. y velocity is plotted in the opposite way, i.e. (0, 1) is plotted as an upward vector in `quiver`.
+
+From the manual velocity measurement, we know that OpenPIV returns velocity field that is consistent with this convention. I need to make my azimuthal unit vector generator function consistent with this convention, too. To do it, I simply reverse the output y-component. As a result, the azimuthal unit vector field displays correctly on images, as shown below.
+
+![azi vec field correct](../images/2022/01/azi-vec-field-correct.png)
+
+<font color="blue">The divided by 0 handling in function `tangent_unit()` deserves a note, because the problem solved is of broader interest.</font>
+
+### B. Compute order parameter from my PIV data
+
+#### 1. Wioland 2013 (Ref. 3)
+##### i. Definition
+> ![wioland2013](../images/2022/01/wioland2013.png)
+
+But note that this order parameter does not reflect any information about the oscillatory motion. By taking the absolute value of $v_i \cdot t_i$, no matter $v_i$ is parallel or antiparallel to $t_i$, the outcome is the same.
+
+##### ii. Computation
+
+Below I plot together the azimuthal unit vector field (red) and the velocity field measured by PIV.
 
 ![compare velocity with azimuthal](../images/2022/01/compare-velocity-with-azimuthal.png)
 
-Using the formula given in III.A, we get an order parameter for the PIV data in the example $\phi=0.23$. According to Wioland 2013, $\phi>0$ indicates the **existence of a coherent circulation**.
+Using the formula given in definition, we get an order parameter for the PIV data in the example $\phi=0.23$. _Although I feel the alignment is very good already._ According to Wioland 2013, $\phi>0$ indicates the **existence of a coherent circulation**. <font color="red">Replace the illustration and analysis with a more updated PIV, where more area near the edge is included, and verify that the vector outside the droplet are not included as 0 when averaging.</font>
 
 The whole video No.22 shows noisy order parameter oscillation between -0.4 and 0.4. The positivity is not pronounced compared to the noise.
 
 ![order parameter 22](../images/2022/01/order-parameter-22.png)
 
 <font color="red">When looking at the oscillation of OP, a shorter time scale is desired. According to Hamby 2018, the period of the circulation is several seconds.</font>
+#### 2. Hamby 2018 (Ref. 9)
+##### i. Definition
+> ![hamby2018OP](../images/2022/01/hamby2018op.png)
 
-#### 3. Compute order parameter (Hamby 2018)
+According to the description, the formal definition of the order parameter ($\psi$) should be
 
-<font color="red">Awaits...</font>
+$$
+\psi = \frac{\sum_i \bm{v}_i\cdot \bm{t}_i}{\sum_i|\bm{v}_i|}
+$$
+
+where $\bm{v}_i$ is the local velocity of bacterial suspensions in droplets (PIV data), $\bm{t}_i$ is the azimuthal unit vector at the same point of $\bm{n}_i$. In this definition, if all the velocities align perfectly with the positive azimuthal direction, forming a clockwise (CW) circulation, $\psi=1$. If all the velocities are antiparallel to the positive azimuthal direction, forming a counter clockwise (CCW) circulation, $\psi=-1$. In cases where uniform circulations are not pronounced, i.e. chaotic flows, $\psi \approx 0$.
+
+##### ii. Computation
+
+The example we use here is the velocity field shown below, still from 12092021/22 data. The wider yellow arrows are the velocity field from PIV, $\bm{v}$, and the thinner red arrows are the corresponding azimuthal unit vector, $\bm{t}$. In this snapshot, the order parameter is -0.54. Indeed, the circulation in this snapshot is CCW. _Remember that we define CW circulation as positive order parameters._
+
+![velocity field and azimuthal unit field](../images/2022/01/velocity-field-and-azimuthal-unit-field.png)
+
+We can calculate the order parameter for many frames now and look at its temporal evolution. For this specific sample, we can see some oscillatory circulation, not as strong as in Hamby 2018 though. The time scale for the period is indeed on the order of 1 second.
+
+![OP short time](../images/2022/01/op-short-time.png)
+
+In a longer time scale (minutes), such oscillation could have repeated for too many times, hence is not easily resolved from the curve.
+
+![OP longer time](../images/2022/01/op-longer-time.png)
+
+<font color="red">This OP better reveals the circulation directions of the flow. Although in this example, perfect oscillatory circulation is not observed, we can use this OP as a single number metric to percept other data.</font>
 
 ## IV. Validity of PIV analysis
 
