@@ -13,6 +13,7 @@ The following table lists several such quantities that can be computed from PIV 
 | order parameter   | 2 or 3  |   |
 | ...   |   |   |
 
+There are still many things to be added to the list.
 ## I. Masked PIV
 
 **The need for masked PIV arises from the study of bacterial flow field in droplets.** Unlike previous bulk experiments, where the whole field of view is filled with bacteria, the images I have now usually have all bacteria confined in parts of the images. The followings are typical images I obtained recently, with one or more droplets in each image.
@@ -48,7 +49,7 @@ As can be seen in the result below, yellow PIV arrows are found in both big drop
 
 ![freehand_mask_piv](/assets/freehand_mask_piv.svg)
 
-It may be noticed that for the masked PIV in the images above, there is a gap between the mask contour and the PIV arrow contour. This gap is caused by the way I convert the pixel mask into PIV window mask. There is a threshold setting in this process, determining what kind of windows are considered "transparent" and what windows are considered "opaque". In code, this thresholding is implemented as the following:
+It may be noticed that for the masked PIV in the images above, there is a gap between the mask contour and the PIV arrow contour. This gap is caused by the way I convert the pixel mask into PIV window mask. **There is a threshold setting in this process, determining what kind of windows are considered "transparent" and what windows are considered "opaque" in a mask.** In code, this thresholding is implemented as the following:
 ```python
 mask_w = divide_windows(mask, windowsize=[winsize, winsize], step=winsize-overlap)[2] >= 1
 ```
@@ -85,24 +86,42 @@ Below are some plots comparing the overall velocity field, velocity PDF and runn
 
 We know that after a couple of hours, most bacteria in droplets stop moving and droplets look like "frozen". But, is there a more **precise time scale** for this "freezing" process? What is the **major cause** of this phenomenon? Here we examine **bacterial activity over time** in several different droplets and try to estimate this time scale.
 
-### A. Experiment
+### A. 12092021/21-24
 
 My experiment comprises **4 10-minute videos of the same droplet** whose diameter is 55 um (snapshots can be found in the following figure 21-24). 21 and 23 are bright field images, 22 and 24 are confocal images. Images were taken in order from 21 to 24, and the time delay between two videos was less than one minute and should be _negligible_.
 19-20 are also bright field and confocal images of the same droplet with smaller size. The size of the droplet is comparable to PIV box size and may detoriote the PIV quality. Therefore, we only use 21-24 for the analysis.
 
 ![](img/19-24.svg)
 
-### B. Results and discussion
-
 Below is the mean velocity of PIV velocities in videos 21-24.
 
 ![mean velocity evolution](../images/2022/01/velocity_in_droplet.svg)
 
 We note a few things from this measurement:
-1. **velocity decay is most pronounced in the first 10 min**, later on the velocity remains constant for 30 min
-2. Confocal measures a **higher** mean velocity
+1. **Velocity keeps decreasing.** The velocity decay in the first 10 min is the most pronounced.
+2. **Confocal measures a higher mean velocity.**
 3. Confocal laser **does not** seem to harm bacterial activity
 4. the **sudden drop of velocity** in the middle of yellow curve is not expected, watch video to find out why.
+
+### B. 01052022/12-17
+
+A new set of data, taken in the same sample, with time stamps and xy-xz comparisons.
+
+![activitiyd drop 01052022 12-17](../images/2022/01/activity_drop_01052022_12-17.svg)
+
+Remarks:
+- Velocity is higher in large droplets. This is consistent with what Ref. 9 reports.
+- **Velocity in XZ plane is always larger than in XY plane for the same sample. It does not matter which is measured first.**
+
+![v-dropsize](../images/2022/01/v-dropsize.png)
+
+#### 1. Difference between XY and XZ planes
+
+![difference between xy and xz](../images/2022/01/difference-between-xy-and-xz.png)
+
+1. In XY plane, droplets are more spread out, while in XZ plane, droplets are compacted more closely. So in XZ plane, the flow in one droplet is more likely to be affected by other droplets.
+2. In XY plane, bottom substrate is the only one relevant boundary, while in XZ plane, both bottom and side walls are close enough to the droplets _to affect the flow_.
+3. The flow may be anisotropic, with respect to gravity.
 
 ## III. Order parameter
 
@@ -302,7 +321,7 @@ The mean velocity of the zero control video is shown in the following plot. The 
 
 **Velocity profiles provide a different degree of averaging of velocity fields.** It's more detailed compared to the average over the whole velocity field, but is less detailed compared to the velocity field. In a 2D image of droplets, we can compute velocity profiles along two directions: radial and azimuthal. On top of directions, we can look at both velocity magnitude and velocity azimuthal component.
 
-### A. Radial profile of velocity
+### A. Flow profile
 The radial profile of velocity considers velocity distribution in radial direction, as illustrated below. Formally, the mean velocity $\bar v$ at radial position $r$ can be expressed as the following.
 
 $$
@@ -310,29 +329,38 @@ $$
 $$
 ![vp illustration 1](../images/2022/01/vp-illustration-1.png)
 
+#### 1. Instantaneous velocity profiles
+
 The following curves show the radial velocity profiles from 5 instantaneous velocity fields.
 
 ![vp 1](../images/2022/01/vp-1.png)
 
-To get more statistically meaningful velocity profile, I average the velocity profiles measured from 15000 PIV data from a 10-minute video.
+#### 2. Temporal evolution and averaged profile
 
-![mean vp 1](../images/2022/01/mean-vp-1.png)
+To see the activity decrease with in the same video, I measure the temporal evolution of radial velocity profile. Velocity profiles of each time point is averaged from 5 adjacent PIV data and time points are sampled every 88 second.
 
-### B. Radial profile of azimuthal velocity
+12092021/22
+
+![vp time ev 12092021-22](../images/2022/01/vp-time-ev-12092021-22.png)
+
+### B. Azimuthal flow profile
 In Hamby et al. 2018 (Ref. 9), the velocities are predominately in azimuthal direction, which come together to form oscillatory circulations in droplets. We expect to see similar preference in our system, so we also compute the profiles of the azimuthal component. The formal definition of the _radial profile of azimuthal velocity_ is given below.
 
 $$
 \bar{v}(r) = \left< \bm{v}(x, y)\cdot\bm{t}(x, y) \right>_{r<\sqrt{x^2+y^2}<r+\Delta r}
 $$
 
+#### 1. Instantaneous azimuthal velocity profiles
+
 Below are velocity profiles of some instantaneous frames.
 
 ![azi vp](../images/2022/01/azi-vp.png)
 
+#### 2. Temporal evolution and averaged profile
+
 Average over the whole video _again_. Although the velocities are not completely averaged out, the magnitudes of the averaged velocities are already ~3 orders of magnitude lower than the highest instantaneous velocity. **Thus, the small average velocity can be considered as 0, i.e. there is no preferred circulation direction over long time.** The circulation, if exists, has too be reversing all the time.
 
-![azi vp average](../images/2022/01/azi-vp-average.png)
-
+![azimuthal vp time ev 12092021-22](../images/2022/01/azimuthal-vp-time-ev-12092021-22.png)
 
 ### C. Azimuthal profile of velocity
 
@@ -367,10 +395,22 @@ To conclude the velocity profile measurement, I make the following tentative poi
 
 We see collective motions in bulk and under confinement. Are they the same or different in any aspects? Let us try to understand this by looking at the spatial and temporal correlation functions.
 
+## VI. Compare XY and XZ
 
+Out of curiosity, I want to know if the flow profiles are the when looking from different perspective.
 
+### A. Velocity profile
 
+#### 1. Mean velocity
+01052022-12, 13
 
+![maen v xyxz](../images/2022/01/maen-v-xyxz.png)
+#### 2. Mean azimuthal velocity
+The magnitude of mean azimuthal velocity is significantly lower because the flow is reversing and opposite velocities cancel each other over time.
+
+01052022-12, 13
+
+![mean av xyxz](../images/2022/01/mean-av-xyxz.png)
 
 
 

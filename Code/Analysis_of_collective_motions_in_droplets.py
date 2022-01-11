@@ -698,3 +698,135 @@ plt.imshow(np.random.rand(3, 3), vmin=-1000, cmap='gray')
 # plt.quiver(x, y, u, v)
 tu = tangent_unit((x, y), (1, 1))
 plt.quiver(x, y, tu[0], tu[1], color="red")
+
+# %% codecell
+piv_folder = r"C:\Users\liuzy\Documents\12092021\piv_drop\22"
+center = (259, 228)
+l = readdata(piv_folder, "csv")
+plt.figure(dpi=150)
+for num, i in l[::2200].iterrows():
+    vp_tmp = []
+    for j in range(50):
+        pivData = pd.read_csv(l.loc[num+j].Dir)
+        vp_tmp.append(velocity_profile_radial(pivData, center).set_index("r")["v"])
+    vp = pd.concat(vp_tmp, axis=1).mean(axis=1).to_frame("v")
+    plt.plot(vp.index*0.16, vp.v*0.16, label=num/25)
+
+piv_folder = r"C:\Users\liuzy\Documents\12092021\piv_drop\22"
+center = (259, 228)
+l = readdata(piv_folder, "csv")
+vp_tmp = []
+for num, i in l[::2200].iterrows():
+    pivData = pd.read_csv(i.Dir)
+    vp_tmp.append(velocity_profile_radial(pivData, center).set_index("r")["v"])
+vp = pd.concat(vp_tmp, axis=1).mean(axis=1).to_frame("v")
+plt.plot(vp.index*0.16, vp.v*0.16, color="black", lw=3, label="mean")
+plt.legend(fontsize=7)
+plt.xlabel("r (um)")
+plt.ylabel("velocity (um/s)")
+# %% codecell
+piv_folder = r"C:\Users\liuzy\Documents\12092021\piv_drop\22"
+center = (259, 228)
+l = readdata(piv_folder, "csv")
+plt.figure(dpi=150)
+for num, i in l[::2200].iterrows():
+    vp_tmp = []
+    for j in range(50):
+        pivData = pd.read_csv(l.loc[num+j].Dir)
+        vp_tmp.append(azimuthal_velocity_profile_radial(pivData, center).set_index("r")["v"])
+    vp = pd.concat(vp_tmp, axis=1).mean(axis=1).to_frame("v")
+    plt.plot(vp.index*0.16, vp.v*0.16, label=num/25)
+
+piv_folder = r"C:\Users\liuzy\Documents\12092021\piv_drop\22"
+center = (259, 228)
+l = readdata(piv_folder, "csv")
+vp_tmp = []
+for num, i in l[::2200].iterrows():
+    pivData = pd.read_csv(i.Dir)
+    vp_tmp.append(azimuthal_velocity_profile_radial(pivData, center).set_index("r")["v"])
+vp = pd.concat(vp_tmp, axis=1).mean(axis=1).to_frame("v")
+plt.plot(vp.index*0.16, vp.v*0.16, color="black", lw=3, label="mean")
+plt.legend(fontsize=7)
+plt.xlabel("r (um)")
+plt.ylabel("velocity (um/s)")
+# %% codecell
+# 12 - center - (405, 382)
+# 13 - center - (422, 400)
+piv_folder = r"E:\01052022\piv_drop\12"
+center = (405, 382)
+l = readdata(piv_folder, "csv")
+vp_tmp = []
+plt.figure()
+for num, i in l[::500].iterrows():
+    pivData = pd.read_csv(i.Dir)
+    vp_tmp.append(velocity_profile_radial(pivData, center).set_index("r")["v"])
+vp = pd.concat(vp_tmp, axis=1).mean(axis=1).to_frame("v")
+plt.plot(vp.index*0.16, vp.v*0.16, color="black", lw=3, label="xz")
+
+piv_folder = r"E:\01052022\piv_drop\13"
+center = (422, 400)
+l = readdata(piv_folder, "csv")
+vp_tmp = []
+for num, i in l[::500].iterrows():
+    pivData = pd.read_csv(i.Dir)
+    vp_tmp.append(velocity_profile_radial(pivData, center).set_index("r")["v"])
+vp = pd.concat(vp_tmp, axis=1).mean(axis=1).to_frame("v")
+plt.plot(vp.index*0.16, vp.v*0.16, color="red", lw=3, label="xy")
+plt.legend(fontsize=15)
+plt.xlabel("r (um)")
+plt.ylabel("velocity (um/s)")
+# %% codecell
+# azimuthal
+piv_folder = r"E:\01052022\piv_drop\12"
+center = (405, 382)
+l = readdata(piv_folder, "csv")
+vp_tmp = []
+plt.figure()
+for num, i in l[::100].iterrows():
+    pivData = pd.read_csv(i.Dir)
+    vp_tmp.append(azimuthal_velocity_profile_radial(pivData, center).set_index("r")["v"])
+vp = pd.concat(vp_tmp, axis=1).mean(axis=1).to_frame("v")
+plt.plot(vp.index*0.16, vp.v*0.16, color="black", lw=3, label="xz")
+
+piv_folder = r"E:\01052022\piv_drop\13"
+center = (422, 400)
+l = readdata(piv_folder, "csv")
+vp_tmp = []
+for num, i in l[::100].iterrows():
+    pivData = pd.read_csv(i.Dir)
+    vp_tmp.append(azimuthal_velocity_profile_radial(pivData, center).set_index("r")["v"])
+vp = pd.concat(vp_tmp, axis=1).mean(axis=1).to_frame("v")
+plt.plot(vp.index*0.16, vp.v*0.16, color="red", lw=3, label="xy")
+plt.legend(fontsize=15)
+plt.xlabel("r (um)")
+plt.ylabel("velocity (um/s)")
+# %% codecell
+# mean velocity evolution - use 01052022 sample 3 as an example
+meanv_list = []
+for n in range(0, 18):
+    piv_folder = r"E:\01052022\piv_drop\{:02d}".format(n)
+    l = readdata(piv_folder, "csv")
+    v_tmp = []
+    for num, i in l[::1000].iterrows():
+        pivData = pd.read_csv(i.Dir).dropna()
+        v = ((pivData.u ** 2 + pivData.v ** 2) ** 0.5 ).mean()
+        v_tmp.append(v)
+    meanv = np.array(v_tmp).mean()
+    meanv_list.append(meanv)
+plt.figure(dpi=150)
+plt.plot(range(0, 18), np.array(meanv_list)*0.16)
+plt.xlabel("sample number")
+plt.ylabel("mean velocity (um/s)")
+# %% codecell
+380*0.16
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
