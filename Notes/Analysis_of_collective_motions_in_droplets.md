@@ -1,25 +1,17 @@
 ---
-title: "Sample Document"
-output: pdf_document
-bibliography: try.bib
----
-<!-- ---
+Title: Analysis of Collective Motions in Droplets
 Date: Jan 12, 2022
 Tags: research, droplet, active turbulence, PIV
-Numbering: (I, II, III...), (A, B, C...), (1, 2, 3...), (i, ii, iii...),(a, b, c...)
-Colors: Black (default), Red (questions and issues), Blue (to be elaborated)
 todo: 1. What to expect when expand the system dimension from 2D to 3D?
 2. Find a better way for citing bibliography
 3. Separate technical content to another document
 4. Steady state, 4 things to try
 5. Make PIV videos to have better intuition of the persistence.
-note: When converted to PDF, the page size is about 600*800 pixels (quite small). Therefore, embedded picture size should be carefully set to avoid spamming pages.
-
---- -->
+---
 
 # Analysis of Collective Motions in Droplets
 
-In this note, I summarize the analysis on the collective motions of bacteria in droplets [@aditi_simha_hydrodynamic_2002]. Most analysis will be performed on the PIV data. The data analysis essentially reduces the number of dimensions of the original data, i.e. the velocity field over time. The data have 3 dimensions: $\theta$, $r$ and $t$. $\theta$ and $r$ are spatial, and $t$ is temporal. In our analysis, one or more dimensions are averaged out, leaving a smaller and more condense set of quantities, which makes our perception of data easier.
+In this note, I summarize the analysis on the collective motions of bacteria in droplets. Most analysis will be performed on the PIV data. The data analysis essentially reduces the number of dimensions of the original data, i.e. the velocity field over time. The data have 3 dimensions: $\theta$, $r$ and $t$. $\theta$ and $r$ are spatial, and $t$ is temporal. In our analysis, one or more dimensions are averaged out, leaving a smaller and more condense set of quantities, which makes our perception of data easier.
 
 The following table lists several such quantities that can be computed from PIV data, along with the number of dimensions reduced.
 | Quantities | Dim reduced     | Comment |
@@ -36,11 +28,11 @@ There are still many things to be added to the list.
 
 ## I. Mean velocity
 
-We know that after a couple of hours, most bacteria in droplets stop moving and droplets look like "frozen". But, is there a more **precise time scale** for this "freezing" process? What is the **major cause** of this phenomenon? Here we examine **bacterial activity over time** in several different droplets and try to estimate this time scale.
+We know that after a couple of hours, most bacteria in droplets stop moving and droplets look like "frozen". Such process has a time scale which depends on various factors, such as bacterial strain, droplet size, laser exposure, etc. Some of these factors may be more important, and some may be less. Knowing the _leading cause_ as well as the _precise time scale_ for this "freezing" process will be very beneficial for my experiment. **Here we examine bacterial activity over time in several different settings, hoping to answer the questions raised above, and to set a reasonable protocol to study active turbulence in droplets.**
 
-### A. 12092021/21-24
+### A. Data 01: 12092021/21-24
 
-My experiment comprises **4 10-minute videos of the same droplet** whose diameter is 55 um (snapshots can be found in the following figure 21-24). 21 and 23 are bright field images, 22 and 24 are confocal images. Images were taken in order from 21 to 24, and the time delay between two videos was less than one minute and should be _negligible_.
+This data set comprises **4 10-minute videos of the same droplet** whose diameter is 55 um (snapshots can be found in the following figure 21-24). 21 and 23 are bright field images, 22 and 24 are confocal images. Images were taken in order from 21 to 24, and the time delay between two videos was less than one minute and should be _negligible_.
 19-20 are also bright field and confocal images of the same droplet with smaller size. The size of the droplet is comparable to PIV box size and may detoriote the PIV quality. Therefore, we only use 21-24 for the analysis.
 
 ![..](../images/19-24.svg)
@@ -55,7 +47,7 @@ We note a few things from this measurement:
 3. Confocal laser **does not** seem to harm bacterial activity
 4. the **sudden drop of velocity** in the middle of yellow curve is not expected, watch video to find out why.
 
-### B. 01052022/12-17
+### B. Data 02: 01052022/12-17
 
 A new set of data, taken in the same sample, with time stamps and xy-xz comparisons.
 
