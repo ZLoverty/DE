@@ -4,16 +4,17 @@ Summarize the progress regularly to remind myself the next steps.
 
 ## Updates
 - June 06, 2021: it's good to have a graphical abstract for each log to highlight the progress.
+- Jan 12, 2022: folder structure change, I no longer use a folder for each log. Instead, each log will just be a .md file under the main "Log" folder. With the help of Markdown writer, images are handled with much more ease and no longer need to be in the same folder as the log. There is no need to update the content in this doc, because the logs are already very handy if I'm in this directory.
 
 ## Folder structure
 ```
 |- Log
   README.md (the main log, contains guidelines and snapshots of date logs)
-  |- mmdd-yyyy
-  |- mmdd-yyyy
-  |- mmdd-yyyy
-  |- ... (date logs)  
+  |- mmdd-yyyy (deprecated Jan 12, 2022)
+  yyyymmdd.md
+  yyyymmdd.md
 ```
+
 ## Contents
 - Date + short description + picture
 
@@ -21,7 +22,7 @@ Summarize the progress regularly to remind myself the next steps.
 <a href="Sept24-2021"><img src="Sept24-2021/bordeaux.jpg" alt="bordeaux" width="500"></a>
 ### Sept 17, 2021: Trip to Italy
 <a href="Sept17-2021"><img src="Sept17-2021/Taormina-beach.jpg" alt="Taormina beach" width="500"></a>
-### Sept 03, 2021: Meeting with supervisors 
+### Sept 03, 2021: Meeting with supervisors
 ### Aug 27, 2021: Write MSCA proposal
 <a href="Aug27-2021"><img src="Aug27-2021/MSCA-logo.png" alt="MSCA" width="500"></a>
 
