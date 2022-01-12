@@ -1,37 +1,56 @@
 ![cover](Illustrations/project-cover/v0.png)
 # DE
 
-DE stands for Double Emulsion.
+DE stands for **D**ouble **E**mulsion.
 It's the experimental system I am working with at PMMH-ESPCI with Eric Clement, Anke Lindner and Teresa Lopez-Leon.
-The project is a combination of the double emulsion system and active matter.
-In particular, I will be studying
-- "Thermometer" in an active bath
-- ...
 
-In this repository, I save the notes, code, illustrations and eventually the draft for the research paper of this project.
-
+In this repository, I save the notes, code, illustrations and eventually the draft for the research paper of this project. The structure plan of this repository is shown below.
+```
+|- DE
+  README.md
+  |- Code
+  |- Illustrations (deprecated)
+  |- Images (automated image folder for Markdown writer)  
+  |- Notes
+  |- (Draft)
+  |- Log
+  |- Protocols
+  |- MSCA (the EU commission Marie Curie fellowship proposal)
+```
 **Some structural edits:**
 - Dec 15, 2021 -- i) use main readme.md for to-do's, ii) put notes in *obsidian* style, i.e. .md's in the Notes folder and all images mix in *img* folder.
+- Jan 12, 2021 -- i) Use task list for to-do's
+
+---
 
 ## To-do list
-- [Analysis of collective motions in droplets](Notes\Analysis_of_collective_motions_in_droplets.md)
-  - **PIV should be run again with `PIV_masked()` instead of `piv_drop`, batch script needs to be implemented**
-  - **compare BF and fluorescence image PIV**
-  - **temporal evolution of velocity: does bacterial activity decay with time in droplets? What's the typical time scale?**
-  - spatial autocorrelation length: this can be the first observable for temporal activity evolution
-  - temporal autocorrelation
-  - order parameter: any oscillatory motions detected?
 
-- experiment
-  - if we see an oscillatory motion at the equator, we should be able to see it on one side too!
-- data
-  - have all the `NothingToSay` Drive backed up and try to use a merged file system solution, such as [mergerfs](https://github.com/trapexit/mergerfs)
-  - validity of PIV measurement, the velocity seems to be too small.
+### Collective motion note
+- [x] PIV should be run again with `PIV_masked()` instead of `piv_drop`, batch script needs to be implemented
+- [x] compare BF and fluorescence image PIV
+- [x] temporal evolution of velocity: does bacterial activity decay with time in droplets? What's the typical time scale?
+- [x] order parameter
+- [ ] Order parameter in different regions
+- [ ] spatial autocorrelation length: this can be the first observable for temporal activity evolution
+- [ ] temporal autocorrelation
+- [ ] better illustrate velocity profile
+- [ ] PIV movies
 
-Although it's important to determine the best PIV parameters, it's not a trivial work and significantly delay the downstream analysis. Therefore, I will proceed with the current PIV data, and come back to the question of best parameters when the whole analysis work flow is set up.
+### Experiment
+- [ ] Compare bacterial motility in MB with and without L-serine, especially long time.
+- [ ] Compare the motility decreasing characteristics with and without pumping oxygen into oil.
+- [ ] Laser on and off periodically to test the effect of laser on the motility
+- [ ] Use PDMS (instead of glass) as the specimen chamber lid.
+- [ ] Density match the bacterial suspensions using percoll (what do I expect to see if the density is matched? How can I tell if density is matched?)
 
-## "Thermometer" in an active bath
+### Data analysis
+- [ ] a merged file system solution, such as [mergerfs](https://github.com/trapexit/mergerfs)
+- [ ] Try out object-oriented programming (OOP), by enclose a video (dir) along with all the analyses as the methods in the object. Use the file system as database.
 
+---
+
+## I. "Thermometer" in an active bath
+April 19, 2021 
 #### Project summary
 
 We devise a "thermometer" for an active bath using double emulsions.
@@ -42,21 +61,9 @@ In this study, we combine microfluidic techniques and advanced imaging technique
 - whether boundary conditions, especially curvature, affect the temperature
 - to what extent thermodynamic tools can be generalized to active matter systems
 
-## Collective motion in droplets
+## II. Collective motion in droplets
+Jan 12, 2022
 
-## Sliding on soft interface
+## III. Sliding on soft interface
 
-## Wobbling in droplets
-
-## Structure of this repos
-```
-|- DE
-  README.md
-  |- Code
-  |- Illustrations
-  |- Notes
-  |- (Draft)
-  |- Log
-  |- Protocols
-  |- MSCA (the EU commission Marie Curie fellowship proposal)
-```
+## IV. Wobbling in droplets
