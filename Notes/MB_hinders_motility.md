@@ -1,4 +1,9 @@
+---
+Tags: research, technical issue
+---
 # Motility Buffer (MB) Hinders the Motility of Fluorescent _E. coli_ (AD62)
+
+<font color="blue">Very likely, the clusters are induced by PVA, instead of MB. This issue should be considered as resolved. I will modify the protocol, so we don't add PVA to MB in the future.</font>
 
 ## I. AD62 with and without MB
 
