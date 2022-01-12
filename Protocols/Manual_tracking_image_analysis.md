@@ -1,17 +1,15 @@
 # Manual Tracking Image Analysis
 
-This protocol contains the standard procedure of extracting inner droplet trajectories using a combined method of `crop-HoughCircles` and `manual tracking`.
+This protocol contains the standard procedure of extracting inner droplet trajectories using a combined method of `crop-HoughCircles` and `manual tracking`. <font color="blue">This protocol will no longer be followed since I have dropped Jupyter notebook from my workflow. However, it may explain some data I generated in the past.</font>
 
-## Steps
-
-### Manage the data analysis log
+### A. Manage the data analysis log
 
 1. Run `data_manage.ipynb`, run the first cell to load the current log
 2. Check if the log contains the latest videos. If not, run the `Add entries to log` at the bottom of the notebook, change the folder to new videos folder and run the cell. A list of subfolders will be printed.
 3. Fill out the `main_log.csv` file with the new video parameters: date, subfolder, bacterial concentration, MPP and FPS
 4. Save the `main_log.csv` file, reload it in the notebook.
 
-### Analyze a video
+### B. Analyze a video
 
 1. From the log, find a video that has not been analyzed
 2. Measure the position and size of the droplets, save in `dropSize.xlsx`, update the log
@@ -26,7 +24,7 @@ This protocol contains the standard procedure of extracting inner droplet trajec
 6. Make **3d-traj-animation.avi**
 7. Make **3d-traj-RVRef.avi**
 
-## Output file checklist
+## c. Output file checklist
 
 - **traj.csv**: 2D trajectory text file, use `crop-HoughCircles-Copy1.ipynb` to produce, and use `ImageJ Manual Tracking` to correct
 - **xyz-traj.csv**: 3D trajectory text file, use `3D trajectory.ipynb` to produce
