@@ -35,6 +35,8 @@ In this repository, I save the notes, code, illustrations and eventually the dra
 - [ ] temporal autocorrelation
 - [ ] better illustrate velocity profile
 - [ ] PIV movies
+- [ ] How much does optical distortions of images affect the PIV analysis? (Vladescu et al. 2014)
+- [ ]
 
 ### Experiment
 - [ ] Compare bacterial motility in MB with and without L-serine, especially long time.
@@ -42,6 +44,7 @@ In this repository, I save the notes, code, illustrations and eventually the dra
 - [ ] Laser on and off periodically to test the effect of laser on the motility
 - [ ] Use PDMS (instead of glass) as the specimen chamber lid.
 - [ ] Density match the bacterial suspensions using percoll (what do I expect to see if the density is matched? How can I tell if density is matched?)
+- [ ] Use oxygen indicators and DDM to verify the existence of oxygen gradient. (Vladescu et al. 2014)
 
 ### Data analysis
 - [ ] a merged file system solution, such as [mergerfs](https://github.com/trapexit/mergerfs)
@@ -50,7 +53,7 @@ In this repository, I save the notes, code, illustrations and eventually the dra
 ---
 
 ## I. "Thermometer" in an active bath
-April 19, 2021 
+April 19, 2021
 #### Project summary
 
 We devise a "thermometer" for an active bath using double emulsions.
