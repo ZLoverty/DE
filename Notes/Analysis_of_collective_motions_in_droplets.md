@@ -2,11 +2,7 @@
 Title: Analysis of Collective Motions in Droplets
 Date: Jan 12, 2022
 Tags: research, droplet, active turbulence, PIV
-todo: 1. What to expect when expand the system dimension from 2D to 3D?
-2. Find a better way for citing bibliography
-3. Separate technical content to another document
-4. Steady state, 4 things to try
-5. Make PIV videos to have better intuition of the persistence.
+
 ---
 
 # Analysis of Collective Motions in Droplets
