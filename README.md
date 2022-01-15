@@ -34,9 +34,8 @@ In this repository, I save the notes, code, illustrations and eventually the dra
 - [ ] spatial autocorrelation length: this can be the first observable for temporal activity evolution
 - [ ] temporal autocorrelation
 - [ ] better illustrate velocity profile
-- [ ] PIV movies
+- [x] PIV movies
 - [ ] How much does optical distortions of images affect the PIV analysis? (Vladescu et al. 2014)
-- [ ]
 
 ### Experiment
 - [ ] Compare bacterial motility in MB with and without L-serine, especially long time.
@@ -48,6 +47,7 @@ In this repository, I save the notes, code, illustrations and eventually the dra
 
 ### Data analysis
 - [ ] Make all in one visualization (piv_overlay, order parameter, velocity profile, mean velocity)
+- [ ] Compare bright field and confocal PIV
 - [ ] a merged file system solution, such as [mergerfs](https://github.com/trapexit/mergerfs) (long term)
 - [ ] Try out object-oriented programming (OOP), by enclose a video (dir) along with all the analyses as the methods in the object. Use the file system as database. (long term)
 

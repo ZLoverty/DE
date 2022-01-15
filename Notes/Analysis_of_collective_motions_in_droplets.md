@@ -7,20 +7,11 @@ Tags: research, droplet, active turbulence, PIV
 
 # Analysis of Collective Motions in Droplets
 
-In this note, I summarize the analysis on the collective motions of bacteria in droplets. Most analysis will be performed on the PIV data. The data analysis essentially reduces the number of dimensions of the original data, i.e. the velocity field over time. The data have 3 dimensions: $\theta$, $r$ and $t$. $\theta$ and $r$ are spatial, and $t$ is temporal. In our analysis, one or more dimensions are averaged out, leaving a smaller and more condense set of quantities, which makes our perception of data easier.
+In this note, I summarize the analysis on the collective motions of bacteria in droplets. There are some potentially interesting physics to look at, such as the anisotropy with respect to gravity, confinement effect on the collective motions and the interactions between different droplets.
 
-The following table lists several such quantities that can be computed from PIV data, along with the number of dimensions reduced.
-| Quantities | Dim reduced     | Comment |
-| :------------- | :------------- | :---  |
-| velocity field    | 0      | original data |
-| velocity profile | 1 or 2  | reduce one spatial dimension |
-| correlation length  | 2 or 3  |  "or" because quantities can be calculated for a single frame, or average over a long time. |
-| correlation time   | 2 or 3  |   |
-| mean velocity  | 2 or 3  |   |
-| order parameter   | 2 or 3  |   |
-| ...   |   |   |
+As of Jan 12, 2021, I have done approximately 15 days of experiments (definitely need to do more, but with more concrete idea of what to do...). Although I have got videos of active turbulence that seem to be OK, the significant activity decay in my experiment needs to be addressed carefully.
 
-There are still many things to be added to the list.
+After discussed with Eric, we identified that oxygen and laser are the two major factors that can lead to the activity decay. To
 
 ## I. Mean velocity
 
@@ -275,7 +266,7 @@ We see collective motions in bulk and under confinement. Are they the same or di
 
 From the plot, the first intuition to get is: noisy motion has autocorrelations that decay faster. The most active bacterial sample in the 12092021 experiment is sample 4. The VACF of all the videos from sample 4 is shown below.
 
-![](img/VACF-3.jpg)
+![](../images/VACF-3.jpg)
 
 ```
 Sample 4: OD=130, no MB, 2400 xg centrifuge, room temp
@@ -291,7 +282,7 @@ The VACF curves roughly fall into two groups for two different droplets, whereas
 
 The interpretation of long correlation time can be two-fold. One the one hand, strong collective motion (high activity) leads to long correlation times than random motions. One the other hand, a slower but still collective motion can exhibit even longer temporal correlations. Therefore, in a dense bacterial suspension, if we make a plot of correlation time vs. bacterial activity, the curve would be nonmonotonic, but shows a peak with two decaying tails, as illustrated below.
 
-![](img/correlation_time.jpg)
+![](../images/correlation_time.jpg)
 
 The peak may diverge. I observed similar thing in the GNF study. In a droplet, the measurement could be done in a easier and more convincing way, since we can always image the same batch of bacteria, and their activity decays with time.
 
@@ -311,7 +302,6 @@ The magnitude of mean azimuthal velocity is significantly lower because the flow
 01052022-12, 13
 
 ![mean av xyxz](../images/2022/01/mean-av-xyxz.png)
-
 
 
 ## References
