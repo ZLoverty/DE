@@ -140,4 +140,14 @@ The mean velocity of the zero control video is shown in the following plot. The 
 
 ## III. Compare PIV on bright field images and confocal images
 
-<font color="blue">Part of this has been done in the mean velocity analysis note. However, this comparison needs to be more detailed. For example, are they different only by a fixed factor of magnitude, or there are more fundamental difference? PDF, videos of PIV will be compared.</font>
+<font color="blue">Part of this has been done in the mean velocity analysis note. However, this comparison needs to be more detailed, so that we know if the two methods gives qualitatively similar results. For example, are they different only by a fixed factor of magnitude, or there are more qualitative difference? PDF, videos of PIV will be compared.</font>
+
+### A. PDF
+
+We have plotted the velocity PDF at certain times. Here, we are going to measure one velocity PDF for a whole video. The figure below compares the PDF's from the velocity fields measured from bright field and confocal images of the same sample. Velocities in x and y directions (u and v) are plotted in different colors. **The data show that within the same set of images, u and v are quantitatively same. Compared to bright field velocity filed, confocal velocity field shows a higher peak at 0, less intermediate velocities and more large velocities.**
+
+![compare u v pdf](../images/2022/01/compare-u-v-pdf.png)
+
+![bf fl pdf u](../images/2022/01/bf-fl-pdf-u.png)   
+
+### B. Overlay videos

@@ -818,7 +818,58 @@ plt.plot(range(0, 18), np.array(meanv_list)*0.16)
 plt.xlabel("sample number")
 plt.ylabel("mean velocity (um/s)")
 # %% codecell
-380*0.16
+bf_folder = r"C:\Users\liuzy\Documents\12092021\piv_drop\21"
+fl_folder = r"C:\Users\liuzy\Documents\12092021\piv_drop\22"
+l1 = readdata(bf_folder, "csv")
+data_list1 = []
+for num, i in l1[::20].iterrows():
+    pivData = pd.read_csv(i.Dir).dropna()
+    data_list1.append(pivData)
+data_bf = pd.concat(data_list1, axis=0)
+data_bf = data_bf.reset_index(drop=True)
+data_bf
+# %% codecell
+l2 = readdata(fl_folder, "csv")
+data_list2 = []
+for num, i in l2[::20].iterrows():
+    pivData = pd.read_csv(i.Dir).dropna()
+    data_list2.append(pivData)
+data_fl = pd.concat(data_list2, axis=0)
+data_fl = data_fl.reset_index(drop=True)
+# %% codecell
+from myImageLib import bestcolor
+plt.figure(dpi=150)
+hist, bin_edges = np.histogram(data_bf.u*0.16, bins=np.linspace(-10, 10, 50), density=True)
+plt.plot(bin_edges[:-1], hist, ls='solid', color=bestcolor(0), label="bf_u")
+hist, bin_edges = np.histogram(data_bf.v*0.16, bins=np.linspace(-10, 10, 50), density=True)
+plt.plot(bin_edges[:-1], hist, ls='--', color=bestcolor(0), label="bf_v")
+# hist, bin_edges = np.histogram(data_fl.u*0.16, bins=np.linspace(-10, 10, 50), density=True)
+# plt.plot(bin_edges[:-1], hist, ls='solid', marker='x', color=bestcolor(0), label="fl_u")
+# hist, bin_edges = np.histogram(data_fl.v*0.16, bins=np.linspace(-10, 10, 50), density=True)
+# plt.plot(bin_edges[:-1], hist, ls='solid', marker='x', color=bestcolor(1), label="fl_v")
+plt.legend()
+plt.xlabel("velocity (um/s)")
+plt.ylabel("PDF")
+
+# %% codecell
+data_bf - data_fl
+# %% codecell
+pivData
+# %% codecell
+11100/148
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
 # %% codecell
 # %% codecell
 # %% codecell
