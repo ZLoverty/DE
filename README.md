@@ -38,15 +38,15 @@ In this repository, I save the notes, code, illustrations and eventually the dra
 - [ ] How much does optical distortions of images affect the PIV analysis? (Vladescu et al. 2014)
 
 ### Experiment
-- [ ] Compare bacterial motility in MB with and without L-serine, especially long time.
+- [x] Compare bacterial motility in MB with and without L-serine, especially long time. (serine makes a **big difference**)
 - [x] Compare the motility decreasing characteristics with and without pumping oxygen into oil. A [simple calculation](finish_the_note) shows this is a possible solution to the oxygen gradient.
-- [ ] Laser on and off periodically to test the effect of laser on the motility
+- [x] Laser on and off periodically to test the effect of laser on the motility
 - [ ] Use PDMS (instead of glass) as the specimen chamber lid.
-- [ ] Density match the bacterial suspensions using percoll (what do I expect to see if the density is matched? How can I tell if density is matched?)
+- [x] Density match the bacterial suspensions using percoll (what do I expect to see if the density is matched? How can I tell if density is matched?)
 - [ ] Use oxygen indicators and DDM to verify the existence of oxygen gradient. (Vladescu et al. 2014)
 
 ### Data analysis
-- [ ] Make all in one visualization (piv_overlay, order parameter, velocity profile, mean velocity)
+- [ ] Make all-in-one visualization (piv_overlay, order parameter, velocity profile, mean velocity)
 - [ ] Compare bright field and confocal PIV
 - [ ] a merged file system solution, such as [mergerfs](https://github.com/trapexit/mergerfs) (long term)
 - [ ] Try out object-oriented programming (OOP), by enclose a video (dir) along with all the analyses as the methods in the object. Use the file system as database. (long term)
