@@ -37,3 +37,6 @@ JANUARY
 =======
 01052022 -- Circulation in droplets (i) more droplet sizes (ii) image at multiple layers.
 01062022 -- Circulation in droplets (i) more droplet sizes (ii) all with time stamps (iii) zero control (iv) z scan of frozen drop
+01172022 -- Serine test: very useful. The life of a dense bacterial droplet. 
+01182022 -- laser effect / XY-XZ diff / XY-XZ diff w/ percoll. Imaging plane is chosen a little (3 um) below the equator (where a well defined circle can be first seen) to avoid light distortion effect
+01192022 -- Flow reactivated in frozen drop.
