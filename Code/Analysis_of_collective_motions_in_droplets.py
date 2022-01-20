@@ -858,7 +858,24 @@ pivData
 # %% codecell
 11100/148
 # %% codecell
+# oxygen concentration profile in a droplet
+K = 5
+rs = 0.5
+r = np.linspace(0, 1)
+C = 1 - 1/6 * K * (1 - r**2)
+plt.plot(r, C, label="$K=5$")
+K = 10
+C = 1 - 1/6 * K * (1 - r**2)
+plt.plot(r, C, label="$K=10$")
+plt.plot([0, 1], [0, 0], ls="--", color="black")
+K = 0.169
+C = 1 - 1/6 * K * (1 - r**2)
+plt.plot(r, C, label="$K=0.169$", color="red", lw=3)
+plt.xlabel("$r/R$")
+plt.ylabel("$C/C_0$")
+plt.legend()
 # %% codecell
+8e16 * 10**(-12.7) / 24 / 3600 * (50e-6)**2 / 2.11e-9 / 1.298
 # %% codecell
 # %% codecell
 # %% codecell
