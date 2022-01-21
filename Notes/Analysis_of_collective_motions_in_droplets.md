@@ -7,6 +7,8 @@ Tags: research, droplet, active turbulence, PIV
 
 # Analysis of Collective Motions in Droplets
 
+(Jan 12, 2022)
+
 In this note, I summarize the analysis on the collective motions of bacteria in droplets. There are some potentially interesting physics to look at, such as the anisotropy with respect to gravity, confinement effect on the collective motions and the interactions between different droplets.
 
 As of Jan 12, 2021, I have done approximately 15 days of experiments (definitely need to do more, but with more concrete idea of what to do...). Although I have got videos of active turbulence that seem to be OK, the significant activity decay in my experiment needs to be addressed carefully.
@@ -34,6 +36,10 @@ We note a few things from this measurement:
 3. Confocal laser **does not** seem to harm bacterial activity
 4. the **sudden drop of velocity** in the middle of yellow curve is not expected, watch video to find out why.
 
+The data above is obtained with PIV window of 40 px. I redo the PIV with window size of 20 px, which appears to be a better choice. The result is show below. The main tendencies all retain, only that the overall velocity magnitudes are slightly higher. As such, I confirm the difference between bright field PIV and confocal PIV.
+
+![mean velocity wsize 20](../images/2022/01/mean-velocity-wsize-20.png)
+
 ### B. Data 02: 01052022/12-17
 
 A new set of data, taken in the same sample, with time stamps and xy-xz comparisons.
@@ -53,6 +59,8 @@ Remarks:
 1. In XY plane, droplets are more spread out, while in XZ plane, droplets are compacted more closely. So in XZ plane, the flow in one droplet is more likely to be affected by other droplets.
 2. In XY plane, bottom substrate is the only one relevant boundary, while in XZ plane, both bottom and side walls are close enough to the droplets _to affect the flow_.
 3. The flow may be anisotropic, with respect to gravity.
+
+### C. Data 03: 01172022/
 
 ## II. Velocity profiles
 

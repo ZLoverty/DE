@@ -1,5 +1,7 @@
 # PIV Technical Report
 
+()
+
 Particle image velocimetry is a powerful flow analysis and visualization technique. To get the most useful information out of it, we need to deal with some technical details, including choosing the best parameters and check the validity of the analysis. In this report, I deal with these aspects of applying PIV on bacterial flows in droplets. Portions of this report were originally written in [the collective motion in droplets note](Analysis_of_collective_motions_in_droplets.md).
 
 ## I. Masked PIV
@@ -151,3 +153,29 @@ We have plotted the velocity PDF at certain times. Here, we are going to measure
 ![bf fl pdf u](../images/2022/01/bf-fl-pdf-u.png)   
 
 ### B. Overlay videos
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--  -->

@@ -25,7 +25,7 @@ In this repository, I save the notes, code, illustrations and eventually the dra
 
 ## To-do list
 
-### Collective motion note
+### Data analysis
 - [x] PIV should be run again with `PIV_masked()` instead of `piv_drop`, batch script needs to be implemented
 - [x] compare BF and fluorescence image PIV
 - [x] temporal evolution of velocity: does bacterial activity decay with time in droplets? What's the typical time scale?
@@ -36,6 +36,10 @@ In this repository, I save the notes, code, illustrations and eventually the dra
 - [ ] better illustrate velocity profile
 - [x] PIV movies
 - [ ] How much does optical distortions of images affect the PIV analysis? (Vladescu et al. 2014)
+- [ ] Make all-in-one visualization (piv_overlay, order parameter, velocity profile, mean velocity)
+- [x] Compare bright field and confocal PIV [PIV technical](Notes\PIV_technical_report.md)
+- [ ] Temporal decay with serine? Time scale vs. droplet size?
+- [ ] Compare max velocity?
 
 ### Experiment
 - [x] Compare bacterial motility in MB with and without L-serine, especially long time. (serine makes a **big difference**)
@@ -45,9 +49,8 @@ In this repository, I save the notes, code, illustrations and eventually the dra
 - [x] Density match the bacterial suspensions using percoll (what do I expect to see if the density is matched? How can I tell if density is matched?)
 - [ ] Use oxygen indicators and DDM to verify the existence of oxygen gradient. (Vladescu et al. 2014)
 
-### Data analysis
-- [ ] Make all-in-one visualization (piv_overlay, order parameter, velocity profile, mean velocity)
-- [x] Compare bright field and confocal PIV [PIV technical](Notes\PIV_technical_report.md)
+### Development
+
 - [ ] a merged file system solution, such as [mergerfs](https://github.com/trapexit/mergerfs) (long term)
 - [ ] Try out object-oriented programming (OOP), by enclose a video (dir) along with all the analyses as the methods in the object. Use the file system as database. (long term)
 

@@ -39,8 +39,23 @@ plt.ylabel("$v$ (um/s)")
 # 3. Confocal laser does not seem to harm bacterial activity
 # 4. the sudden drop of velocity in the middle of yellow curve is not expected, watch video to find out why.
 
-# %% markdown
-$$\phi$$
+# %% codecell
+# mean velocities
+folder = r"C:\Users\liuzy\Documents\01052022"
+l = readdata(folder, "csv")
+t_offset = 0
+plt.figure(figsize=(6, 3), dpi=150)
+for num, i in l[:20].iterrows():
+    mv = pd.read_csv(i.Dir)
+    plt.plot((mv.frame+t_offset)/50/60, savgol_filter(mv.mean_v, 301, 3)*0.16, label=num)
+    t_offset += mv.frame.iloc[-1]
+plt.legend(bbox_to_anchor=(1,1), ncol=2, fontsize=5)
+plt.xlabel("time (min)")
+plt.ylabel("mean velocity (um/s)")
+# mv.iloc[-1].frame
+
+# pd.read_csv(l.loc[12].Dir).plot()
+# pd.read_csv(l.loc[12].Dir).set_index("frame")[6500:6520].plot()
 # %% codecell
 # compute tangent normal
 def tangent_unit(point, center):
