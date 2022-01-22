@@ -13,7 +13,9 @@ In this note, I summarize the analysis on the collective motions of bacteria in 
 
 As of Jan 12, 2021, I have done approximately 15 days of experiments (definitely need to do more, but with more concrete idea of what to do...). Although I have got videos of active turbulence that seem to be OK, the significant activity decay in my experiment needs to be addressed carefully.
 
-After discussed with Eric, we identified that oxygen and laser are the two major factors that can lead to the activity decay. To
+After discussed with Eric, we identified that oxygen and laser are the two major factors that can lead to the activity decay. These two factors are studied experimentally, along with some simple calculations, and are documented elsewhere.
+
+Due to the big activity difference after adding L-serine to MB, the data analysis in this note is only preliminary and will likely not be included in the final data. 
 
 ## I. Mean velocity
 
@@ -311,7 +313,15 @@ The magnitude of mean azimuthal velocity is significantly lower because the flow
 
 ![mean av xyxz](../images/2022/01/mean-av-xyxz.png)
 
+## VII. Add L-serine in MB
 
+L-serine makes a quite surprising difference: bacteria become much faster and collective, last longer, and show less clusters. Below is a video showing the very vigorous collective motion of a bacterial suspension at OD=173, in a 100 um droplet.
+
+[Video: vigorous collective motion in a droplet](https://drive.google.com/file/d/13AmyeAelieYmGZzB1sTbPr1HU4LrCKRJ/view?usp=sharing)
+
+The big difference suggests that the data I analyzed previously are not very useful due to technical reasons. Only new experiments should be included in the final data. This note, however, is a good preliminary study and will be archived for future reference.
+
+It is not yet confirmed if a steady state really exists or not, and will be seen in the coming analysis of the data obtained during 01172022-01192022.
 ## References
 
 1. Wioland, H., Lushi, E. & Goldstein, R. E. Directed collective motion of bacteria under channel confinement. New J. Phys. 18, 075002 (2016).
