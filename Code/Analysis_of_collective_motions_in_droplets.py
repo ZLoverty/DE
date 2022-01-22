@@ -41,11 +41,11 @@ plt.ylabel("$v$ (um/s)")
 
 # %% codecell
 # mean velocities
-folder = r"C:\Users\liuzy\Documents\01052022"
+folder = r"C:\Users\liuzy\Documents\01182022"
 l = readdata(folder, "csv")
 t_offset = 0
 plt.figure(figsize=(6, 3), dpi=150)
-for num, i in l[:20].iterrows():
+for num, i in l[9:15].iterrows():
     mv = pd.read_csv(i.Dir)
     plt.plot((mv.frame+t_offset)/50/60, savgol_filter(mv.mean_v, 301, 3)*0.16, label=num)
     t_offset += mv.frame.iloc[-1]
@@ -892,7 +892,16 @@ plt.legend()
 # %% codecell
 8e16 * 10**(-12.7) / 24 / 3600 * (50e-6)**2 / 2.11e-9 / 1.298
 # %% codecell
+sizes = np.array([91.04, 61.44, 54.72, 49.6, 93.6, 84.8,
+                    62.4, 37.12, 45.12, 28.16, 112, 56.64])
+od = np.array([173, 166, 197, 197, 197, 197, 185, 174, 174, 185, 185, 199])
+plt.scatter(sizes, od)
+plt.plot([sizes.min(), sizes.max()], [185, 185], ls="--", color="black")
+plt.ylim([0, 210])
+plt.xlabel("droplet diameter (um)")
+plt.ylabel("OD$_{600}$")
 # %% codecell
+
 # %% codecell
 # %% codecell
 # %% codecell

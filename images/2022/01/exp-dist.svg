@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="110.27487mm"
+   height="108.0358mm"
+   viewBox="0 0 110.27487 108.0358"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="0117-0119_exp_dist.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.5722797"
+     inkscape:cx="252.67638"
+     inkscape:cy="167.591"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-58.602448,-69.642284)">
+    <ellipse
+       style="opacity:0.3;fill:#000080;fill-opacity:1;stroke:none;stroke-width:0.19622837;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.30653268;paint-order:stroke fill markers"
+       id="path815"
+       cx="113.73988"
+       cy="123.66019"
+       rx="55.137436"
+       ry="54.017902" />
+    <circle
+       style="opacity:0.8;fill:#000080;fill-opacity:1;stroke:none;stroke-width:0.26499999;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.30653268;paint-order:stroke fill markers"
+       id="path817"
+       cx="91.376076"
+       cy="139.65813"
+       r="21.876408" />
+    <circle
+       style="opacity:0.8;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.31696078;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.30653268;paint-order:stroke fill markers"
+       id="path819"
+       cx="143.87947"
+       cy="142.35062"
+       r="10.265083" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#712e13;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="73.370102"
+       y="103.47792"
+       id="text823"><tspan
+         sodipodi:role="line"
+         x="73.370102"
+         y="103.47792"
+         style="fill:#712e13;fill-opacity:1;stroke-width:0.26458332"
+         id="tspan825">12 steady-state</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#deb887;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="71.855583"
+       y="142.01407"
+       id="text829"><tspan
+         sodipodi:role="line"
+         id="tspan827"
+         x="71.855583"
+         y="142.01407"
+         style="fill:#deb887;stroke-width:0.26458332">3 xy-xz</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#756ad3;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="134.4558"
+       y="144.03342"
+       id="text835"><tspan
+         sodipodi:role="line"
+         id="tspan833"
+         x="134.4558"
+         y="144.03342"
+         style="font-size:5.29166651px;fill:#756ad3;fill-opacity:1;stroke-width:0.26458332">1 laser</tspan></text>
+  </g>
+</svg>
