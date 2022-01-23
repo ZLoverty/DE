@@ -41,11 +41,11 @@ plt.ylabel("$v$ (um/s)")
 
 # %% codecell
 # mean velocities
-folder = r"C:\Users\liuzy\Documents\01182022"
+folder = r"C:\Users\liuzy\Documents\01172022"
 l = readdata(folder, "csv")
 t_offset = 0
 plt.figure(figsize=(6, 3), dpi=150)
-for num, i in l[9:15].iterrows():
+for num, i in l[17:20].iterrows():
     mv = pd.read_csv(i.Dir)
     plt.plot((mv.frame+t_offset)/50/60, savgol_filter(mv.mean_v, 301, 3)*0.16, label=num)
     t_offset += mv.frame.iloc[-1]
@@ -56,6 +56,20 @@ plt.ylabel("mean velocity (um/s)")
 
 # pd.read_csv(l.loc[12].Dir).plot()
 # pd.read_csv(l.loc[12].Dir).set_index("frame")[6500:6520].plot()
+# %% codecell
+# Better handle offset
+folder = r"C:\Users\liuzy\Documents\01192022"
+l = readdata(folder, "csv")
+t_offset = [35,40,43,46,49,52]
+plt.figure(figsize=(6, 3), dpi=150)
+count = 0
+for num, i in l[25:31].iterrows():
+    mv = pd.read_csv(i.Dir)
+    plt.plot(mv.frame/50/60+t_offset[count], savgol_filter(mv.mean_v, 501, 3)*0.16, label=num)
+    count += 1
+plt.legend(bbox_to_anchor=(1,1), ncol=2, fontsize=5)
+plt.xlabel("time (min)")
+plt.ylabel("mean velocity (um/s)")
 # %% codecell
 # compute tangent normal
 def tangent_unit(point, center):
