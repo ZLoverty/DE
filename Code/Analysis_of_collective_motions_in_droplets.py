@@ -70,6 +70,62 @@ for num, i in l[25:31].iterrows():
 plt.legend(bbox_to_anchor=(1,1), ncol=2, fontsize=5)
 plt.xlabel("time (min)")
 plt.ylabel("mean velocity (um/s)")
+
+# %% codecell
+data_dir = r"../Data/structured_log/structured_log.ods"
+data = pd.read_excel(io=data_dir)
+data.head()
+data.Date[0]
+help(data.Date[0])
+data.Date[0].strftime("%m%d%Y")
+# %% codecell
+data1 = data.copy()
+folder = r"C:/Users/liuzy/Documents"
+for num, i in data.iterrows():
+    datestr = i.Date.strftime("%m%d%Y")
+    file_dir = os.path.join(folder, datestr, "mean_velocity", "{:02d}.csv".format(i["Video#"]))
+    if os.path.exists(file_dir):
+        try:
+            mv = pd.read_csv(file_dir)
+            v_init = mv[:250].mean_v.mean() * 0.16
+            print(i.Date, i["Video#"], "{:.1f}".format(v_init))
+            data1.at[num, "Initial mean velocity (10 s)"] = v_init
+        except:
+            pass
+# %% codecell
+data1
+# %% codecell
+with pd.ExcelWriter("data_save_test.ods") as writer:
+    data1.to_excel(writer)
+# %% codecell
+data_dir = r"../Data/structured_log/structured_log.ods"
+data = pd.read_excel(io=data_dir)
+data.head()
+# %% codecell
+droplets = [0,7,8,17,18,19,20,21]
+plt.figure(dpi=150)
+for n in droplets:
+    subdata = data.loc[data["Droplet#"]==n]
+    plt.plot(subdata["Time in minutes"]-subdata["Time in minutes"].iat[0] + 1,
+                subdata["Initial mean velocity (10 s)"], marker="s", label=n)
+plt.legend(fontsize=8)
+plt.xscale("log")
+plt.xlabel("Time from loading sample (min)")
+plt.ylabel("Mean velocity (um/s)")
+# %% codecell
+import matplotlib as mpl
+data_dir = r"../Data/structured_log/structured_log.ods"
+data = pd.read_excel(io=data_dir, sheet_name="Lifetime").dropna().sort_values("Droplet size")
+data.head()
+plt.figure(dpi=150)
+color = plt.cm.get_cmap("Set3")
+count = 0
+for num, i in data.iterrows():
+    plt.scatter(i["Droplet size"], i["Lifetime"], label=i["Droplet#"], s=50, color=color(count))
+    count += 1
+plt.legend(ncol=2)
+plt.xlabel("Droplet diameter (um)")
+plt.ylabel("Droplet lifetime (min)")
 # %% codecell
 # compute tangent normal
 def tangent_unit(point, center):

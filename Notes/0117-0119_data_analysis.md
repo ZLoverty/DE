@@ -57,7 +57,13 @@ Below is a simplified velocity evolution of these two samples. Under bright ligh
 
 ![simplified comparison between bright light and laser](../images/2022/01/simplified-comparison-between-bright-light-and-laser.png)
 
-#### 4. Other data
+
+## II. Life time of a droplet
+In the previous section, we compared the velocity evolutions of two droplets of similar size under bright light and blue laser. We see a clear effect of blue laser already, which suggests that in order to obtain steady state in the experiment, I should avoid using blue laser. Lasers of other wavelength, or bright field microscopy are the ways to go.
+
+In this section, we summarize the mean velocity evolutions of all other droplets (excluding percoll and MB w/o serine tests). We will see that besides illumination condition, there are other factors that affect the lifetime of a droplet.
+
+### A. Other mean velocity data
 
 ##### Droplet #6 (0117/17-19) | 61 um | 166
 ![droplet#6](../images/2022/01/droplet-6.png)
@@ -92,16 +98,26 @@ Note: this is a single video, velocity start to decrease within the first minute
 
 ##### Droplet #21 (0119/25-30) | 57 um | 199
 ![droplet#21](../images/2022/01/droplet-21.png)
-### E. Life time of a droplet
 
-### F. Others
 
-## II. Confirmed steady state?
+### B. Initial mean velocity evolution
 
-## III. How much does serine enhance the motility?
+We discussed the issue previously where droplets escape from PIV masks and lead to erroneous velocity measurement. To avoid this error, for each video, we only look at the first 10 s, where the PIV masks are generally more accurate.
 
-## IV. Does blue laser make a difference?
+![initial velocity illustration 1](../images/2022/01/initial-velocity-illustration-1.png)
 
-## V. Percoll??
+Now, plot initial mean velocity against the time after sample loading.
 
-## VI. Frozen droplets
+![initial mean velocity evolutino](../images/2022/01/initial-mean-velocity-evolutino.png)
+
+Note that the $x$-axis is in log scale to make the steady-state regimes of all the curves more obvious.
+
+### C. Define an unambiguous lifetime
+
+The first thing come to my mind is to measure the time it takes for the velocity to decrease to a half of the initial velocity. Below, I plot the droplet lifetime against its size, and a linear-like relation is revealed.
+
+![lifetime vs dropsize](../images/2022/01/lifetime-vs-dropsize.png)
+
+## III. Jamming and reactivation
+
+<font color="blue">To be continued...</font>
