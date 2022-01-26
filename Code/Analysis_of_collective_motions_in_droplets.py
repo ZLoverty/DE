@@ -61,13 +61,13 @@ plt.ylabel("mean velocity (um/s)")
 folder = r"C:\Users\liuzy\Documents\01192022"
 l = readdata(folder, "csv")
 t_offset = [35,40,43,46,49,52]
-plt.figure(figsize=(6, 3), dpi=150)
+plt.figure(figsize=(6, 4), dpi=150)
 count = 0
-for num, i in l[25:31].iterrows():
+for num, i in l[16:17].iterrows():
     mv = pd.read_csv(i.Dir)
     plt.plot(mv.frame/50/60+t_offset[count], savgol_filter(mv.mean_v, 501, 3)*0.16, label=num)
     count += 1
-plt.legend(bbox_to_anchor=(1,1), ncol=2, fontsize=5)
+# plt.legend(bbox_to_anchor=(1,1), ncol=2, fontsize=5)
 plt.xlabel("time (min)")
 plt.ylabel("mean velocity (um/s)")
 
@@ -121,9 +121,11 @@ plt.figure(dpi=150)
 color = plt.cm.get_cmap("Set3")
 count = 0
 for num, i in data.iterrows():
+    if i["Droplet#"] == 16:
+        continue
     plt.scatter(i["Droplet size"], i["Lifetime"], label=i["Droplet#"], s=50, color=color(count))
     count += 1
-plt.legend(ncol=2)
+# plt.legend(ncol=2)
 plt.xlabel("Droplet diameter (um)")
 plt.ylabel("Droplet lifetime (min)")
 # %% codecell
@@ -971,9 +973,44 @@ plt.ylim([0, 210])
 plt.xlabel("droplet diameter (um)")
 plt.ylabel("OD$_{600}$")
 # %% codecell
+from pivLib import PIV_masked
 
+img_folder = r"C:\Users\liuzy\Documents\01192022\16\raw"
+mask_folder = r"C:\Users\liuzy\Documents\01192022\16\mask"
+numbers = [0, 3000, 6000, 9000, 12000, 14998]
+for n in numbers:
+    I0 = io.imread(os.path.join(img_folder, "{:05d}.tif".format(n)))
+    I1 = io.imread(os.path.join(img_folder, "{:05d}.tif".format(n+1)))
+    winsize = 20
+    overlap = 10
+    dt = 0.02
+    mask = io.imread(os.path.join(mask_folder, "{:05d}.tif".format(n)))
+    x, y, u, v = PIV_masked(I0, I1, winsize, overlap, dt, mask)
+    fig, ax = plt.subplots(dpi=300)
+    ax.imshow(I0, cmap='gray')
+    ax.quiver(x, y, u, v, color="yellow", width=0.005, scale=900)
+    ax.axis("off")
+    fig.savefig(os.path.join(r"C:\Users\liuzy\Documents\01192022\16", "{:05d}.jpg".format(n)))
 # %% codecell
+img_folder = r"C:\Users\liuzy\Documents\01192022\revive\raw"
+mask_folder = r"C:\Users\liuzy\Documents\01192022\revive\mask"
+I0names = ["1-02250.tif", "2-00100.tif", "3-07400.tif", "4-00500.tif"]
+I1names = ["1-02251.tif", "2-00101.tif", "3-07401.tif", "4-00501.tif"]
+for n0, n1 in zip(I0names, I1names):
+    I0 = io.imread(os.path.join(img_folder, n0))
+    I1 = io.imread(os.path.join(img_folder, n1))
+    winsize = 20
+    overlap = 10
+    dt = 0.02
+    mask = io.imread(os.path.join(mask_folder, n0))
+    x, y, u, v = PIV_masked(I0, I1, winsize, overlap, dt, mask)
+    fig, ax = plt.subplots(dpi=300)
+    ax.imshow(I0, cmap='gray')
+    ax.quiver(x, y, u, v, color="yellow", width=0.004, scale=1500)
+    ax.axis("off")
+    fig.savefig(os.path.join(r"C:\Users\liuzy\Documents\01192022\revive", n0.replace("tif", "pdf")))
 # %% codecell
+pivData
 # %% codecell
 # %% codecell
 # %% codecell
