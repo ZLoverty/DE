@@ -11,11 +11,11 @@ Tags: research, droplet, active turbulence, PIV
 
 In this note, I summarize the analysis on the collective motions of bacteria in droplets. There are some potentially interesting physics to look at, such as the anisotropy with respect to gravity, confinement effect on the collective motions and the interactions between different droplets.
 
-As of Jan 12, 2021, I have done approximately 15 days of experiments (definitely need to do more, but with more concrete idea of what to do...). Although I have got videos of active turbulence that seem to be OK, the significant activity decay in my experiment needs to be addressed carefully.
+As of Jan 12, 2022, I have done approximately 15 days of experiments (definitely need to do more, but with more concrete idea of what to do...). Although I have got videos of active turbulence that seem to be OK, the significant activity decay in my experiment needs to be addressed carefully.
 
-After discussed with Eric, we identified that oxygen and laser are the two major factors that can lead to the activity decay. These two factors are studied experimentally, along with some simple calculations, and are documented elsewhere.
+After discussing with Eric, we identified that oxygen and laser are the two major factors that can lead to the activity decay. These two factors are studied experimentally, along with some simple calculations, and are documented elsewhere.
 
-Due to the big activity difference after adding L-serine to MB, the data analysis in this note is only preliminary and will likely not be included in the final data. 
+Due to the big activity difference after adding L-serine to MB, the data analysis in this note is only preliminary and will likely not be included in the final data.
 
 ## I. Mean velocity
 
@@ -91,7 +91,7 @@ To see the activity decrease with in the same video, I measure the temporal evol
 ![vp time ev 12092021-22](../images/2022/01/vp-time-ev-12092021-22.png)
 
 ### B. Azimuthal flow profile
-In Hamby et al. 2018 (Ref. 9), the velocities are predominately in azimuthal direction, which come together to form oscillatory circulations in droplets. We expect to see similar preference in our system, so we also compute the profiles of the azimuthal component. The formal definition of the _radial profile of azimuthal velocity_ is given below.
+In Hamby et al. 2018, the velocities are predominately in azimuthal direction, which come together to form oscillatory circulations in droplets. We expect to see similar preference in our system, so we also compute the profiles of the azimuthal component. The formal definition of the _radial profile of azimuthal velocity_ is given below.
 
 $$
 \bar{v}(r) = \left< \bm{v}(x, y)\cdot\bm{t}(x, y) \right>_{r<\sqrt{x^2+y^2}<r+\Delta r}
@@ -223,7 +223,7 @@ From the manual velocity measurement, we know that OpenPIV returns velocity fiel
 
 ### B. Compute order parameter from my PIV data
 
-#### 1. Wioland 2013 (Ref. 3)
+#### 1. Wioland et al. 2013
 ##### i. Definition
 > ![wioland2013](../images/2022/01/wioland2013.png)
 
@@ -242,7 +242,7 @@ The whole video No.22 shows noisy order parameter oscillation between -0.4 and 0
 ![order parameter 22](../images/2022/01/order-parameter-22.png)
 
 <font color="red">When looking at the oscillation of OP, a shorter time scale is desired. According to Hamby 2018, the period of the circulation is several seconds.</font>
-#### 2. Hamby 2018 (Ref. 9)
+#### 2. Hamby et al. 2018
 ##### i. Definition
 > ![hamby2018OP](../images/2022/01/hamby2018op.png)
 
@@ -324,12 +324,6 @@ The big difference suggests that the data I analyzed previously are not very use
 It is not yet confirmed if a steady state really exists or not, and will be seen in the coming analysis of the data obtained during 01172022-01192022.
 ## References
 
-1. Wioland, H., Lushi, E. & Goldstein, R. E. Directed collective motion of bacteria under channel confinement. New J. Phys. 18, 075002 (2016).
-2. Wioland, H., Woodhouse, F. G., Dunkel, J. & Goldstein, R. E. Ferromagnetic and antiferromagnetic order in bacterial vortex lattices. Nature Phys 12, 341–345 (2016).
-3. Wioland, H., Woodhouse, F. G., Dunkel, J., Kessler, J. O. & Goldstein, R. E. Confinement Stabilizes a Bacterial Suspension into a Spiral Vortex. Phys. Rev. Lett. 110, 268102 (2013).
-4. Wensink, H. H. et al. Meso-scale turbulence in living fluids. Proceedings of the National Academy of Sciences 109, 14308–14313 (2012).
-5. Sokolov, A., Aranson, I. S., Kessler, J. O. & Goldstein, R. E. Concentration Dependence of the Collective Dynamics of Swimming Bacteria. Phys. Rev. Lett. 98, 158102 (2007).
-6. Lushi, E., Wioland, H. & Goldstein, R. E. Fluid flows created by swimming bacteria drive self-organization in confined suspensions. Proc Natl Acad Sci USA 111, 9733–9738 (2014).
-7. Cisneros, L. H., Kessler, J. O., Ganguly, S. & Goldstein, R. E. Dynamics of swimming bacteria: Transition to directional order at high concentration. Phys. Rev. E 83, 061907 (2011).
-8. Cisneros, L. H., Cortez, R., Dombrowski, C., Goldstein, R. E. & Kessler, J. O. Fluid dynamics of self-propelled microorganisms, from individuals to concentrated populations. Exp Fluids 43, 737–753 (2007).
-9. Hamby, A. E., Vig, D. K., Safonova, S. & Wolgemuth, C. W. Swimming bacteria power microspin cycles. Sci. Adv. 4, eaau0125 (2018).
+Wioland, Hugo, Francis G. Woodhouse, Jörn Dunkel, John O. Kessler, and Raymond E. Goldstein. “Confinement Stabilizes a Bacterial Suspension into a Spiral Vortex.” Physical Review Letters 110, no. 26 (June 24, 2013): 268102. https://doi.org/10.1103/PhysRevLett.110.268102.
+
+Hamby, Alex E., Dhruv K. Vig, Sasha Safonova, and Charles W. Wolgemuth. “Swimming Bacteria Power Microspin Cycles.” Science Advances 4, no. 12 (December 13, 2018): eaau0125. https://doi.org/10.1126/sciadv.aau0125.
