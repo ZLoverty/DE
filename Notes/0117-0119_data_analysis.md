@@ -120,4 +120,10 @@ The first thing come to my mind is to measure the time it takes for the velocity
 
 ## III. Jamming and reactivation
 
-<font color="blue">To be continued...</font>
+Now we see that bacterial droplets inevitably freeze after some time.
+
+![small droplet freeze with piv](../images/2022/01/small-droplet-freeze-with-piv.png)
+
+Is this due to "bacteria losing their swimming capability" or "dynamical jamming"? The following experiment, where a "frozen droplet" is reactivated by an active droplet, may provide some insights.
+
+![reactivationg](../images/2022/01/reactivationg.png)
