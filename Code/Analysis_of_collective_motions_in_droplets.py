@@ -8,6 +8,8 @@ from pivLib import read_piv
 from skimage import io
 from corrLib import divide_windows, readdata
 from de_utils import tangent_unit
+import trackpy as tp
+from scipy.optimize import curve_fit
 # %% codecell
 folder = r"C:\Users\liuzy\Documents\12092021"
 mv_folder = os.path.join(folder, "mean_velocity")
@@ -1010,7 +1012,111 @@ for n0, n1 in zip(I0names, I1names):
     ax.axis("off")
     fig.savefig(os.path.join(r"C:\Users\liuzy\Documents\01192022\revive", n0.replace("tif", "pdf")))
 # %% codecell
-pivData
+# fitting model
+def lin(x, b):
+    return 2 * x  + b
+# %% codecell
+# MSD analysis
+# 11022021-05 short time
+folder = r"C:\Users\liuzy\Documents\short_time_man_track\11102021-11"
+data_dir = os.path.join(folder, "traj.csv")
+traj = pd.read_csv(data_dir)
+trajs = traj.copy()
+# window size 17 smoothing makes a smooth line
+trajs.y = savgol_filter(traj.y, 5, 3)
+msd = tp.msd(trajs, mpp=0.33, fps=50)
+msd.to_csv(os.path.join(folder, "short_msd.csv"), index=False)
+# fit for A
+msd = tp.msd(trajs, mpp=0.33, fps=50)
+msdc = msd.loc[msd.lagt<0.05]
+popt, pcov = curve_fit(lin, np.log(msdc.lagt), np.log(msdc["<y^2>"]))
+print("A = {:.1f}".format(np.exp(popt[0])))
+# Check fitting quality
+plt.plot(msdc.lagt, msdc["<y^2>"])
+plt.plot(msdc.lagt, np.exp(popt[0])*msdc.lagt**2)
+plt.loglog()
+
+# %% codecell
+# smooth traj with savgol_filter
+plt.figure(dpi=150)
+trajs = traj.copy()
+viridis = plt.cm.get_cmap("viridis", 8)
+for sw in range(5, 30, 6):
+    trajs.y = savgol_filter(traj.y, sw, 3)
+    msd = tp.msd(trajs, mpp=0.33, fps=50)
+    plt.plot(msd.lagt, msd["<y^2>"], color=viridis(sw/30), label=sw)
+plt.loglog()
+plt.legend()
+plt.xlabel("lag time (s)")
+plt.ylabel(r"$\left<\Delta x^2\right>$ (um$^2$)")
+# %% codecell
+
+# %% codecell
+long_msd = pd.read_csv(r"D:\Github\DE\Data\Real_data\MSD_50_11022021_05.csv")
+plt.figure(dpi=150)
+plt.plot(msd.lagt, msd["<y^2>"])
+plt.plot(long_msd.lagt, long_msd["<y^2>"])
+plt.loglog()
+plt.xlabel("lag time (s)")
+plt.ylabel(r"$\left<\Delta x^2\right>$ (um$^2$)")
+
+# %% codecell
+long_traj = pd.read_csv(r"C:\Users\liuzy\Documents\short_time_man_track\11032021-14\traj_50.csv")
+long_msd = tp.msd(long_traj, mpp=0.33, fps=1)
+plt.figure(dpi=150)
+plt.plot(long_msd.lagt, long_msd["<y^2>"])
+plt.loglog()
+# %% codecell
+long_msd["<y^2>"][10:].mean()
+
+# %% codecell
+data_dir = r"D:\Github\DE\Data\Real_data\MSD_50_11022021_08.csv"
+long_msd = pd.read_csv(data_dir)
+plt.plot(long_msd.lagt, long_msd["<y^2>"])
+plt.loglog()
+# %% codecell
+popt
+# %% codecell
+
+# %% codecell
+230 * 4/3 * np.pi * 1e-15 * 9.8 / 70e-5
+# %% codecell
+6 * np.pi * 1e-3 * 1e-5
+# %% codecell
+1.35e-8 / 1.88e-7
+# %% codecell
+42.1/0.072
+# %% codecell
+p = np.array([1265, 865, 770, 2140, 33])
+A = np.array([521.1, 90.8, 84.8, 197.1, 42])
+p / A
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
 # %% codecell
 # %% codecell
 # %% codecell
