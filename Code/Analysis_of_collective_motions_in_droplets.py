@@ -78,7 +78,6 @@ data_dir = r"../Data/structured_log/structured_log.ods"
 data = pd.read_excel(io=data_dir)
 data.head()
 data.Date[0]
-help(data.Date[0])
 data.Date[0].strftime("%m%d%Y")
 # %% codecell
 data1 = data.copy()
@@ -104,16 +103,29 @@ data_dir = r"../Data/structured_log/structured_log.ods"
 data = pd.read_excel(io=data_dir)
 data.head()
 # %% codecell
-droplets = [0,7,8,17,18,19,20,21]
+droplets = [0,7,21,43,45,49]
 plt.figure(dpi=150)
 for n in droplets:
     subdata = data.loc[data["Droplet#"]==n]
-    plt.plot(subdata["Time in minutes"]-subdata["Time in minutes"].iat[0] + 1,
-                subdata["Initial mean velocity (10 s)"], marker="s", label=n)
+    if n < 22:
+        plt.plot(subdata["Time in minutes"]-subdata["Time in minutes"].iat[0] + 1,
+                    subdata["Initial mean velocity (10 s)"], marker="s", label=n, color="gray")
+    else:
+        plt.plot(subdata["Time in minutes"]-subdata["Time in minutes"].iat[0] + 1,
+                    subdata["Initial mean velocity (10 s)"], marker="s", label=n)
+mv_dir = r"C:\Users\liuzy\Documents\01192022\mean_velocity\16.csv"
+mv = pd.read_csv(mv_dir)
+plt.plot(mv.frame/50/60+1, savgol_filter(mv.mean_v*0.16, 501, 3), color="gray")
 plt.legend(fontsize=8)
 plt.xscale("log")
 plt.xlabel("Time from loading sample (min)")
 plt.ylabel("Mean velocity (um/s)")
+# %% codecell
+subdata
+# %% codecell
+mv_dir = r"C:\Users\liuzy\Documents\01262022\mean_velocity\94.csv"
+mv = pd.read_csv(mv_dir)
+plt.plot(mv.frame/3000 + 34, savgol_filter(mv.mean_v*0.16, 501, 3), color='green')
 # %% codecell
 import matplotlib as mpl
 data_dir = r"../Data/structured_log/structured_log.ods"
