@@ -43,3 +43,9 @@ JANUARY
 01242022 -- Bright field droplet lifetime.
 01252022 -- Bright field droplet lifetime.
 01262022 -- Laser 10s exposure test (short exposure).
+
+========
+February
+========
+02012022 -- More droplet sizes for characterizing correlation time
+02022022 -- Test MB+ (MB with double serine)
