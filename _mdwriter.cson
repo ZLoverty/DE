@@ -21,7 +21,7 @@ siteUrl: ""
 # - Leave it empty to use the current project path (recommended)
 siteLocalDir: ""
 # Directory to drafts from siteLocalDir
-siteDraftsDir: "_drafts/"
+siteDraftsDir: "Log/"
 # Directory to posts from siteLocalDir
 sitePostsDir: "_posts/{year}/"
 # Directory to images from siteLocalDir
@@ -39,7 +39,7 @@ frontMatterNameTags: "tags"
 frontMatterNameCategories: "categories"
 
 # Filename format of new drafts created
-newDraftFileName: "{slug}{extension}"
+newDraftFileName: "{year}-{month}-{day}_{slug}{extension}"
 # Filename format of new posts created
 newPostFileName: "{year}-{month}-{day}-{slug}{extension}"
 
@@ -60,7 +60,7 @@ date: "{date}"
 """
 
 # File extension of posts/drafts
-fileExtension: ".markdown"
+fileExtension: ".md"
 # File slug separator
 slugSeparator: "-"
 
