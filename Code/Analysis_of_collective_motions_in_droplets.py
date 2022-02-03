@@ -139,23 +139,32 @@ plt.legend()
 plt.savefig("initial mean velocity.pdf")
 
 # %% codecell
-droplets = [0,7,8, 17,18,19,20,21,31,45,49]
-plt.figure(dpi=150)
+data_dir = r"../Data/structured_log/structured_log.ods"
+data = pd.read_excel(io=data_dir)
+droplets = [18, 45, 0]
+plt.figure(figsize=(5, 3), dpi=150)
 for n in droplets:
-    subdata = data.loc[data["Droplet#"]==n]
-    if n < 22:
-        plt.plot(subdata["Time in minutes"]-subdata["Time in minutes"].iat[0] + 1,
-                    subdata["Initial mean velocity (10 s)"], marker="s", label=n, color="gray")
-    else:
-        plt.plot(subdata["Time in minutes"]-subdata["Time in minutes"].iat[0] + 1,
-                    subdata["Initial mean velocity (10 s)"], marker="s", label=n)
-mv_dir = r"C:\Users\liuzy\Documents\01192022\mean_velocity\16.csv"
-mv = pd.read_csv(mv_dir)
-plt.plot(mv.frame/50/60+1, savgol_filter(mv.mean_v*0.16, 501, 3), color="gray")
+    subdata = data.loc[data["Droplet#"]==n].dropna(subset=["Initial mean velocity (10 s)"])
+    if n > 40:
+        plt.plot(subdata["Time in minutes"]-subdata["Time in minutes"].iat[0],
+                subdata["Initial mean velocity (10 s)"], marker="s", label="{:.1f}".format(subdata["Droplet size"].iat[0]),
+                color="red")
+        continue
+    plt.plot(subdata["Time in minutes"]-subdata["Time in minutes"].iat[0],
+                subdata["Initial mean velocity (10 s)"], marker="s", label="{:.1f}".format(subdata["Droplet size"].iat[0]),
+                color="black")
+# mv_dir = r"C:\Users\liuzy\Documents\01192022\mean_velocity\16.csv"
+# mv = pd.read_csv(mv_dir)
+# plt.plot(mv.frame/50/60+1, savgol_filter(mv.mean_v*0.16, 501, 3), color="gray")
+plt.xlim([0, 52])
+plt.ylim([0, 12])
 plt.legend(fontsize=6.5)
-plt.xscale("log")
+# plt.xscale("log")
 plt.xlabel("Time from loading sample (min)")
 plt.ylabel("Mean velocity (um/s)")
+plt.savefig("velocity-evolution.pdf")
+# %% codecell
+subdata
 # %% codecell
 # velocity increase
 start = 40
@@ -178,16 +187,22 @@ plt.plot(mv.frame/3000 + 34, savgol_filter(mv.mean_v*0.16, 501, 3), color='green
 # %% codecell
 data_dir = r"../Data/structured_log/structured_log.ods"
 data = pd.read_excel(io=data_dir, sheet_name="Lifetime").dropna(subset=["Lifetime"]).sort_values("Droplet size")
-plt.figure(dpi=150)
+plt.figure(figsize=(5, 5), dpi=150)
 color = plt.cm.get_cmap("viridis")
 count = 0
 for num, i in data.iterrows():
     if i["Initial mean velocity (10 s)"] > 8:
-        plt.scatter(i["Droplet size"], i["Lifetime"], label=i["Droplet#"], s=50, color=color(i["Initial mean velocity (10 s)"]/13))
-        plt.annotate((i["Droplet#"], i["Bacterial concentration"]), (i["Droplet size"]-0.8, i["Lifetime"]-0.7), fontsize=6, xycoords='data')
+        if i["Droplet#"] > 40:
+            plt.scatter(i["Droplet size"], i["Lifetime"], label=i["Droplet#"], s=100, color="red")
+            continue
+        plt.scatter(i["Droplet size"], i["Lifetime"], label=i["Droplet#"], s=100, color="black")
 
+        # plt.annotate(i["Droplet#"], (i["Droplet size"]-0.8, i["Lifetime"]-0.7), fontsize=6, xycoords='data')
+plt.xlim([0, 120])
+plt.ylim([0, 52])
 plt.xlabel("Droplet diameter (um)")
 plt.ylabel("Droplet lifetime (min)")
+plt.savefig("lifetime-diameter.pdf")
 # %% codecell
 # plot only high initial velocity data
 
@@ -1152,6 +1167,8 @@ p = np.array([1265, 865, 770, 2140, 33])
 A = np.array([521.1, 90.8, 84.8, 197.1, 42])
 p / A
 # %% codecell
+# velocity autocorrelation PIV
+
 # %% codecell
 # %% codecell
 # %% codecell
