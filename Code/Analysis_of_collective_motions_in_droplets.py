@@ -103,6 +103,42 @@ data_dir = r"../Data/structured_log/structured_log.ods"
 data = pd.read_excel(io=data_dir)
 data.head()
 # %% codecell
+data1 = data.drop_duplicates(subset="Droplet#")
+data1.head()
+data2 = data1.loc[(data1.Comments!="no serine")&(data1.Comments!="with percoll")]
+data3 = data2.loc[data2["Image type"]=="bf"]
+data4 = data2.loc[data2["Image type"]=="fl"]
+data5 = data1.loc[data1.Comments=="Old LB"]
+data6 = data1.loc[(data1.Comments!="no serine")&(data1.Comments!="with percoll")&(data1.Comments!="Old LB")]
+data7 = data6.loc[data6["Image type"]=="bf"]
+data8 = data6.loc[data6["Image type"]=="fl"]
+# %% codecell
+plt.plot(data1["Droplet size"], data1["Initial mean velocity (10 s)"], ls="", marker="o")
+plt.plot(data2["Droplet size"], data2["Initial mean velocity (10 s)"], ls="", marker="o")
+plt.plot(data3["Droplet size"], data3["Initial mean velocity (10 s)"], ls="", marker="o", label="bf")
+plt.plot(data4["Droplet size"], data4["Initial mean velocity (10 s)"], ls="", marker="o", label="fl")
+plt.plot(data5["Droplet size"], data5["Initial mean velocity (10 s)"], ls="", marker="o", label="Old LB")
+
+plt.xlabel("Droplet size (um)")
+plt.ylabel("Initial mean velocity (um/s)")
+plt.legend()
+# %% codecell
+data6
+# %% codecell
+plt.figure(dpi=300)
+plt.plot(data7["Droplet size"], data7["Initial mean velocity (10 s)"], ls="", marker="o", label="bf")
+plt.plot(data8["Droplet size"], data8                  ["Initial mean velocity (10 s)"], ls="", marker="o", label="fl")
+# annotation
+for num, i in data7.iterrows():
+    plt.annotate(i["Droplet#"], (i["Droplet size"]-0.8, i["Initial mean velocity (10 s)"]-0.1), fontsize=4, xycoords='data')
+for num, i in data8.iterrows():
+    plt.annotate(i["Droplet#"], (i["Droplet size"]-0.8, i["Initial mean velocity (10 s)"]-0.1), fontsize=4, xycoords='data')
+plt.xlabel("Droplet size (um)")
+plt.ylabel("Initial mean velocity (um/s)")
+plt.legend()
+plt.savefig("initial mean velocity.pdf")
+
+# %% codecell
 droplets = [0,7,8, 17,18,19,20,21,31,45,49]
 plt.figure(dpi=150)
 for n in droplets:
@@ -122,13 +158,15 @@ plt.xlabel("Time from loading sample (min)")
 plt.ylabel("Mean velocity (um/s)")
 # %% codecell
 # velocity increase
-droplets = range(42, 50)
+start = 40
+end = 50
+droplets = range(start, end)
 plt.figure(dpi=150)
-viridis = plt.cm.get_cmap("Set3", 10)
+viridis = plt.cm.get_cmap("Set3", len(droplets))
 for n in droplets:
     subdata = data.loc[data["Droplet#"]==n]
     plt.plot(subdata["Time in minutes"]-subdata["Time in minutes"].iat[0] + 1,
-                subdata["Initial mean velocity (10 s)"], marker="s", label=n, color=viridis(n-42))
+                subdata["Initial mean velocity (10 s)"], marker="s", label=n, color=viridis((n-start)/(end-start)))
 plt.legend(fontsize=6.5)
 plt.xscale("log")
 plt.xlabel("Time from loading sample (min)")
@@ -138,21 +176,21 @@ mv_dir = r"C:\Users\liuzy\Documents\01262022\mean_velocity\94.csv"
 mv = pd.read_csv(mv_dir)
 plt.plot(mv.frame/3000 + 34, savgol_filter(mv.mean_v*0.16, 501, 3), color='green')
 # %% codecell
-import matplotlib as mpl
 data_dir = r"../Data/structured_log/structured_log.ods"
-data = pd.read_excel(io=data_dir, sheet_name="Lifetime").dropna().sort_values("Droplet size")
-data.head()
+data = pd.read_excel(io=data_dir, sheet_name="Lifetime").dropna(subset=["Lifetime"]).sort_values("Droplet size")
 plt.figure(dpi=150)
-color = plt.cm.get_cmap("Set3")
+color = plt.cm.get_cmap("viridis")
 count = 0
 for num, i in data.iterrows():
-    if i["Droplet#"] == 16:
-        continue
-    plt.scatter(i["Droplet size"], i["Lifetime"], label=i["Droplet#"], s=50, color=color(count))
-    count += 1
-# plt.legend(ncol=2)
+    if i["Initial mean velocity (10 s)"] > 8:
+        plt.scatter(i["Droplet size"], i["Lifetime"], label=i["Droplet#"], s=50, color=color(i["Initial mean velocity (10 s)"]/13))
+        plt.annotate((i["Droplet#"], i["Bacterial concentration"]), (i["Droplet size"]-0.8, i["Lifetime"]-0.7), fontsize=6, xycoords='data')
+
 plt.xlabel("Droplet diameter (um)")
 plt.ylabel("Droplet lifetime (min)")
+# %% codecell
+# plot only high initial velocity data
+
 # %% codecell
 # compute tangent normal
 def tangent_unit(point, center):
