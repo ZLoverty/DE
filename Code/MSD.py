@@ -100,15 +100,15 @@ for b in be:
     log2 = log1.loc[(log1.D>=b)&(log1.D<b+50)]
     D_list.append(log2.D.mean())
     Derr_list.append(log2.D.std())
-    R_list.append(log2.Rinfy.mean())
-    Rerr_list.append(log2.Rinfy.std())
+    R_list.append((log2.Rinfy**0.5).mean())
+    Rerr_list.append((log2.Rinfy**0.5).std())
     t_list.append(log2.t2.mean())
     terr_list.append(log2.t2.std())
 plt.figure(figsize=(3,4),dpi=150)
 plt.errorbar(D_list, R_list, xerr=Derr_list, yerr=Rerr_list, ls="", color="black", marker="o",
                 label="$R^\infty$", markersize=10)
 plt.xlabel("$\left<D\\right>$ ($\mu$m)")
-plt.ylabel("$R^\infty$ ($\mu$m$^2$)")
+plt.ylabel("$R^\infty$ ($\mu$m)")
 plt.legend(frameon=False, bbox_to_anchor=(1, 1))
 plt.twinx()
 ax = plt.gca()
@@ -136,15 +136,16 @@ for b in be:
     r2 =  log2.D / log2.d
     D_list.append(r2.mean())
     Derr_list.append(r2.std())
-    R_list.append(log2.Rinfy.mean())
-    Rerr_list.append(log2.Rinfy.std())
+    R_list.append((log2.Rinfy**0.5).mean())
+    Rerr_list.append((log2.Rinfy**0.5).std())
     t_list.append(log2.t2.mean())
     terr_list.append(log2.t2.std())
-plt.figure(figsize=(3,4), dpi=150)
+plt.figure(figsize=(4,4), dpi=150)
 plt.errorbar(D_list, R_list, xerr=Derr_list, yerr=Rerr_list, ls="", color="black", marker="o",
                 markersize=10)
 plt.xlabel("$\left<D/d\\right>$")
-plt.ylabel("$R^\infty$ ($\mu$m$^2$)")
+plt.ylabel("$R^\infty$ ($\mu$m)")
+plt.ylim([0, 35])
 plt.twinx()
 ax = plt.gca()
 ax.yaxis.label.set_color('red')
@@ -152,6 +153,8 @@ ax.tick_params(axis="y", color="red", labelcolor="red")
 ax.spines['right'].set_color('red')
 plt.errorbar(D_list, t_list, xerr=Derr_list, yerr=terr_list, ls="", color="red", marker="s")
 plt.ylabel("$\\tau^*$ (s)")
+plt.xlim([0, 11])
+plt.ylim([0, 17])
 plt.savefig("RTDd.pdf")
 # %% codecell
 # d
@@ -166,15 +169,16 @@ for b in be:
     log2 = log1.loc[(log1.d>=b)&(log1.d<b+10)]
     D_list.append(log2.d.mean())
     Derr_list.append(log2.d.std())
-    R_list.append(log2.Rinfy.mean())
-    Rerr_list.append(log2.Rinfy.std())
+    R_list.append((log2.Rinfy**0.5).mean())
+    Rerr_list.append((log2.Rinfy**0.5).std())
     t_list.append(log2.t2.mean())
     terr_list.append(log2.t2.std())
-plt.figure(figsize=(3,4), dpi=150)
+plt.figure(figsize=(4,4), dpi=150)
 plt.errorbar(D_list, R_list, xerr=Derr_list, yerr=Rerr_list, ls="", color="black", marker="o",
                 markersize=10)
 plt.xlabel("$\left<d\\right>$ ($\mu$m)")
-plt.ylabel("$R^\infty$ ($\mu$m$^2$)")
+plt.ylabel("$R^\infty$ ($\mu$m)")
+plt.ylim([0, 30])
 plt.twinx()
 ax = plt.gca()
 ax.yaxis.label.set_color('red')
@@ -182,6 +186,8 @@ ax.tick_params(axis="y", color="red", labelcolor="red")
 ax.spines['right'].set_color('red')
 plt.errorbar(D_list, t_list, xerr=Derr_list, yerr=terr_list, ls="", color="red", marker="s")
 plt.ylabel("$\\tau^*$ (s)")
+plt.xlim([0, 60])
+plt.ylim([0, 16])
 plt.savefig("RTdi.pdf")
 # %% codecell
 log1.loc[(log1.d>=10)&(log1.d<20)]
@@ -294,7 +300,9 @@ plt.ylabel(r"$\left< \Delta y^2 \right>$")
 plt.grid(which="both", ls=":")
 plt.savefig("msd-example.pdf")
 # %% codecell
+log1.OD.mean()
 # %% codecell
+log1.OD.std()
 # %% codecell
 # %% codecell
 # %% codecell
