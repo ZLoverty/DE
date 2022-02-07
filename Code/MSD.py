@@ -13,49 +13,6 @@ import trackpy as tp
 import datetime
 # %% codecell
 # Old data MSD visualize
-log_dir = r"..\Data\structured_log_DE.ods"
-log = pd.read_excel(io=log_dir, sheet_name="before10262021")
-log.head()
-# %% codecell
-i = log.loc[0]
-i.Date.strftime("%m%d%Y")
-# %% codecell
-folder = r"E:\DE"
-traj = pd.read_csv(os.path.join(folder, i.Date.strftime("%m%d%Y"), i["Video#"], "crop_HoughCircles", "traj.csv"))
-# %% codecell
-traj = traj.assign(frame=traj.index, particle=0)
-msd = tp.msd(traj, mpp=i.MPP, fps=i.FPS, max_lagtime=len(traj)//5)
-# %% codecell
-plt.plot(msd.lagt, msd["<y^2>"])
-plt.loglog()
-# %% codecell
-log1 = log.loc[log.Date==datetime.datetime(2021, 8, 13)]
-# %% codecell
-plt.figure(dpi=200)
-viridis = plt.cm.get_cmap("viridis", 8)
-count = 0
-for num, i in log1.iterrows():
-    traj = pd.read_csv(os.path.join(folder, i.Date.strftime("%m%d%Y"), i["Video#"], "crop_HoughCircles", "traj.csv"))
-    traj = traj.assign(frame=traj.index, particle=0)
-    msd = tp.msd(traj, mpp=i.MPP, fps=i.FPS, max_lagtime=len(traj)//5)
-    plt.plot(msd.lagt, msd["<y^2>"], label=i["Video#"], color=viridis(count))
-    count += 1
-    if count == 8:
-        plt.legend(bbox_to_anchor=(1,1), fontsize=5)
-        plt.xlabel("$\Delta t$ (s)")
-        plt.ylabel(r"$\left< \Delta y^2 \right>$ ($\mu$m$^2$)")
-        plt.grid(ls=":")
-        plt.loglog()
-        plt.figure(dpi=200)
-        count = 0
-plt.legend(bbox_to_anchor=(1,1), fontsize=5)
-plt.xlabel("$\Delta t$ (s)")
-plt.ylabel(r"$\left< \Delta y^2 \right>$ ($\mu$m$^2$)")
-plt.grid(ls=":")
-plt.loglog()
-
-# %% codecell
-dirrec(r"C:\Users\liuzy\Documents", "traj_50.csv")
 # %% codecell
 # review data after 1026
 log_dir = r"..\Data\structured_log_DE.ods"
@@ -79,6 +36,12 @@ viridis = plt.cm.get_cmap('viridis')
 plt.figure(dpi=150)
 plt.scatter(log1.D/log1.d, log1.d, s=15, c="black")
 plt.xlabel("$D/d$")
+plt.ylabel("$d$ ($\mu$m)")
+plt.grid(ls=":")
+# %% codecell
+plt.figure(dpi=150)
+plt.scatter(log1.D-log1.d, log1.d, s=15, c="black")
+plt.xlabel("$D-d$")
 plt.ylabel("$d$ ($\mu$m)")
 plt.grid(ls=":")
 # %% codecell
@@ -123,6 +86,7 @@ plt.xlabel("$\Delta t/\\tau^*$")
 plt.ylabel(r"$\left< \Delta y^2 \right> / R^\infty$")
 plt.grid(which="both", ls=":")
 plt.loglog()
+plt.savefig("collapse_msd.pdf")
 # %% codecell
 # plot Rinf vs. D
 be = range(50, 250, 50)
@@ -140,13 +104,23 @@ for b in be:
     Rerr_list.append(log2.Rinfy.std())
     t_list.append(log2.t2.mean())
     terr_list.append(log2.t2.std())
-plt.figure(dpi=150)
-plt.errorbar(D_list, R_list, xerr=Derr_list, yerr=Rerr_list, ls="", color="black", marker="s")
+plt.figure(figsize=(3,4),dpi=150)
+plt.errorbar(D_list, R_list, xerr=Derr_list, yerr=Rerr_list, ls="", color="black", marker="o",
+                label="$R^\infty$", markersize=10)
 plt.xlabel("$\left<D\\right>$ ($\mu$m)")
 plt.ylabel("$R^\infty$ ($\mu$m$^2$)")
+plt.legend(frameon=False, bbox_to_anchor=(1, 1))
 plt.twinx()
-plt.errorbar(D_list, t_list, xerr=Derr_list, yerr=terr_list, ls="", color="red", marker="s")
+ax = plt.gca()
+ax.yaxis.label.set_color('red')
+ax.tick_params(axis="y", color="red", labelcolor="red")
+ax.spines['right'].set_color('red')
+plt.errorbar(D_list, t_list, xerr=Derr_list, yerr=terr_list, ls="", color="red", marker="s",
+                label="$\\tau^*$")
 plt.ylabel("$\\tau^*$ (s)")
+plt.legend(frameon=False, bbox_to_anchor=(1, 0.9))
+plt.savefig("RTDo.pdf")
+
 # %% codecell
 # D/d
 be = range(2, 12, 2)
@@ -166,13 +140,19 @@ for b in be:
     Rerr_list.append(log2.Rinfy.std())
     t_list.append(log2.t2.mean())
     terr_list.append(log2.t2.std())
-plt.figure(dpi=150)
-plt.errorbar(D_list, R_list, xerr=Derr_list, yerr=Rerr_list, ls="", color="black", marker="s")
+plt.figure(figsize=(3,4), dpi=150)
+plt.errorbar(D_list, R_list, xerr=Derr_list, yerr=Rerr_list, ls="", color="black", marker="o",
+                markersize=10)
 plt.xlabel("$\left<D/d\\right>$")
 plt.ylabel("$R^\infty$ ($\mu$m$^2$)")
 plt.twinx()
+ax = plt.gca()
+ax.yaxis.label.set_color('red')
+ax.tick_params(axis="y", color="red", labelcolor="red")
+ax.spines['right'].set_color('red')
 plt.errorbar(D_list, t_list, xerr=Derr_list, yerr=terr_list, ls="", color="red", marker="s")
 plt.ylabel("$\\tau^*$ (s)")
+plt.savefig("RTDd.pdf")
 # %% codecell
 # d
 be = range(10, 60, 10)
@@ -190,21 +170,129 @@ for b in be:
     Rerr_list.append(log2.Rinfy.std())
     t_list.append(log2.t2.mean())
     terr_list.append(log2.t2.std())
-plt.figure(dpi=150)
-plt.errorbar(D_list, R_list, xerr=Derr_list, yerr=Rerr_list, ls="", color="black", marker="s")
+plt.figure(figsize=(3,4), dpi=150)
+plt.errorbar(D_list, R_list, xerr=Derr_list, yerr=Rerr_list, ls="", color="black", marker="o",
+                markersize=10)
 plt.xlabel("$\left<d\\right>$ ($\mu$m)")
 plt.ylabel("$R^\infty$ ($\mu$m$^2$)")
 plt.twinx()
+ax = plt.gca()
+ax.yaxis.label.set_color('red')
+ax.tick_params(axis="y", color="red", labelcolor="red")
+ax.spines['right'].set_color('red')
 plt.errorbar(D_list, t_list, xerr=Derr_list, yerr=terr_list, ls="", color="red", marker="s")
 plt.ylabel("$\\tau^*$ (s)")
+plt.savefig("RTdi.pdf")
 # %% codecell
 log1.loc[(log1.d>=10)&(log1.d<20)]
 # %% codecell
+# Rinf vs. D/d
+log_dir = r"..\Data\structured_log_DE.ods"
+log = pd.read_excel(io=log_dir, sheet_name="main")
+log1 = log.loc[(log.OD>=50)&(log.OD<=70)]
+be = range(2, 12, 2)
+D_list = []
+Derr_list = []
+R_list = []
+Rerr_list = []
+t_list = []
+terr_list = []
+for b in be:
+    r = log1.D / log1.d
+    log2 = log1.loc[(r>=b)&(r<b+2)]
+    r2 =  log2.D / log2.d
+    D_list.append(r2.mean())
+    Derr_list.append(r2.std())
+    R_list.append((log2.Rinfy**0.5).mean())
+    Rerr_list.append((log2.Rinfy**0.5).std())
+    t_list.append(log2.t2.mean())
+    terr_list.append(log2.t2.std())
+plt.figure(figsize=(3,4), dpi=150)
+plt.errorbar(D_list, R_list, xerr=Derr_list, yerr=Rerr_list, ls="", color="black", marker="o",
+                markersize=10)
+plt.xlabel("$\left<D/d\\right>$")
+plt.ylabel("$R^\infty$ ($\mu$m)")
+plt.xlim([0, 11])
+plt.ylim([0, 34])
+plt.twinx()
+ax = plt.gca()
+ax.yaxis.label.set_color('red')
+ax.tick_params(axis="y", color="red", labelcolor="red")
+ax.spines['right'].set_color('red')
+plt.errorbar(D_list, t_list, xerr=Derr_list, yerr=terr_list, ls="", color="red", marker="s")
+plt.ylabel("$\\tau^*$ (s)")
+plt.ylim([0, 17])
+# plt.savefig("RTDd.pdf")
 # %% codecell
+log_dir = r"..\Data\structured_log_DE.ods"
+log = pd.read_excel(io=log_dir, sheet_name="main")
+log1 = log.loc[(log.OD>=50)&(log.OD<=70)]
+be = range(25, 225, 50)
+D_list = []
+Derr_list = []
+R_list = []
+Rerr_list = []
+t_list = []
+terr_list = []
+for b in be:
+    r = log1.D - log1.d
+    log2 = log1.loc[(r>=b)&(r<b+50)]
+    r2 =  log2.D - log2.d
+    D_list.append(r2.mean())
+    Derr_list.append(r2.std())
+    R_list.append((log2.Rinfy**0.5).mean())
+    Rerr_list.append((log2.Rinfy**0.5).std())
+    t_list.append(log2.t2.mean())
+    terr_list.append(log2.t2.std())
+plt.figure(figsize=(3,4), dpi=150)
+plt.errorbar(D_list, R_list, xerr=Derr_list, yerr=Rerr_list, ls="", color="black", marker="o",
+                markersize=10)
+plt.xlabel("$\left< D-d \\right>$")
+plt.ylabel("$R^\infty$ ($\mu$m)")
+plt.twinx()
+ax = plt.gca()
+ax.yaxis.label.set_color('red')
+ax.tick_params(axis="y", color="red", labelcolor="red")
+ax.spines['right'].set_color('red')
+plt.errorbar(D_list, t_list, xerr=Derr_list, yerr=terr_list, ls="", color="red", marker="s")
+plt.ylabel("$\\tau^*$ (s)")
 # %% codecell
+data_dir = r"../Data/traj_50"
+traj = pd.read_csv(os.path.join(data_dir, "35.csv"))
+traj.head()
+plt.plot(traj.x, traj.y, alpha=0.5, lw=0.5)
+plt.scatter(traj.x, traj.y, s=10, c=traj.frame, cmap="viridis")
+plt.axis("equal")
+plt.savefig("traj-illu.pdf")
 # %% codecell
+# Rinf vs. tau
+log_dir = r"..\Data\structured_log_DE.ods"
+log = pd.read_excel(io=log_dir, sheet_name="main")
+log1 = log.loc[(log.OD>=50)&(log.OD<=70)]
+plt.figure(figsize=(3,3), dpi=150)
+plt.scatter(log1.t2, log1.Rinfy)
+# plt.xlim([0, 18])
+# plt.ylim([0, 1200])
+plt.xlabel("$\\tau^*$ (s)")
+plt.ylabel("$R_\infty^2$ ($\mu$m)")
+plt.xlim([0,17])
+plt.ylim([0,1100])
+plt.savefig("Rinf_vs_tau.pdf")
+
+# plt.loglog()
+#
+
 # %% codecell
-# %% codecell
+data_dir = r"../Data/traj_50"
+traj = pd.read_csv(os.path.join(data_dir, "35.csv"))
+msd = tp.msd(traj, mpp=i.MPP, fps=i.FPS/50, max_lagtime=len(traj)//10)
+plt.figure(figsize=(3,3))
+plt.plot(msd.lagt, msd["<y^2>"], label=i["DE#"])
+plt.loglog()
+plt.xlabel("$\Delta t$")
+plt.ylabel(r"$\left< \Delta y^2 \right>$")
+plt.grid(which="both", ls=":")
+plt.savefig("msd-example.pdf")
 # %% codecell
 # %% codecell
 # %% codecell
