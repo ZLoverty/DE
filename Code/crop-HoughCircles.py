@@ -13,8 +13,8 @@ import pandas as pd
 from myImageLib import to8bit, show_progress
 import time
 # %% codecell
-folder = r'E:\DE\08042021\2021-08-04_16h42m12s'
-l = readdata(os.path.join(folder, 'images'), 'tif')
+folder = r'C:\Users\liuzy\Documents\11032021\15'
+l = readdata(folder, 'tif')
 num_images = len(l)
 print('Total {:d} frames'.format(num_images))
 # %% codecell
@@ -25,8 +25,8 @@ img = io.imread(l.Dir[0])
 plt.imshow(img, cmap='gray')
 # %% codecell
 # test the first cropped image
-crop_anchor = np.array([230, 230]) # upper left corner coords, int
-crop_size = (550, 550) # height and width, int
+crop_anchor = np.array([220, 400]) # upper left corner coords, int
+crop_size = (200, 200) # height and width, int
 crop = (crop_anchor[0], crop_anchor[0]+crop_size[0],
        crop_anchor[1], crop_anchor[1]+crop_size[1])
 # need to check if the crop exceeds the borders of images
@@ -35,11 +35,11 @@ plt.imshow(cropped, cmap='gray')
 # %% codecell
 # test HoughCircles params
 
-Hough_dp = 1.2
+Hough_dp = 0.8
 Hough_minDist = max(crop_size)
-Hough_param2 = 1
-Hough_maxRadius = 260
-Hough_minRadius = 240
+Hough_param2 = 10
+Hough_maxRadius = 60
+Hough_minRadius = 50
 circles = cv2.HoughCircles(to8bit(cropped), cv2.HOUGH_GRADIENT, Hough_dp, Hough_minDist,
                                param2=Hough_param2, maxRadius=Hough_maxRadius, minRadius=Hough_minRadius)
 fig, ax = plt.subplots(figsize=(3, 3))
@@ -70,10 +70,7 @@ filename_list = [] # filename of raw image
 nc_list = [] # number of circles detected in each frame
 
 # initialize output folder
-main_output_folder = os.path.join(folder, 'crop_HoughCircles')
-cropped_folder = os.path.join(main_output_folder, 'cropped')
-if os.path.exists(main_output_folder) == False:
-    os.makedirs(main_output_folder)
+cropped_folder = os.path.join(folder, 'cropped')
 if os.path.exists(cropped_folder) == False:
     os.makedirs(cropped_folder)
 
@@ -126,7 +123,8 @@ for num, i in l.iterrows():
             break
 
 data = pd.DataFrame({'x':x_list, 'y':y_list, 'filename':filename_list})
-data.to_csv(os.path.join(main_output_folder, 'traj.csv'), index=False)
+data = data.assign(frame=data.index, particle=0)
+data.to_csv(os.path.join(folder, 'traj.csv'), index=False)
 # %% codecell
 plt.plot(data.x)
 # %% codecell
