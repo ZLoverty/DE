@@ -304,9 +304,48 @@ log1.OD.mean()
 # %% codecell
 log1.OD.std()
 # %% codecell
+log_dir = r"..\Data\structured_log_DE.ods"
+log = pd.read_excel(io=log_dir, sheet_name="main")
+log1 = log.loc[(log.OD>=50)&(log.OD<=70)]
+be = np.linspace(0, 0.7,10)
+D_list = []
+Derr_list = []
+R_list = []
+Rerr_list = []
+t_list = []
+terr_list = []
+for b in be:
+    r = (log1.D-log1.d) / log1.d ** 2
+    log2 = log1.loc[(r>=b)&(r<b+0.2)]
+    r2 =  (log2.D-log2.d) / log2.d ** 2
+    D_list.append(r2.mean())
+    Derr_list.append(r2.std())
+    R_list.append((log2.Rinfy**0.5).mean())
+    Rerr_list.append((log2.Rinfy**0.5).std())
+    t_list.append(log2.t2.mean())
+    terr_list.append(log2.t2.std())
+plt.figure(figsize=(3,4), dpi=150)
+plt.errorbar(D_list, R_list, xerr=Derr_list, yerr=Rerr_list, ls="", color="black", marker="o",
+                markersize=10)
+plt.xlabel("$\left<(D-d)/d^2\\right>$")
+plt.ylabel("$R^\infty$ ($\mu$m)")
+# plt.xlim([0, 11])
+plt.ylim([0, 34])
+plt.twinx()
+ax = plt.gca()
+ax.yaxis.label.set_color('red')
+ax.tick_params(axis="y", color="red", labelcolor="red")
+ax.spines['right'].set_color('red')
+plt.errorbar(D_list, t_list, xerr=Derr_list, yerr=terr_list, ls="", color="red", marker="s")
+plt.ylabel("$\\tau^*$ (s)")
+plt.ylim([0, 17])
 # %% codecell
+r = (log1.D-log1.d) / log1.d ** 2
+plt.plot(r)
 # %% codecell
+log2
 # %% codecell
+r
 # %% codecell
 # %% codecell
 # %% codecell
