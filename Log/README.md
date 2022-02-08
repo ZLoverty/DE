@@ -11,8 +11,8 @@ Summarize the progress regularly to remind myself the next steps.
 |- Log
   README.md (the main log, contains guidelines and snapshots of date logs)
   |- mmdd-yyyy (deprecated Jan 12, 2022)
-  yyyymmdd.md
-  yyyymmdd.md
+  yyyy-mm-dd_(optional description).md
+  yyyy-mm-dd_(optional description).md
 ```
 
 ## Contents
