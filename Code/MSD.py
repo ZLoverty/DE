@@ -20,46 +20,48 @@ log = pd.read_excel(io=log_dir, sheet_name="main")
 log.head()
 # %% codecell
 OD_min = 20
-OD_max = 40
-log1 = log.loc[(log.OD>=OD_min)&(log.OD<=OD_max)]
-r = (log1.D - log1.d) / log1.d ** 2
-plt.scatter(r, log1["DE#"])
-plt.xlabel("$(D-d)/d^2$")
-plt.ylabel("DE index")
-# %% codecell
-# visualize the bins
-log1 = log.loc[(log.OD>=OD_min)&(log.OD<=OD_max)]
-r = (log1.D - log1.d) / log1.d ** 2
-plt.scatter(r, log1["DE#"])
-plt.xlabel("$(D-d)/d^2$")
-plt.ylabel("DE index")
+OD_max = 50
 N = 5
+log1 = log.loc[(log.OD>=OD_min)&(log.OD<=OD_max)].dropna(subset=["Rinfy"])
+r = (log1.D - log1.d) / log1.d ** 2
 range_size = r.max() - r.min()
 bin_size = range_size / N * 2
+# visualize the bins
+plt.figure(dpi=100)
+plt.scatter(r, log1["DE#"])
+plt.xlabel("$(D-d)/d^2$")
+plt.ylabel("DE index")
 bin_start = np.linspace(r.min(), r.max()-bin_size, N)
 bin_end = bin_start + bin_size
 count = 20
 for start, end in zip(bin_start, bin_end):
     plt.plot([start, end], [count, count])
     count += 2
-
-# %% codecell
-# Make ranges for r
-log1 = log.loc[(log.OD>=OD_min)&(log.OD<=OD_max)]
-r = (log1.D - log1.d) / log1.d ** 2
-N = 5
-range_size = r.max() - r.min()
-bin_size = range_size / N * 1.5
-bin_start = np.linspace(r.min(), r.max()-bin_size, N)
-bin_end = bin_start + bin_size
+# plot Rinf as a function of B
+plt.figure(dpi=100)
+xm = 0
+ym = 0
 for start, end in zip(bin_start, bin_end):
-    print(start, end)
     log2 = log1.loc[(r>=start)&(r<=end)]
     r2 = (log2.D - log2.d) / log2.d ** 2
-    plt.errorbar(r2.mean(), (log2.Rinfy**0.5).mean(), xerr=r2.std(), yerr=(log2.Rinfy**0.5).std(), marker="o")
+    x = r2.mean()
+    y =(log2.Rinfy**0.5).mean()
+    xe = r2.std()
+    ye = (log2.Rinfy**0.5).std()
+    plt.errorbar(x, y, xerr=xe, yerr=ye, marker="o")
+    print("{:.3f}, {:.3f}, {:.3f}, {:.3f}".format(x, y, xe, ye))
+    if np.isnan(xe):
+        xe = 0
+    if np.isnan(ye):
+        ye = 0
+    if x + xe > xm:
+        xm = x + xe
+    if y + ye > ym:
+        ym = y + ye
 plt.xlabel("$(D-d)/d^2$")
 plt.ylabel("$R_\infty$")
-# plt.xlim([0, 1.2])
+plt.xlim([0, xm*1.1])
+plt.ylim([0, ym*1.1])
 # plt.ylim([0, 35])
 #
 
