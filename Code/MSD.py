@@ -19,7 +19,72 @@ log_dir = r"..\Data\structured_log_DE.ods"
 log = pd.read_excel(io=log_dir, sheet_name="main")
 log.head()
 # %% codecell
+OD_min = 20
+OD_max = 40
+log1 = log.loc[(log.OD>=OD_min)&(log.OD<=OD_max)]
+r = (log1.D - log1.d) / log1.d ** 2
+plt.scatter(r, log1["DE#"])
+plt.xlabel("$(D-d)/d^2$")
+plt.ylabel("DE index")
+# %% codecell
+# visualize the bins
+log1 = log.loc[(log.OD>=OD_min)&(log.OD<=OD_max)]
+r = (log1.D - log1.d) / log1.d ** 2
+plt.scatter(r, log1["DE#"])
+plt.xlabel("$(D-d)/d^2$")
+plt.ylabel("DE index")
+N = 5
+range_size = r.max() - r.min()
+bin_size = range_size / N * 2
+bin_start = np.linspace(r.min(), r.max()-bin_size, N)
+bin_end = bin_start + bin_size
+count = 20
+for start, end in zip(bin_start, bin_end):
+    plt.plot([start, end], [count, count])
+    count += 2
 
+# %% codecell
+# Make ranges for r
+log1 = log.loc[(log.OD>=OD_min)&(log.OD<=OD_max)]
+r = (log1.D - log1.d) / log1.d ** 2
+N = 5
+range_size = r.max() - r.min()
+bin_size = range_size / N * 1.5
+bin_start = np.linspace(r.min(), r.max()-bin_size, N)
+bin_end = bin_start + bin_size
+for start, end in zip(bin_start, bin_end):
+    print(start, end)
+    log2 = log1.loc[(r>=start)&(r<=end)]
+    r2 = (log2.D - log2.d) / log2.d ** 2
+    plt.errorbar(r2.mean(), (log2.Rinfy**0.5).mean(), xerr=r2.std(), yerr=(log2.Rinfy**0.5).std(), marker="o")
+plt.xlabel("$(D-d)/d^2$")
+plt.ylabel("$R_\infty$")
+# plt.xlim([0, 1.2])
+# plt.ylim([0, 35])
+#
+
+# %% codecell
+bin_start
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
 # %% codecell
 viridis = plt.cm.get_cmap('viridis')
 plt.figure(dpi=150)
@@ -27,6 +92,9 @@ plt.scatter(log.OD, log.index, s=2, c=log.index, cmap=viridis)
 plt.xlabel("OD")
 plt.ylabel("arbitrary index")
 plt.grid(ls=":")
+
+
+
 # %% codecell
 log1 = log.loc[(log.OD>=50)&(log.OD<=70)]
 log1 = log1.sort_values("DE#")
@@ -45,12 +113,17 @@ plt.xlabel("$D-d$")
 plt.ylabel("$d$ ($\mu$m)")
 plt.grid(ls=":")
 # %% codecell
+log1 = log.loc[log["DE#"]>=23]
 data_dir = r"..\Data\traj_50"
 viridis = plt.cm.get_cmap('Set3', 5)
 count = 0
 plt.figure(dpi=200)
 for num, i in log1.iterrows():
-    traj = pd.read_csv(os.path.join(data_dir, "{:02d}.csv".format(i["DE#"])))
+    traj_dir = os.path.join(data_dir, "{:02d}.csv".format(i["DE#"]))
+    if os.path.exists(traj_dir):
+        traj = pd.read_csv(traj_dir)
+    else:
+        print("Missing traj {:d}".format(i["DE#"]))
     msd = tp.msd(traj, mpp=i.MPP, fps=i.FPS/50, max_lagtime=len(traj)//10)
     plt.plot(msd.lagt, msd["<y^2>"], label=i["DE#"], color=viridis(count))
     count += 1
@@ -86,7 +159,7 @@ plt.xlabel("$\Delta t/\\tau^*$")
 plt.ylabel(r"$\left< \Delta y^2 \right> / R^\infty$")
 plt.grid(which="both", ls=":")
 plt.loglog()
-plt.savefig("collapse_msd.pdf")
+# plt.savefig("collapse_msd.pdf")
 # %% codecell
 # plot Rinf vs. D
 be = range(50, 250, 50)
@@ -119,7 +192,7 @@ plt.errorbar(D_list, t_list, xerr=Derr_list, yerr=terr_list, ls="", color="red",
                 label="$\\tau^*$")
 plt.ylabel("$\\tau^*$ (s)")
 plt.legend(frameon=False, bbox_to_anchor=(1, 0.9))
-plt.savefig("RTDo.pdf")
+# plt.savefig("RTDo.pdf")
 
 # %% codecell
 # D/d
@@ -155,7 +228,7 @@ plt.errorbar(D_list, t_list, xerr=Derr_list, yerr=terr_list, ls="", color="red",
 plt.ylabel("$\\tau^*$ (s)")
 plt.xlim([0, 11])
 plt.ylim([0, 17])
-plt.savefig("RTDd.pdf")
+# plt.savefig("RTDd.pdf")
 # %% codecell
 # d
 be = range(10, 60, 10)
@@ -188,7 +261,7 @@ plt.errorbar(D_list, t_list, xerr=Derr_list, yerr=terr_list, ls="", color="red",
 plt.ylabel("$\\tau^*$ (s)")
 plt.xlim([0, 60])
 plt.ylim([0, 16])
-plt.savefig("RTdi.pdf")
+# plt.savefig("RTdi.pdf")
 # %% codecell
 log1.loc[(log1.d>=10)&(log1.d<20)]
 # %% codecell
@@ -269,7 +342,7 @@ traj.head()
 plt.plot(traj.x, traj.y, alpha=0.5, lw=0.5)
 plt.scatter(traj.x, traj.y, s=10, c=traj.frame, cmap="viridis")
 plt.axis("equal")
-plt.savefig("traj-illu.pdf")
+# plt.savefig("traj-illu.pdf")
 # %% codecell
 # Rinf vs. tau
 log_dir = r"..\Data\structured_log_DE.ods"
@@ -283,7 +356,7 @@ plt.xlabel("$\\tau^*$ (s)")
 plt.ylabel("$R_\infty^2$ ($\mu$m)")
 plt.xlim([0,17])
 plt.ylim([0,1100])
-plt.savefig("Rinf_vs_tau.pdf")
+# plt.savefig("Rinf_vs_tau.pdf")
 
 # plt.loglog()
 #
@@ -298,7 +371,7 @@ plt.loglog()
 plt.xlabel("$\Delta t$")
 plt.ylabel(r"$\left< \Delta y^2 \right>$")
 plt.grid(which="both", ls=":")
-plt.savefig("msd-example.pdf")
+# plt.savefig("msd-example.pdf")
 # %% codecell
 log1.OD.mean()
 # %% codecell
