@@ -113,18 +113,18 @@ plt.xlabel("$D-d$")
 plt.ylabel("$d$ ($\mu$m)")
 plt.grid(ls=":")
 # %% codecell
-log1 = log.loc[log["DE#"]>=23]
-data_dir = r"..\Data\traj_50"
+log1 = log.loc[log["DE#"]<23]
+data_dir = r"..\Data\traj"
 viridis = plt.cm.get_cmap('Set3', 5)
 count = 0
 plt.figure(dpi=200)
 for num, i in log1.iterrows():
-    traj_dir = os.path.join(data_dir, "{:02d}.csv".format(i["DE#"]))
+    traj_dir = os.path.join(data_dir, "{:03d}.csv".format(i["DE#"]))
     if os.path.exists(traj_dir):
         traj = pd.read_csv(traj_dir)
     else:
         print("Missing traj {:d}".format(i["DE#"]))
-    msd = tp.msd(traj, mpp=i.MPP, fps=i.FPS/50, max_lagtime=len(traj)//10)
+    msd = tp.msd(traj, mpp=i.MPP, fps=i.FPS, max_lagtime=len(traj)//5)
     plt.plot(msd.lagt, msd["<y^2>"], label=i["DE#"], color=viridis(count))
     count += 1
     if count > 4:
