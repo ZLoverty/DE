@@ -49,3 +49,6 @@ February
 ========
 02012022 -- More droplet sizes for characterizing correlation time
 02022022 -- Test MB+ (MB with double serine)
+02072022 -- Come back to MB, more droplet sizes for characterizing correlation time
+02082022 -- more droplet sizes for characterizing correlation time
+02092022 -- Some high concentration double emulsion experiments (the best pool from GR is broken, need new ones)
