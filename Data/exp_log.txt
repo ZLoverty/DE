@@ -49,3 +49,6 @@ February
 ========
 02012022 -- More droplet sizes for characterizing correlation time
 02022022 -- Test MB+ (MB with double serine)
+02072022 -- Normal MB, more droplet sizes for correlation time
+02082022 -- Normal MB, more droplet sizes for correlation time
+02092022 -- Double emulsion, intermediate to high bacterial concentration (Pluronic 108)
