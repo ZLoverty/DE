@@ -29,6 +29,8 @@ bin_size = range_size / N * 2
 # visualize the bins
 plt.figure(dpi=100)
 plt.scatter(r, log1["DE#"])
+for num, i in log1.iterrows():
+    plt.annotate(i["DE#"], ((i.D - i.d) / i.d ** 2, i["DE#"]), xycoords="data")
 plt.xlabel("$(D-d)/d^2$")
 plt.ylabel("DE index")
 bin_start = np.linspace(r.min(), r.max()-bin_size, N)
@@ -45,9 +47,9 @@ for start, end in zip(bin_start, bin_end):
     log2 = log1.loc[(r>=start)&(r<=end)]
     r2 = (log2.D - log2.d) / log2.d ** 2
     x = r2.mean()
-    y =(log2.Rinfy**0.5).mean()
+    y =(log2.t2**0.5).mean()
     xe = r2.std()
-    ye = (log2.Rinfy**0.5).std()
+    ye = (log2.t2**0.5).std()
     plt.errorbar(x, y, xerr=xe, yerr=ye, marker="o")
     print("{:.3f}, {:.3f}, {:.3f}, {:.3f}".format(x, y, xe, ye))
     if np.isnan(xe):
@@ -59,15 +61,24 @@ for start, end in zip(bin_start, bin_end):
     if y + ye > ym:
         ym = y + ye
 plt.xlabel("$(D-d)/d^2$")
-plt.ylabel("$R_\infty$")
+plt.ylabel("$\\tau^*$")
 plt.xlim([0, xm*1.1])
 plt.ylim([0, ym*1.1])
 # plt.ylim([0, 35])
 #
 
 # %% codecell
-bin_start
+9e-3/230/10
 # %% codecell
+# plot the MSD model, get a feeling of parameters
+gamma = 1/10
+nu = 1
+t = np.logspace(-3, 2)
+y2 = (1 - np.exp(-2*gamma*t)) / (2*gamma) - (np.exp(-(gamma+nu)*t)-np.exp(-2*gamma*t))
+plt.plot(t, y2)
+plt.loglog()
+plt.xlabel("lag time")
+plt.ylabel("$\left<\Delta y^2\\right>$")
 # %% codecell
 # %% codecell
 # %% codecell
