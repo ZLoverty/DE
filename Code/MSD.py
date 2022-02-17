@@ -431,12 +431,69 @@ plt.plot(r)
 # %% codecell
 log2
 # %% codecell
-r
+# specific for Cristian's data from Chile, the format of traj data is different
+log_dir = r"..\Data\structured_log_DE.ods"
+log = pd.read_excel(io=log_dir, sheet_name="Cristian-Chile")
+log1 = log.dropna(subset=["OD"])
+data_dir = r"..\Data\traj"
+viridis = plt.cm.get_cmap('Set3', 5)
+count = 0
+plt.figure(dpi=200)
+for num, i in log1.iterrows():
+    traj_dir = os.path.join(data_dir, "{:03d}.csv".format(i["DE#"]))
+    if os.path.exists(traj_dir):
+        traj = pd.read_csv(traj_dir, names=["x", "y"])
+        traj = traj.assign(frame=traj.index, particle=0)
+    else:
+        print("Missing traj {:d}".format(i["DE#"]))
+    msd = tp.msd(traj, mpp=1, fps=i.FPS, max_lagtime=len(traj)//5)
+    plt.plot(msd.lagt, msd["<y^2>"], label=i["DE#"], color=viridis(count))
+    count += 1
+    if count > 4:
+        plt.legend(bbox_to_anchor=(1,1), fontsize=5)
+        plt.xlabel("$\Delta t$ (s)")
+        plt.ylabel(r"$\left< \Delta y^2 \right>$ ($\mu$m$^2$)")
+        plt.grid(which="both", ls=":")
+        plt.loglog()
+        # plt.savefig("{:d}.jpg".format(num))
+        plt.figure(dpi=200)
+        count = 0
+plt.legend(bbox_to_anchor=(1,1), fontsize=5)
+plt.xlabel("$\Delta t$ (s)")
+plt.ylabel(r"$\left< \Delta y^2 \right>$ ($\mu$m$^2$)")
+plt.grid(which="both", ls=":")
+plt.loglog()
+
 # %% codecell
+log_dir = r"..\Data\structured_log_DE.ods"
+log = pd.read_excel(io=log_dir, sheet_name="Cristian-Chile")
+log1 = log.dropna(subset=["OD"])
+viridis = plt.cm.get_cmap('viridis')
+plt.figure(dpi=150)
+plt.scatter(log1["(D-d)/d^2"], log1["DE#"], s=2, c=log1.index, cmap=viridis)
+plt.xlabel("$(D-d)/d^2$")
+plt.ylabel("DE#")
+plt.grid(ls=":")
 # %% codecell
+log_dir = r"..\Data\structured_log_DE.ods"
+log = pd.read_excel(io=log_dir, sheet_name="combine")
+log1 = log.dropna(subset=["OD"])
+viridis = plt.cm.get_cmap('Set3')
+plt.figure(dpi=150)
+for i in range(0, 120, 20):
+    log2 = log1.loc[(log1.OD>=i)&(log1.OD<=i+20)]
+    x = log2["(D-d)/d^2"] 
+    y = log2["Rinfy"] ** 0.5 / log2["OD"]
+    plt.scatter(x, y, s=20, color=viridis(i/100), label="{0:d}-{1:d}".format(i, i+20))
+plt.legend()
+plt.xlabel("$(D-d)/d^2$")
+plt.ylabel("$R_\infty / OD$ (um)")
+plt.grid(ls=":")
+# plt.xlim([1, log1["(D-d)/d^2"].max()*1.1])
+# plt.ylim([0.01, log1["t2"].max()**0.5*1.1])
+plt.loglog()
 # %% codecell
-# %% codecell
-# %% codecell
+
 # %% codecell
 # %% codecell
 # %% codecell
