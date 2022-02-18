@@ -27,3 +27,7 @@ I hope to determine a VACF analysis protocol that takes care of the artifact by 
 ##### Snapshots of samples
 
 Note that we only take the first 10 s from each video, since later on the displacement of droplets may be significant.
+
+![VACF mask effect](../images/2022/02/VACF_mask_effect.svg)
+
+##### Velocity autocorrelation with different masks
