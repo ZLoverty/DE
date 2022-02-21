@@ -4,10 +4,12 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
-from corrLib import readdata, distance_corr, xy_bin
+from corrLib import readdata, distance_corr, xy_bin, divide_windows
 from matplotlib import cm
 from pivLib import read_piv
 from matplotlib.patches import Ellipse
+import scipy
+from skimage import io
 # %% codecell
 # util functions
 def autocorr_t(x):
@@ -78,31 +80,133 @@ fig, ax = plt.subplots(dpi=150)
 for n in [19, 10, 20]:
     folder = r"C:\Users\liuzy\Documents\vacf-mask\{:d}\piv_drop".format(n)
     ustack, vstack = read_piv_stack(folder)
-    vacf_piv(ustack, 0.04, mode="direct").plot(ax=ax)
-ax.set_xlim([0, 3])
+    vacf_piv(ustack, 0.04, mode="direct").plot(ax=ax, ls="", marker="o")
+ax.set_xlim([0, 1])
 # %% codecell
-# illustrate different masks
+# smooth velocity in time
+fig, ax = plt.subplots(dpi=150)
+for n in [19, 10, 20]:
+    folder = r"C:\Users\liuzy\Documents\vacf-mask\{:d}\piv_drop".format(n)
+    ustack, vstack = read_piv_stack(folder)
+    ustack = scipy.ndimage.gaussian_filter(ustack, (3/4,0,0))
+    vacf_piv(ustack, 0.04, mode="direct").plot(ax=ax, ls="", marker="o")
+ax.set_xlim([0, 1])
+# %% codecell
+stack_r = vstack.reshape((vstack.shape[0], -1)).T
+stack1 = stack_r[~np.isnan(stack_r[:, 0]), :]
+stack2 = scipy.ndimage.gaussian_filter(stack1, (0, 0.75))
+# %% codecell
+stack1.shape
+# %% codecell
+stack_r.shape
+# %% codecell
+plt.plot(stack1[0])
+plt.plot(stack2[0])
+# %% codecell
+ustack.shape
+# %% codecell
+# include and exclude edge data
+folder = r"C:\Users\liuzy\Documents\vacf-mask\10"
+img = io.imread(os.path.join(folder, "images", "00000.tif"))
+x, y, u, v = read_piv(os.path.join(folder, "piv_drop", "00000-00001.csv"))
+plt.figure(dpi=150)
+plt.imshow(img, cmap="gray")
+plt.quiver(x, y, u, v, color="yellow", scale=4000, width=0.004)
+plt.axis("off")
+# %% codecell
+mask = io.imread(os.path.join(folder, "mask.tif"))
+mask = mask >= mask.mean()
+winsize=20
+overlap=10
+mask_w = divide_windows(mask, windowsize=[winsize, winsize],
+                            step=winsize-overlap)[2] >= 1
+u1 = u
+v1 = v
+u1[~mask_w] = np.nan
+v1[~mask_w] = np.nan
+plt.figure(dpi=150)
+plt.imshow(img, cmap="gray")
+plt.quiver(x, y, u1, v1, color="yellow", scale=4000, width=0.004)
+plt.axis("off")
+# %% codecell
+# mask -> vacf
+fig, ax = plt.subplots(dpi=150)
+for n in [19, 10, 20]:
+    folder = r"C:\Users\liuzy\Documents\vacf-mask\{:d}\piv_drop".format(n)
+    # velocity
+    ustack, vstack = read_piv_stack(folder)
+    # smooth with gaussian filter
+    ustack = scipy.ndimage.gaussian_filter(ustack, (3/4,0,0))
+    vacf_piv(ustack, 0.04, mode="direct").plot(ax=ax, ls="", marker="o")
+    # mask
+    mask = io.imread(os.path.join(folder, "..\mask.tif"))
+    mask = mask >= mask.mean()
+    winsize=20
+    overlap=10
+    mask_w = divide_windows(mask, windowsize=[winsize, winsize],
+                                step=winsize-overlap)[2] >= 1
+    mask_wb = np.broadcast_to(mask_w, ustack.shape)
+    # apply mask
+    ustack[~mask_wb] = np.nan
+    vacf_piv(ustack, 0.04, mode="direct").plot(ax=ax, ls="", marker="o")
+    break
+ax.set_xlim([0, 1])
+# %% codecell
+ustack.shape
+# %% codecell
+mask_wb = np.broadcast_to(mask_w, ustack.shape)
+ustack[~mask_web] = np.nan
+# %% codecell
+mask_w.shape
+# %% codecell
+ustack.shape
+# %% codecell
+u.shape
+# %% codecell
+folder = r"C:\Users\liuzy\Documents\vacf-mask\{:d}\piv_drop".format(10)
+ustack, vstack = read_piv_stack(folder)
+# %% codecell
+# construct droplet position data
+abr = {"19": (172, 164, 168),
+       "10": (395, 377, 508),
+       "20": (526, 514, 704)}
+# %% codecell
+# systematic vary radial position
 
+dr = 3 # um
+mpp = 0.16 # micron per pixel
+for n in [19, 10, 20]:
+    fig, ax = plt.subplots(dpi=150)
+    folder = r"C:\Users\liuzy\Documents\vacf-mask\{:d}\piv_drop".format(n)
+    x, y, u, v = read_piv(os.path.join(folder, "00000-00001.csv"))
+    # velocity
+    ustack, vstack = read_piv_stack(folder)
+    # smooth with gaussian filter
+    ustack = scipy.ndimage.gaussian_filter(ustack, (3/4,0,0))
+    vacf_piv(ustack, 0.04, mode="direct").plot(ax=ax, marker="o")
+    # mask
+    a, b, r = abr[str(n)]
+    N_bins = np.floor(r / dr * mpp)
+    r_stops = np.linspace(0, r, int(N_bins))
+    for r_stop in r_stops[1:]:
+        mask_w = (x - a) ** 2 + (y - b) ** 2 <= r_stop ** 2
+        plt.figure()
+        mask_wb = np.broadcast_to(mask_w, ustack.shape)
+        # apply mask
+        c = np.copy(ustack)
+        c[~mask_wb] = np.nan
+        plt.imshow(c[0])
+        vacf_piv(c, 0.04, mode="direct").plot(ax=ax)
+    ax.set_xlim([0, 1])
+    break
 # %% codecell
+mask_w.shape
+ustack.shape
+np.linspace(0, 172, 5, endpoint=False)
 # %% codecell
+r_stops
 # %% codecell
-# %% codecell
-# %% codecell
-# %% codecell
-# %% codecell
-# %% codecell
-# %% codecell
-# %% codecell
-# %% codecell
-# %% codecell
-# %% codecell
-# %% codecell
-# %% codecell
-# %% codecell
-# %% codecell
-# %% codecell
-# %% codecell
-# %% codecell
+24*0.16
 # %% codecell
 # %% codecell
 
