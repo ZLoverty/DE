@@ -152,17 +152,6 @@ for n in [19, 10, 20]:
     break
 ax.set_xlim([0, 1])
 # %% codecell
-ustack.shape
-# %% codecell
-mask_wb = np.broadcast_to(mask_w, ustack.shape)
-ustack[~mask_web] = np.nan
-# %% codecell
-mask_w.shape
-# %% codecell
-ustack.shape
-# %% codecell
-u.shape
-# %% codecell
 folder = r"C:\Users\liuzy\Documents\vacf-mask\{:d}\piv_drop".format(10)
 ustack, vstack = read_piv_stack(folder)
 # %% codecell
@@ -200,91 +189,159 @@ for n in [19, 10, 20]:
     ax.set_xlim([0, 1])
     break
 # %% codecell
-mask_w.shape
-ustack.shape
-np.linspace(0, 172, 5, endpoint=False)
-# %% codecell
-r_stops
-# %% codecell
-24*0.16
-# %% codecell
-# %% codecell
+# mask and mean velocity, time evolution
+abr = {"19": (172, 164, 168/2),
+       "10": (395, 377, 508/2),
+       "20": (526, 514, 704/2)}
+
+mpp = 0.16 # micron per pixel
+
+for n in [19, 10, 20]:
+    fig, ax = plt.subplots(dpi=150)
+    folder = r"C:\Users\liuzy\Documents\vacf-mask\{:d}\piv_drop".format(n)
+    x, y, u, v = read_piv(os.path.join(folder, "00000-00001.csv"))
+    # velocity
+    ustack, vstack = read_piv_stack(folder)
+    # smooth with gaussian filter
+    ustack = scipy.ndimage.gaussian_filter(ustack, (3/4,0,0))
+    # mask
+    a, b, r = abr[str(n)]
+    dr =  r / 8 * mpp
+    N_bins = np.floor(r / dr * mpp)
+    r_stops = np.linspace(0, r, int(N_bins))
+    for r_stop in r_stops[1:]:
+        mask_w = (x - a) ** 2 + (y - b) ** 2 <= r_stop ** 2
+        mask_wb = np.broadcast_to(mask_w, ustack.shape)
+        # apply mask
+        u1 = np.copy(ustack)
+        v1 = np.copy(vstack)
+        u1[~mask_wb] = np.nan
+        v1[~mask_wb] = np.nan
+        velocity = (u1 ** 2 + v1 ** 2) ** 0.5
+        ax.plot(np.nanmean(velocity, axis=(1, 2))*0.16,
+            label="$r_{{stop}}={:.2f}r$".format(r_stop/r))
+    ax.legend(bbox_to_anchor=(1,1))
+    ax.set_xlabel("time (frame)")
+    ax.set_ylabel("mean velocity (um/s)")
+    ax.set_xlim([0, 250])
+    ax.set_ylim([0, 30])
 
 
+# %% codecell
+# mask and mean velocity, vmean vs. r_stop
+abr = {"19": (172, 164, 168/2),
+       "10": (395, 377, 508/2),
+       "20": (526, 514, 704/2)}
 
+mpp = 0.16 # micron per pixel
 
-
-# %% codecell
-folder = r"C:\Users\liuzy\Data\DE\12092021\spatial_correlation\21"
-l = readdata(folder, "csv")
-viridis = cm.get_cmap('viridis', len(l))
-for num, i in l[::10].iterrows():
-    data = pd.read_csv(i.Dir)
-    dc = distance_corr(data.X, data.Y, data.CV)
-    x, y = xy_bin(dc.R, dc.C, n=10)
-    plt.plot(x, y, marker='o', color=viridis(num), label=i.Name.split('-')[0])
-plt.legend(bbox_to_anchor=(1, 1))
-plt.xlabel("r (um)")
-plt.ylabel("velocity correlation")
-# %% codecell
-# temporal correlation
-folder = r"C:\Users\liuzy\Documents\vacf-mask\20\piv_drop"
-l = readdata(folder, "csv")
-u_list = []
-for num, i in l.iterrows():
-    x, y, u, v = read_piv(i.Dir)
-    u_list.append(u)
-stack = np.stack(u_list, axis=0)
-# %% codecell
-plt.quiver(x, y, u, v)
-
-
-# %% codecell
-stack.shape
-# %% codecell
-stack_r = stack.reshape((250, -1))
-# %% codecell
-x = np.random.rand(100)
-xn = x - x.mean()
-c = np.correlate(xn, xn, mode="same")[len(xn)//2:] / np.inner(xn, xn)
-plt.plot(c)
-# %% codecell
+fig, ax = plt.subplots(dpi=150)
+for n in [19, 10, 20]:
+    folder = r"C:\Users\liuzy\Documents\vacf-mask\{:d}\piv_drop".format(n)
+    x, y, u, v = read_piv(os.path.join(folder, "00000-00001.csv"))
+    # velocity
+    ustack, vstack = read_piv_stack(folder)
+    # smooth with gaussian filter
+    ustack = scipy.ndimage.gaussian_filter(ustack, (3/4,0,0))
+    # mask
+    a, b, r = abr[str(n)]
+    dr =  r / 8 * mpp
+    N_bins = np.floor(r / dr * mpp)
+    r_stops = np.linspace(0, r, int(N_bins))
+    v_list = []
+    for r_stop in r_stops[1:]:
+        mask_w = (x - a) ** 2 + (y - b) ** 2 <= r_stop ** 2
+        mask_wb = np.broadcast_to(mask_w, ustack.shape)
+        # apply mask
+        u1 = np.copy(ustack)
+        v1 = np.copy(vstack)
+        u1[~mask_wb] = np.nan
+        v1[~mask_wb] = np.nan
+        velocity = (u1 ** 2 + v1 ** 2) ** 0.5
+        v_list.append(np.nanmean(velocity) * mpp)
+    plt.plot(r_stops[1:], v_list, label="{:.1f}".format(r*2*mpp))
+ax.legend(bbox_to_anchor=(1,1))
+ax.set_xlabel("$r_{{stop}}/r$")
+ax.set_ylabel("mean velocity (um/s)")
 
 # %% codecell
-corr  = autocorr_t(x)
-plt.plot(corr)
+# only exclude edge data - mean velocity
+folder = r"C:\Users\liuzy\Documents\vacf-mask\{:d}\piv_drop".format(n)
+x, y, u, v = read_piv(os.path.join(folder, "00000-00001.csv"))
+ustack, vstack = read_piv_stack(folder)
+ustack = scipy.ndimage.gaussian_filter(ustack, (3/4,0,0))
+vstack = scipy.ndimage.gaussian_filter(vstack, (3/4,0,0))
+vmean = (ustack ** 2 + vstack ** 2) ** 0.5
+vmean_t = np.nanmean(vmean, axis=(1, 2)) * mpp
+plt.plot(vmean_t)
+mask = io.imread(os.path.join(folder, "..\mask.tif"))
+mask = mask > mask.mean()
+mask_w = divide_windows(mask, windowsize=[winsize, winsize],
+                            step=winsize-overlap)[2] >= 1
+mask_wb = np.broadcast_to(mask_w, ustack.shape)
+u1 = np.copy(ustack)
+v1 = np.copy(vstack)
+u1[~mask_wb] = np.nan
+v1[~mask_wb] = np.nan
+vmean_ee = (u1 ** 2 + v1 ** 2) ** 0.5
+vmean_ee_t = np.nanmean(vmean_ee, axis=(1, 2)) * mpp
+plt.plot(vmean_ee_t)
+plt.xlabel("time (frame)")
+plt.ylabel("mean velocity (um/s)")
 # %% codecell
-x = stack_r.T[306]
-corr, t = autocorr_t(x, 0.04)
-plt.plot(t, corr, ls="", marker="o")
-plt.xlim([0, 1])
 # %% codecell
-corr_list = []
-for x in stack_r.T:
-    if np.isnan(x[0]) == False:
-        corr = autocorr_t(x)
-        corr_list.append(corr)
 # %% codecell
-len(corr_list)
 # %% codecell
-for i in range(0, 200, 40):
-    plt.plot(corr_list[i])
 # %% codecell
-plt.plot(np.stack(corr_list, axis=0).mean(axis=0), ls="", marker="o")
-plt.xlim([0, 50])
 # %% codecell
-# velocity weighted mean of correlation function
-corr_list = []
-normalizer = 0
-for x in stack_r.T:
-    if np.isnan(x[0]) == False:
-        vmean = abs(x).mean()
-        normalizer += vmean
-        corr = autocorr_t(x) * vmean
-        corr_list.append(corr)
 # %% codecell
-plt.plot(np.stack(corr_list, axis=0).sum(axis=0)/normalizer, ls="", marker="o")
-plt.xlim([0, 50])
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
 # %% codecell
 # %% codecell
 # %% codecell
