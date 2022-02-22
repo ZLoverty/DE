@@ -31,24 +31,19 @@ In this repository, I save the notes, code, illustrations and eventually the dra
 - [x] temporal evolution of velocity: does bacterial activity decay with time in droplets? What's the typical time scale?
 - [x] order parameter
 - [x] PIV movies
-- [x] Compare bright field and confocal PIV [PIV technical](Notes\PIV_technical_report.md)
-- [ ] temporal autocorrelation
-- [ ] How much does optical distortions of images affect the PIV analysis? (Vladescu et al. 2014)
-- [ ] Make all-in-one visualization (piv_overlay, order parameter, velocity profile, mean velocity)
-- [ ] Integrate Cristian's DE data
-- [ ] Temporal decay with serine? Time scale vs. droplet size?
+- [x] Compare bright field and confocal PIV
+- [x] temporal autocorrelation
+- [x] Integrate Cristian's DE data
 - [ ] Compare max velocity?
 - [ ] Order parameter in different regions
 - [ ] spatial autocorrelation length: this can be the first observable for temporal activity evolution
 
-- [ ] better illustrate velocity profile
 ### Experiment
 - [x] Compare bacterial motility in MB with and without L-serine, especially long time. (serine makes a **big difference**)
 - [x] Compare the motility decreasing characteristics with and without pumping oxygen into oil. A [simple calculation](Notes\oxygen_diffusion_calculation.md) shows this is a possible solution to the oxygen gradient.
 - [x] Laser on and off periodically to test the effect of laser on the motility
 - [x] Density match the bacterial suspensions using percoll (what do I expect to see if the density is matched? How can I tell if density is matched?)
 - [ ] Use PDMS (instead of glass) as the specimen chamber lid.
-- [ ] Use oxygen indicators and DDM to verify the existence of oxygen gradient. (Vladescu et al. 2014)
 
 
 

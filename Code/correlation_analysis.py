@@ -289,6 +289,9 @@ plt.plot(vmean_ee_t)
 plt.xlabel("time (frame)")
 plt.ylabel("mean velocity (um/s)")
 # %% codecell
+l = readdata(r"..\Notes", "pdf")
+for num, i in l.iterrows():
+    print(i.Name)
 # %% codecell
 # %% codecell
 # %% codecell
