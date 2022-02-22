@@ -74,8 +74,8 @@ plt.xlabel("time (min)")
 plt.ylabel("mean velocity (um/s)")
 
 # %% codecell
-data_dir = r"../Data/structured_log/structured_log.ods"
-data = pd.read_excel(io=data_dir)
+data_dir = r"../Data/structured_log.ods"
+data = pd.read_excel(io=data_dir, sheet_name="02012022-02092022")
 data.head()
 data.Date[0]
 data.Date[0].strftime("%m%d%Y")
@@ -84,7 +84,7 @@ data1 = data.copy()
 folder = r"C:/Users/liuzy/Documents"
 for num, i in data.iterrows():
     datestr = i.Date.strftime("%m%d%Y")
-    file_dir = os.path.join(folder, datestr, "mean_velocity", "{:02d}.csv".format(i["Video#"]))
+    file_dir = os.path.join(folder, datestr, "mean_velocity", "{:03d}.csv".format(int(i["Video#"])))
     if os.path.exists(file_dir):
         try:
             mv = pd.read_csv(file_dir)
