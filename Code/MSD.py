@@ -181,20 +181,51 @@ plt.ylim([0, ym*1.1])
 9e-3/230/10
 # %% codecell
 # plot the MSD model, get a feeling of parameters
-gamma = 1/10
+gamma = 2
 nu = 1
-t = np.logspace(-3, 2)
+t = np.logspace(-2, 2)
 y2 = (1 - np.exp(-2*gamma*t)) / (2*gamma) - (np.exp(-(gamma+nu)*t)-np.exp(-2*gamma*t))
-plt.plot(t, y2)
+gamma = 0.5
+y3 = (1 - np.exp(-2*gamma*t)) / (2*gamma) - (np.exp(-(gamma+nu)*t)-np.exp(-2*gamma*t))
+plt.figure(dpi=150)
+plt.plot(t, y2, label="$\\tau=1, \\tau^*=0.5$")
+plt.plot(t, y3, label="$\\tau=1, \\tau^*=2$")
+plt.legend()
 plt.loglog()
+plt.grid(which="both", ls=":")
 plt.xlabel("lag time")
 plt.ylabel("$\left<\Delta y^2\\right>$")
 # %% codecell
+# unify trajectory data format
+folder = r"..\Data\traj_50"
+traj = pd.read_csv(os.path.join(folder, "23.csv"))
+traj
 # %% codecell
+traj1 = traj[["x", "y"]].assign(frame=traj.index*50, particle=0)
+traj1.to_csv("test_traj.csv", index=False)
 # %% codecell
+folder = r"..\Data\traj_50"
+save_folder = r"..\Data\traj_u"
+l = readdata(folder, "csv")
+for num, i in l.iterrows():
+    traj = pd.read_csv(i.Dir)
+    traj1 = traj[["x", "y"]].assign(frame=traj.index*50, particle=0)
+    traj1.to_csv(os.path.join(save_folder, "{:02d}.csv".format(int(i.Name))), index=False)
 # %% codecell
+folder = r"..\Data\traj"
+traj = pd.read_csv(os.path.join(folder, "081.csv"), names=["x", "y"])
+traj
 # %% codecell
+folder = r"..\Data\traj"
+save_folder = r"..\Data\traj_u"
+l = readdata(folder, "csv")
+for num, i in l.iterrows():
+    if int(i.Name) > 80:
+        traj = pd.read_csv(i.Dir, names=["x", "y"])
+        traj1 = traj[["x", "y"]].assign(frame=traj.index, particle=0)
+        traj1.to_csv(os.path.join(save_folder, "{:02d}.csv".format(int(i.Name))), index=False)
 # %% codecell
+
 # %% codecell
 # %% codecell
 # %% codecell
@@ -603,7 +634,81 @@ plt.grid(ls=":")
 # plt.ylim([0.01, log1["t2"].max()**0.5*1.1])
 plt.loglog()
 # %% codecell
+# plot all MSD in main
+log_dir = r"..\Data\structured_log_DE.ods"
+log = pd.read_excel(io=log_dir, sheet_name="main")
+log1 = log.dropna(subset=["OD"])
+data_dir = r"..\Data\traj_u"
+viridis = plt.cm.get_cmap('Set1', 5)
+count = 0
+plt.figure(dpi=150)
+for num, i in log1.iterrows():
+    traj_dir = os.path.join(data_dir, "{:02d}.csv".format(int(i["DE#"])))
+    if os.path.exists(traj_dir):
+        traj = pd.read_csv(traj_dir)
+    else:
+        print("Missing traj {:d}".format(i["DE#"]))
+        continue
+    msd = tp.msd(traj, mpp=1, fps=i.FPS, max_lagtime=traj.frame.max()//5).dropna()
+    plt.plot(msd.lagt, msd["<y^2>"], label=i["DE#"], color=viridis(count/4))
+    count += 1
+    if count > 4:
+        plt.legend(fontsize=20, frameon=False)
+        plt.xlabel("$\Delta t$ (s)")
+        plt.ylabel(r"$\left< \Delta y^2 \right>$ ($\mu$m$^2$)")
+        plt.grid(which="both", ls=":")
+        plt.loglog()
+        plt.savefig("{:d}.jpg".format(int(i["DE#"])))
+        plt.figure(dpi=150)
+        count = 0
+plt.legend(fontsize=20, frameon=False)
+plt.xlabel("$\Delta t$ (s)")
+plt.ylabel(r"$\left< \Delta y^2 \right>$ ($\mu$m$^2$)")
+plt.grid(which="both", ls=":")
+plt.loglog()
+plt.tight_layout()
+plt.savefig("{:d}.jpg".format(num))
+# plt.xlim([1, log1["(D-d)/d^2"].max()*1.1])
+# plt.ylim([0.01, log1["t2"].max()**0.5*1.1])
 
+
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
 # %% codecell
 # %% codecell
 # %% codecell
