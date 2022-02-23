@@ -12,7 +12,117 @@ from scipy.signal import savgol_filter
 import trackpy as tp
 import datetime
 # %% codecell
-# Old data MSD visualize
+# Overview of the current data: D vs. d, with color coded concentration bins
+log_dir = r"..\Data\structured_log_DE.ods"
+log = pd.read_excel(io=log_dir, sheet_name="main")
+log1 = log.dropna(subset=["Rinfy", "t2"])
+binsize = 20 # OD bin size
+plt.figure(dpi=150)
+bin_starts = range(0, int(log1.OD.max()), binsize)
+cmap = plt.cm.get_cmap("Set1", len(bin_starts))
+for num, bs in enumerate(bin_starts):
+    log2 = log1.loc[(log1.OD>bs)&(log1.OD<=bs+binsize)]
+    plt.scatter(log2.D, log2.d, color=cmap(num), label="{0:d}-{1:d}".format(bs,bs+binsize))
+plt.xlabel("$D$ (um)")
+plt.ylabel("$d$ (um)")
+plt.xlim([0, 1.05*log1.D.max()])
+plt.ylim([0, 1.05*log1.d.max()])
+plt.plot([0, 1.05*log1.d.max()], [0, 1.05*log1.d.max()], ls=":", color="black")
+plt.legend(ncol=2, fontsize=7)
+# %% codecell
+# Plot R_inf vs. (D-d)/d^2
+log_dir = r"..\Data\structured_log_DE.ods"
+log = pd.read_excel(io=log_dir, sheet_name="main")
+log1 = log.dropna(subset=["Rinfy", "t2"])
+binsize = 20 # OD bin size
+plt.figure(dpi=150)
+bin_starts = range(0, int(log1.OD.max()), binsize)
+cmap = plt.cm.get_cmap("Set1", len(bin_starts))
+for num, bs in enumerate(bin_starts):
+    log2 = log1.loc[(log1.OD>bs)&(log1.OD<=bs+binsize)]
+    plt.scatter(log2["(D-d)/d^2"], log2.Rinfy**0.5, color=cmap(num), label="{0:d}-{1:d}".format(bs,bs+binsize))
+plt.xlabel("$(D-d)/d^2$")
+plt.ylabel("$R_\infty$ (um)")
+plt.legend(ncol=2, fontsize=7)
+plt.grid(which="both", ls=":")
+# plt.loglog()
+# %% codecell
+log_dir = r"..\Data\structured_log_DE.ods"
+log = pd.read_excel(io=log_dir, sheet_name="main")
+log1 = log.dropna(subset=["Rinfy", "t2"])
+binsize = 20 # OD bin size
+plt.figure(dpi=150)
+bin_starts = range(0, int(log1.OD.max()), binsize)
+cmap = plt.cm.get_cmap("Set1", len(bin_starts))
+for num, bs in enumerate(bin_starts):
+    log2 = log1.loc[(log1.OD>bs)&(log1.OD<=bs+binsize)]
+    plt.scatter(log2["(D-d)/d^2"], log2.Rinfy**0.5/(log2.D-log2.d), color=cmap(num), label="{0:d}-{1:d}".format(bs,bs+binsize))
+plt.xlabel("$(D-d)/d^2$")
+plt.ylabel("$R_\infty / (D-d)$")
+plt.legend(ncol=2, fontsize=7)
+plt.grid(which="both", ls=":")
+plt.loglog()
+# %% codecell
+log_dir = r"..\Data\structured_log_DE.ods"
+log = pd.read_excel(io=log_dir, sheet_name="main")
+log1 = log.dropna(subset=["Rinfy", "t2"])
+binsize = 20 # OD bin size
+plt.figure(dpi=150)
+bin_starts = range(0, int(log1.OD.max()), binsize)
+cmap = plt.cm.get_cmap("Set1", len(bin_starts))
+for num, bs in enumerate(bin_starts):
+    log2 = log1.loc[(log1.OD>bs)&(log1.OD<=bs+binsize)]
+    plt.scatter(log2["(D-d)/d^2"], log2.Rinfy**0.5/(log2.OD), color=cmap(num), label="{0:d}-{1:d}".format(bs,bs+binsize))
+plt.xlabel("$(D-d)/d^2$")
+plt.ylabel("$R_\infty / OD$")
+plt.legend(ncol=2, fontsize=7)
+plt.grid(which="both", ls=":")
+plt.loglog()
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
 # %% codecell
 # review data after 1026
 log_dir = r"..\Data\structured_log_DE.ods"
@@ -482,7 +592,7 @@ viridis = plt.cm.get_cmap('Set3')
 plt.figure(dpi=150)
 for i in range(0, 120, 20):
     log2 = log1.loc[(log1.OD>=i)&(log1.OD<=i+20)]
-    x = log2["(D-d)/d^2"] 
+    x = log2["(D-d)/d^2"]
     y = log2["Rinfy"] ** 0.5 / log2["OD"]
     plt.scatter(x, y, s=20, color=viridis(i/100), label="{0:d}-{1:d}".format(i, i+20))
 plt.legend()
