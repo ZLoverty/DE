@@ -673,6 +673,17 @@ plt.savefig("{:d}.jpg".format(num))
 
 
 # %% codecell
+log_dir = r"..\Data\structured_log_DE.ods"
+log = pd.read_excel(io=log_dir, sheet_name="main")
+log1 = log.dropna(subset=["OD"])
+data_dir = r"..\Data\traj"
+for num, i in log1.iterrows():
+    traj_dir = os.path.join(data_dir, "{:02d}.csv".format(int(i["DE#"])))
+    if os.path.exists(traj_dir):
+        traj = pd.read_csv(traj_dir)
+    else:
+        print("Missing traj {:d}".format(i["DE#"]))
+
 # %% codecell
 # %% codecell
 # %% codecell
