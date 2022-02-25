@@ -17,49 +17,80 @@ log_dir = r"..\Data\structured_log_DE.ods"
 log = pd.read_excel(io=log_dir, sheet_name="main")
 log1 = log.dropna(subset=["Rinfy", "t2"])
 binsize = 20 # OD bin size
-plt.figure(dpi=150)
+plt.figure(figsize=(5,3),dpi=150)
 bin_starts = range(0, int(log1.OD.max()), binsize)
-cmap = plt.cm.get_cmap("Set1", len(bin_starts))
+cmap = plt.cm.get_cmap("tab10")
 for num, bs in enumerate(bin_starts):
     log2 = log1.loc[(log1.OD>bs)&(log1.OD<=bs+binsize)]
-    plt.scatter(log2.D, log2.d, color=cmap(num), label="{0:d}-{1:d}".format(bs,bs+binsize))
+    log3 = log2.loc[log2.Comment!="Chile"]
+    log4 = log2.loc[log2.Comment=="Chile"]
+    plt.scatter(log3.D, log3.d, color=cmap(num), label="{0:d}-{1:d}".format(bs,bs+binsize))
+    plt.scatter(log4.D, log4.d, edgecolors=cmap(num), marker="^", fc=(0,0,0,0))
 plt.xlabel("$D$ (um)")
 plt.ylabel("$d$ (um)")
 plt.xlim([0, 1.05*log1.D.max()])
 plt.ylim([0, 1.05*log1.d.max()])
 plt.plot([0, 1.05*log1.d.max()], [0, 1.05*log1.d.max()], ls=":", color="black")
-plt.legend(ncol=2, fontsize=7)
+plt.legend(ncol=2, fontsize=5, loc="upper left")
 # %% codecell
 # Plot R_inf vs. (D-d)/d^2
 log_dir = r"..\Data\structured_log_DE.ods"
 log = pd.read_excel(io=log_dir, sheet_name="main")
 log1 = log.dropna(subset=["Rinfy", "t2"])
 binsize = 20 # OD bin size
-plt.figure(dpi=150)
+plt.figure(figsize=(3.5,3), dpi=200)
 bin_starts = range(0, int(log1.OD.max()), binsize)
-cmap = plt.cm.get_cmap("Set1", len(bin_starts))
+cmap = plt.cm.get_cmap("tab10")
 for num, bs in enumerate(bin_starts):
     log2 = log1.loc[(log1.OD>bs)&(log1.OD<=bs+binsize)]
-    plt.scatter(log2["(D-d)/d^2"], log2.Rinfy**0.5, color=cmap(num), label="{0:d}-{1:d}".format(bs,bs+binsize))
+    log3 = log2.loc[log2.Comment!="Chile"]
+    log4 = log2.loc[log2.Comment=="Chile"]
+    plt.scatter(log3["(D-d)/d^2"], log3.Rinfy**0.5, color=cmap(num), label="{0:d}-{1:d}".format(bs,bs+binsize))
+    plt.scatter(log4["(D-d)/d^2"], log4.Rinfy**0.5, edgecolors=cmap(num), marker="^", fc=(0,0,0,0))
 plt.xlabel("$(D-d)/d^2$")
 plt.ylabel("$R_\infty$ (um)")
-plt.legend(ncol=2, fontsize=7)
+plt.legend(ncol=2, fontsize=6)
 plt.grid(which="both", ls=":")
-# plt.loglog()
+plt.loglog()
 # %% codecell
+# Plot tau^* vs. (D-d)/d^2
 log_dir = r"..\Data\structured_log_DE.ods"
 log = pd.read_excel(io=log_dir, sheet_name="main")
 log1 = log.dropna(subset=["Rinfy", "t2"])
 binsize = 20 # OD bin size
-plt.figure(dpi=150)
+plt.figure(figsize=(3.5,3), dpi=200)
+bin_starts = range(0, int(log1.OD.max()), binsize)
+cmap = plt.cm.get_cmap("tab10")
+for num, bs in enumerate(bin_starts):
+    log2 = log1.loc[(log1.OD>bs)&(log1.OD<=bs+binsize)]
+    log3 = log2.loc[log2.Comment!="Chile"]
+    log4 = log2.loc[log2.Comment=="Chile"]
+    plt.scatter(log3["(D-d)/d^2"], log3.t2, color=cmap(num), label="{0:d}-{1:d}".format(bs,bs+binsize))
+    plt.scatter(log4["(D-d)/d^2"], log4.t2, edgecolors=cmap(num), marker="^", fc=(0,0,0,0))
+plt.xlabel("$(D-d)/d^2$")
+plt.ylabel("$\\tau^*$ (s)")
+plt.legend(ncol=2, fontsize=6)
+plt.grid(which="both", ls=":")
+plt.loglog()
+
+# %% codecell
+# rescale Rinf with (D-d)
+log_dir = r"..\Data\structured_log_DE.ods"
+log = pd.read_excel(io=log_dir, sheet_name="main")
+log1 = log.dropna(subset=["Rinfy", "t2"])
+binsize = 20 # OD bin size
+plt.figure(figsize=(3.5, 3), dpi=200)
 bin_starts = range(0, int(log1.OD.max()), binsize)
 cmap = plt.cm.get_cmap("Set1", len(bin_starts))
 for num, bs in enumerate(bin_starts):
     log2 = log1.loc[(log1.OD>bs)&(log1.OD<=bs+binsize)]
-    plt.scatter(log2["(D-d)/d^2"], log2.Rinfy**0.5/(log2.D-log2.d), color=cmap(num), label="{0:d}-{1:d}".format(bs,bs+binsize))
+    log3 = log2.loc[log2.Comment!="Chile"]
+    log4 = log2.loc[log2.Comment=="Chile"]
+    plt.scatter(log3["(D-d)/d^2"], log3.Rinfy**0.5/(log3.D-log3.d), color=cmap(num), label="{0:d}-{1:d}".format(bs,bs+binsize))
+    plt.scatter(log4["(D-d)/d^2"], log4.Rinfy**0.5/(log4.D-log4.d), edgecolors=cmap(num), marker="^", fc=(0,0,0,0))
 plt.xlabel("$(D-d)/d^2$")
 plt.ylabel("$R_\infty / (D-d)$")
-plt.legend(ncol=2, fontsize=7)
+plt.legend(ncol=2, fontsize=6)
 plt.grid(which="both", ls=":")
 plt.loglog()
 # %% codecell
@@ -67,19 +98,64 @@ log_dir = r"..\Data\structured_log_DE.ods"
 log = pd.read_excel(io=log_dir, sheet_name="main")
 log1 = log.dropna(subset=["Rinfy", "t2"])
 binsize = 20 # OD bin size
-plt.figure(dpi=150)
+plt.figure(figsize=(3.5,3), dpi=150)
 bin_starts = range(0, int(log1.OD.max()), binsize)
 cmap = plt.cm.get_cmap("Set1", len(bin_starts))
 for num, bs in enumerate(bin_starts):
     log2 = log1.loc[(log1.OD>bs)&(log1.OD<=bs+binsize)]
-    plt.scatter(log2["(D-d)/d^2"], log2.Rinfy**0.5/(log2.OD), color=cmap(num), label="{0:d}-{1:d}".format(bs,bs+binsize))
+    log3 = log2.loc[log2.Comment!="Chile"]
+    log4 = log2.loc[log2.Comment=="Chile"]
+    plt.scatter(log3["(D-d)/d^2"], log3.Rinfy**0.5/(log3.OD), color=cmap(num), label="{0:d}-{1:d}".format(bs,bs+binsize))
+    plt.scatter(log4["(D-d)/d^2"], log4.Rinfy**0.5/(log4.OD), edgecolors=cmap(num), marker="^", fc=(0,0,0,0))
+
 plt.xlabel("$(D-d)/d^2$")
 plt.ylabel("$R_\infty / OD$")
-plt.legend(ncol=2, fontsize=7)
+plt.legend(ncol=2, fontsize=6)
 plt.grid(which="both", ls=":")
 plt.loglog()
 # %% codecell
+# Plot $R_\infty^2 / \tau^*$ vs. $(D-d)/d^2$
+log_dir = r"..\Data\structured_log_DE.ods"
+log = pd.read_excel(io=log_dir, sheet_name="main")
+log1 = log.dropna(subset=["Rinfy", "t2"])
+binsize = 20 # OD bin size
+plt.figure(figsize=(4.5,3), dpi=150)
+bin_starts = range(0, int(log1.OD.max()), binsize)
+cmap = plt.cm.get_cmap("Set1", len(bin_starts))
+for num, bs in enumerate(bin_starts):
+    log2 = log1.loc[(log1.OD>bs)&(log1.OD<=bs+binsize)]
+    log3 = log2.loc[log2.Comment!="Chile"]
+    log4 = log2.loc[log2.Comment=="Chile"]
+    plt.scatter(log3["(D-d)/d^2"], log3.Rinfy/(log3.t2), color=cmap(num), label="{0:d}-{1:d}".format(bs,bs+binsize))
+    plt.scatter(log4["(D-d)/d^2"], log4.Rinfy/(log4.t2), edgecolors=cmap(num), marker="^", fc=(0,0,0,0))
+
+plt.xlabel("$(D-d)/d^2$")
+plt.ylabel("$R_\infty^2 / \\tau^*$")
+plt.legend(ncol=2, fontsize=6, loc="lower right")
+plt.grid(which="both", ls=":")
+plt.loglog()
 # %% codecell
+# Plot $R_\infty^2$ vs. $\tau^*$
+log_dir = r"..\Data\structured_log_DE.ods"
+log = pd.read_excel(io=log_dir, sheet_name="main")
+log1 = log.dropna(subset=["Rinfy", "t2"])
+binsize = 20 # OD bin size
+plt.figure(figsize=(4.5,3), dpi=150)
+bin_starts = range(0, int(log1.OD.max()), binsize)
+cmap = plt.cm.get_cmap("Set1", len(bin_starts))
+for num, bs in enumerate(bin_starts):
+    log2 = log1.loc[(log1.OD>bs)&(log1.OD<=bs+binsize)]
+    log3 = log2.loc[log2.Comment!="Chile"]
+    log4 = log2.loc[log2.Comment=="Chile"]
+    plt.scatter(log3.t2, log3.Rinfy, color=cmap(num), label="{0:d}-{1:d}".format(bs,bs+binsize))
+    plt.scatter(log4.t2, log4.Rinfy, edgecolors=cmap(num), marker="^", fc=(0,0,0,0))
+
+plt.xlabel("$\\tau^*$ (s)")
+plt.ylabel("$R_\infty^2 $ (um$^2$)")
+plt.legend(ncol=2, fontsize=6, loc="lower right")
+plt.grid(which="both", ls=":")
+plt.xlim([1, 30])
+plt.loglog()
 # %% codecell
 # %% codecell
 # %% codecell
