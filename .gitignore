@@ -11,7 +11,6 @@
 *.bib
 *.fdb_latexmk
 *.blg
-*.zip
 *synctex*
 README.html
 readme.html

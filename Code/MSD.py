@@ -638,7 +638,7 @@ plt.loglog()
 log_dir = r"..\Data\structured_log_DE.ods"
 log = pd.read_excel(io=log_dir, sheet_name="main")
 log1 = log.dropna(subset=["OD"])
-data_dir = r"..\Data\traj_u"
+data_dir = r"..\Data\traj"
 viridis = plt.cm.get_cmap('Set1', 5)
 count = 0
 plt.figure(dpi=150)
