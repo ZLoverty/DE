@@ -53,3 +53,4 @@ February
 02082022 -- more droplet sizes for characterizing correlation time
 02092022 -- Some high concentration double emulsion experiments (the best pool from GR is broken, need new ones)
 02162022 -- No video is taken today. Aquapel is up and pool is broken. All need to be fixed before starting the next experiment. (T_T)
+02242022 -- Do more double emulsion at high concentration (OD~100). Test new Aquapel, OK. Pluronic seems to cause cluster, too.
