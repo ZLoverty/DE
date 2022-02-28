@@ -180,7 +180,7 @@ class de_data():
         """Plot tau^* vs. (D-d)/d^2"""
         log1 = self.data.dropna(subset=["Rinfy", "t2"])
         binsize = 20 # OD bin size
-        plt.figure(figsize=(3.5,3), dpi=200)
+        plt.figure(figsize=(3.5,3), dpi=100)
         bin_starts = range(0, int(log1.OD.max()), binsize)
         cmap = plt.cm.get_cmap("tab10")
         for num, bs in enumerate(bin_starts):
@@ -210,7 +210,7 @@ class de_data():
                 print("Missing traj {:d}".format(i["DE#"]))
                 n_missing += 1
         print("{:d} trajectories are missing".format(n_missing))
-    def plot_MSD_model_Cristian():
+    def plot_MSD_model_Cristian(self):
         """plot the MSD model, get a feeling of parameters, save for future use, not finished"""
         gamma = 2
         nu = 1
@@ -218,7 +218,7 @@ class de_data():
         y2 = (1 - np.exp(-2*gamma*t)) / (2*gamma) - (np.exp(-(gamma+nu)*t)-np.exp(-2*gamma*t))
         gamma = 0.5
         y3 = (1 - np.exp(-2*gamma*t)) / (2*gamma) - (np.exp(-(gamma+nu)*t)-np.exp(-2*gamma*t))
-        plt.figure(dpi=150)
+        plt.figure(figsize=(3.5, 3), dpi=100)
         plt.plot(t, y2, label="$\\tau=1, \\tau^*=0.5$")
         plt.plot(t, y3, label="$\\tau=1, \\tau^*=2$")
         plt.legend()
@@ -232,7 +232,7 @@ class de_data():
         xm = 0
         ym = 0
         cmap = plt.cm.get_cmap("tab10")
-        plt.figure(figsize=(3.5,3), dpi=150)
+        plt.figure(figsize=(3.5,3), dpi=100)
         for num, OD_min in enumerate(range(0, 160, 20)):
             OD_max = OD_min + 20
             log1 = log.loc[(log.OD>=OD_min)&(log.OD<=OD_max)].dropna(subset=["Rinfy"])
@@ -290,7 +290,7 @@ class de_data():
         """R_inf vs. (D-d)/d^2"""
         log1 = self.data.dropna(subset=["Rinfy", "t2"])
         binsize = 20 # OD bin size
-        plt.figure(figsize=(3.5,3), dpi=200)
+        plt.figure(figsize=(3.5,3), dpi=100)
         bin_starts = range(0, int(log1.OD.max()), binsize)
         cmap = plt.cm.get_cmap("tab10")
         for num, bs in enumerate(bin_starts):
@@ -314,7 +314,7 @@ class de_data():
         xm = 0
         ym = 0
         cmap = plt.cm.get_cmap("tab10")
-        plt.figure(figsize=(3.5,3), dpi=150)
+        plt.figure(figsize=(3.5,3), dpi=100)
         for num, OD_min in enumerate(range(0, 160, 20)):
             OD_max = OD_min + 20
             log1 = log.loc[(log.OD>=OD_min)&(log.OD<=OD_max)].dropna(subset=["Rinfy"])
@@ -373,7 +373,7 @@ class de_data():
         log = self.data
         log1 = log.dropna(subset=["Rinfy", "t2"])
         binsize = 20 # OD bin size
-        plt.figure(figsize=(4.5,3), dpi=150)
+        plt.figure(figsize=(3.5,3), dpi=100)
         bin_starts = range(0, int(log1.OD.max()), binsize)
         cmap = plt.cm.get_cmap("tab10")
         for num, bs in enumerate(bin_starts):
@@ -393,7 +393,7 @@ class de_data():
         log = self.data
         log1 = log.dropna(subset=["Rinfy", "t2"])
         binsize = 20 # OD bin size
-        plt.figure(figsize=(4.5,3), dpi=150)
+        plt.figure(figsize=(3.5,3), dpi=100)
         bin_starts = range(0, int(log1.OD.max()), binsize)
         cmap = plt.cm.get_cmap("tab10")
         for num, bs in enumerate(bin_starts):
@@ -413,7 +413,7 @@ class de_data():
         log = self.data
         log1 = log.dropna(subset=["Rinfy", "t2"])
         binsize = 20 # OD bin size
-        plt.figure(figsize=(3.5,3), dpi=150)
+        plt.figure(figsize=(3.5,3), dpi=100)
         bin_starts = range(0, int(log1.OD.max()), binsize)
         cmap = plt.cm.get_cmap("tab10")
         for num, bs in enumerate(bin_starts):
@@ -432,7 +432,7 @@ class de_data():
         log = self.data
         log1 = log.dropna(subset=["Rinfy", "t2"])
         binsize = 20 # OD bin size
-        plt.figure(figsize=(3.5, 3), dpi=150)
+        plt.figure(figsize=(3.5, 3), dpi=100)
         bin_starts = range(0, int(log1.OD.max()), binsize)
         cmap = plt.cm.get_cmap("tab10")
         for num, bs in enumerate(bin_starts):

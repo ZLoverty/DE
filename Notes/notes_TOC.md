@@ -31,7 +31,7 @@
 3. [Droplet size control in capillary device](drop_size_control.pdf)
 4. [Inner droplet tracking - Hough circles algorithm](droplet_tracking.pdf)
 5. [Oxygen diffusion in a droplet: a simple calculation](oxygen_diffusion_calculation.pdf)
-
+6. [A Python class for plotting DE data](2022-02-28_de-plotting-tools.pdf)
 ---
 
 ##### Miscellaneous
