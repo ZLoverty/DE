@@ -5,7 +5,7 @@ date: "2022-02-25 11:31"
 ---
 
 ### Stochastic model discussion summary
-
+(Feb 25, 2022)
 ##### Formulation and solution
 
 We will continue the discussion with the equations and solutions given by Maggi 2014:
@@ -55,6 +55,8 @@ $$
 \tau^* = \frac{9\eta}{2\Delta\rho g}\frac{r_o-r_i}{r_i^2} =  \frac{9\eta}{\Delta\rho g}\frac{D-d}{d^2}
 $$
 
+Use water viscosity $\eta=0.001$ Pa s, we can compute the theoretical coefficient $K=9\eta/\rho^*g=3.9$ $\mu$m s.
+
 In the limit $\tau^*\gg\tau$, the saturation value $R_\infty^2\approx 2D_A\tau^*\propto\tau^*\propto (D-d)/d^2$,
 
 $$
@@ -83,6 +85,10 @@ $R_\infty$ vs. $(D-d)/d^2$
 
 ![Rinf](../images/2022/02/rinf.png)
 
+Plot the scattered data in bins
+
+![binned tau star and R inf](../images/2022/02/binned-tau-star-and-r-inf.png)
+
 ##### Some attempts
 
 Rescale $R_\infty$ with $n$ (OD)
@@ -97,4 +103,6 @@ Plot $R_\infty^2$ vs. $\tau^*$ (similar to above, expect a linear regime)
 
 ![rinf2 vs tau star](../images/2022/02/rinf2-vs-tau-star.png)
 
-Separate $(D-d)/d^2$ regimes (already evidenced in $R_\infty^2 / \tau^*$ vs. $(D-d)/d^2$ plot)
+Separate $(D-d)/d^2$ regimes (already evidenced in $R_\infty^2 / \tau^*$ vs. $(D-d)/d^2$ plot, and in $\tau^*$ vs. $(D-d)/d^2$ plot). A linear regime is seen for $\tau^*$ at intermediate $(D-d)/d^2$. Fit the linear regime, we obtain a slope $\sim 22$ $\mu$m s. The stochastic model predicts this slope to be $9\eta/\Delta\rho g\approx 3.9$ $\mu$m s. This discrepancy is interesting to look into.
+
+![tau linear regime](../images/2022/02/tau-linear-regime.png)
