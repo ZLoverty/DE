@@ -6,7 +6,8 @@ from scipy.signal import savgol_filter
 from pivLib import read_piv
 from skimage import io
 from corrLib import divide_windows, readdata
-
+import trackpy as tp
+# %% codecell
 def tangent_unit(point, center):
     """Compute tangent unit vector based on point coords and center coords.
     Args:
@@ -143,13 +144,23 @@ class de_data():
         plt.ylim([0, 1.05*log1.d.max()])
         plt.plot([0, 1.05*log1.d.max()], [0, 1.05*log1.d.max()], ls=":", color="black")
         plt.legend(ncol=2, fontsize=5, loc="upper left")
-    def generate_msd_repo(self):
-        """Generate .jpg images for MSD repo. Takes ~2 min and save images, be careful!"""
+    def generate_msd_repo(self, component="y", data_dir=r"..\Data\traj"):
+        """Generate .jpg images for MSD repo. Takes ~2 min and save images, be careful!
+        coord: the displacement component to compute, can be 'y' or 'z'.
+        Edit:
+        Mar 03, 2022 -- i) add z component, ii) put all DE# in image file name"""
+        mapper = {"y": "<y^2>", "z": "<x^2>"}
         log1 = self.data.dropna(subset=["OD"])
-        data_dir = r"..\Data\traj"
+        if component == "z":
+            log1 = log1.loc[log1.Plane=="XZ"]
+        elif component == "y":
+            pass
+        else:
+            raise ValueError("Invalid component, should be y or z")
         viridis = plt.cm.get_cmap('Set1', 5)
         count = 0
         plt.figure(dpi=150)
+        name_list = []
         for num, i in log1.iterrows():
             traj_dir = os.path.join(data_dir, "{:02d}.csv".format(int(i["DE#"])))
             if os.path.exists(traj_dir):
@@ -158,20 +169,28 @@ class de_data():
                 print("Missing traj {:d}".format(i["DE#"]))
                 continue
             msd = tp.msd(traj, mpp=1, fps=i.FPS, max_lagtime=traj.frame.max()//5).dropna()
-            plt.plot(msd.lagt, msd["<y^2>"], label=i["DE#"], color=viridis(count/4))
+            plt.plot(msd.lagt, msd[mapper[component]], label=i["DE#"], color=viridis(count/4))
             count += 1
+            name_list.append("{:d}".format(int(i["DE#"])))
             if count > 4:
                 plt.legend(fontsize=20, frameon=False)
                 plt.xlabel("$\Delta t$ (s)")
-                plt.ylabel(r"$\left< \Delta y^2 \right>$ ($\mu$m$^2$)")
+                if component == "y":
+                    plt.ylabel(r"$\left< \Delta y^2 \right>$ ($\mu$m$^2$)")
+                elif component == "z":
+                    plt.ylabel(r"$\left< \Delta z^2 \right>$ ($\mu$m$^2$)")
                 plt.grid(which="both", ls=":")
                 plt.loglog()
-                plt.savefig("{:d}.jpg".format(int(i["DE#"])))
+                plt.savefig("{}.jpg".format("-".join(name_list)))
                 plt.figure(dpi=150)
                 count = 0
+                name_list = []
         plt.legend(fontsize=20, frameon=False)
         plt.xlabel("$\Delta t$ (s)")
-        plt.ylabel(r"$\left< \Delta y^2 \right>$ ($\mu$m$^2$)")
+        if component == "y":
+            plt.ylabel(r"$\left< \Delta y^2 \right>$ ($\mu$m$^2$)")
+        elif component == "z":
+            plt.ylabel(r"$\left< \Delta z^2 \right>$ ($\mu$m$^2$)")
         plt.grid(which="both", ls=":")
         plt.loglog()
         plt.tight_layout()
@@ -449,3 +468,12 @@ class de_data():
     def scatter(self, mode="log", highlight_Chile_data=True):
         """I want to implement a more flexible plotting tool to test ideas, but it seems difficult"""
         pass
+
+# %% codecell
+if __name__=="__main__":
+    # %% codecell
+    log_dir = r"..\Data\structured_log_DE.ods"
+    log = pd.read_excel(io=log_dir, sheet_name="main")
+    data = de_data(log)
+    # %% codecell
+    data.generate_msd_repo(component="z")
