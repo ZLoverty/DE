@@ -33,6 +33,7 @@
 5. [Oxygen diffusion in a droplet: a simple calculation](oxygen_diffusion_calculation.pdf)
 6. [A Python class for plotting DE data](2022-02-28_de-plotting-tools.pdf)
 7. [Moving mask PIV](2022-03-02_moving-mask-droplet-frame-piv.pdf)
+8. [`droplet_image` class note](2022-03-03_droplet-image-class.pdf)
 ---
 
 ##### Miscellaneous
