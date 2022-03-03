@@ -32,6 +32,7 @@
 4. [Inner droplet tracking - Hough circles algorithm](droplet_tracking.pdf)
 5. [Oxygen diffusion in a droplet: a simple calculation](oxygen_diffusion_calculation.pdf)
 6. [A Python class for plotting DE data](2022-02-28_de-plotting-tools.pdf)
+7. [Moving mask PIV](2022-03-02_moving-mask-droplet-frame-piv.pdf)
 ---
 
 ##### Miscellaneous
