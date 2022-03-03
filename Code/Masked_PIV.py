@@ -230,6 +230,9 @@ class droplet_image:
         imgDir = self.sequence.Dir[index]
         img = io.imread(imgDir)
         return img
+    def get_image_name(self, index):
+        return self.sequence.Name[index]
+
 # %% codecell
 image_sequence = readdata(os.path.join(folder, "16", "raw"), "tif")[:1000]
 mask = io.imread(os.path.join(folder, "mask", "16.tif"))
@@ -237,7 +240,7 @@ xy0 = (173, 165)
 mask_shape = (174, 174)
 di = droplet_image(image_sequence, mask, xy0, mask_shape)
 len(di)
-
+di.get_image_name(999)
 # %% codecell
 traj = di.droplet_traj()
 
@@ -282,3 +285,16 @@ for i0, i1 in zip(di.sequence.index[::2], di.sequence.index[1::2]):
 plt.imshow(I0, cmap="gray")
 plt.quiver(x, y, u, v, color="yellow")
 plt.axis("off")
+
+# %% codecell
+# test json
+import json
+data = {"string": "test", "list": [1,2,3]}
+with open("test.json", "w") as fp:
+    json.dump(data, fp)
+
+# %% codecell
+with open("test.json", "r") as fp:
+    read = json.load(fp)
+read
+read["list"]

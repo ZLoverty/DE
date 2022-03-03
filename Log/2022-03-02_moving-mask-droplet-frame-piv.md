@@ -56,3 +56,23 @@ Directly apply `pivLib.PIV` on the cropped image sequence, we get satisfactory v
 ![moving mask PIV](../images/2022/03/moving-mask-piv.png)
 
 ##### Batch script
+
+I implemented a `droplet_image` class, which creates an object based on the image sequence file directory list, and does image analysis such as PIV inside the object.
+
+The moving mask PIV is implemented as one of the many methods. To use the method, one need to supply the `save_folder`, `PIV_settings`, `mask_info`. See the code below for a working example:
+
+```python
+save_folder = r"test_images\moving_mask_piv\piv_result"
+winsize = 20 # PIV setting
+overlap = 10 # PIV setting
+dt = 0.02 # PIV setting
+mask_dir = r"test_images\moving_mask_piv\mask.tif"
+xy0 = (178, 161) # initial position of droplet
+mask_shape = (174, 174) # width and height of droplet
+
+DI.moving_mask_piv(save_folder, winsize, overlap, dt, mask_dir, xy0, mask_shape)
+```
+
+The figure below shows the result of the moving mask PIV
+
+![result of moving mask PIV](../images/2022/03/result-of-moving-mask-piv.png)
