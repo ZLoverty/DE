@@ -468,12 +468,162 @@ class de_data():
     def scatter(self, mode="log", highlight_Chile_data=True):
         """I want to implement a more flexible plotting tool to test ideas, but it seems difficult"""
         pass
+# %% codecell
+class drop_data:
+    """Droplet data plotting tool."""
+    def __init__(self, data):
+        """Initialize a data object with main log spreadsheet (pd.DataFrame)"""
+        self.data = data
+        self.OD_to_nc = 8e8 # OD to number concentration conversion factor, cells/ml
+        self.single_bacterial_volume = 1 # um^3
+    def __repr__(self):
+        return self.data.__repr__()
+    def find_lifetime_data(self, n=5):
+        """Return the Droplet#'s of droplets with more than n videos, n is 5 by default"""
+        self.lifetime_data_list = []
+        for i in self.data["Droplet#"].drop_duplicates():
+            subdata = self.data.loc[self.data["Droplet#"]==i]
+            if len(subdata) >= n:
+                self.lifetime_data_list.append(i)
+        print("Lifetime data located: {}".format(str(self.lifetime_data_list)))
+    def plot_mean_velocity_evolution(self, n=5, mode="log"):
+        """Plot mean velocity vs. time.
+        Use the time of first video as 0 (or 1 in log mode)
+        n: number of curves on each plot
+        mode: the scale of time axis, can be 'lin' or 'log' (default)"""
+        self.find_lifetime_data()
+        cmap = plt.cm.get_cmap("Set1")
+        for num, i in enumerate(self.lifetime_data_list):
+            if num % n == 0:
+                fig, ax = plt.subplots(figsize=(3.5, 2), dpi=100)
+                ax.set_xlabel("time (min)")
+                ax.set_ylabel("mean velocity (um/s)")
+                ax.set_xlim([0, 60])
+                if mode == "log":
+                    ax.set_xlim([1, 60])
+                    ax.set_xscale("log")
+                ax.set_ylim([0, 15])
+            subdata = self.data.loc[self.data["Droplet#"]==i]
+            t = subdata["Time in minutes"]
+            t -= subdata["Time in minutes"].min()
+            v = subdata["Initial mean velocity (10 s)"]
+            if mode == "log":
+                t += 1
+            ax.plot(t, v, marker="s", color=cmap(num % n), label="{:d}".format(i))
+            ax.legend(frameon=False)
+    def plot_droplet_size_evolution(self, n=5, mode="log"):
+        """Plot droplet size vs. time.
+        Use the time of first video as 0 (or 1 in log mode)
+        n: number of curves on each plot
+        mode: the scale of time axis, can be 'lin' or 'log' (default)"""
+        self.find_lifetime_data()
+        cmap = plt.cm.get_cmap("Set1")
+        for num, i in enumerate(self.lifetime_data_list):
+            if num % n == 0:
+                fig, ax = plt.subplots(figsize=(3.5, 2), dpi=100)
+                ax.set_xlabel("time (min)")
+                ax.set_ylabel("droplet diameter (um)")
+                ax.set_xlim([0, 60])
+                if mode == "log":
+                    ax.set_xlim([1, 60])
+                    ax.set_xscale("log")
+                if mode == "loglog":
+                    ax.set_xlim([1, 60])
+                    ax.set_xscale("log")
+                    ax.set_yscale("log")
+                # ax.set_ylim([0, 15])
+            subdata = self.data.loc[self.data["Droplet#"]==i]
+            t = subdata["Time in minutes"]
+            t -= subdata["Time in minutes"].min()
+            D = subdata["Droplet size"]
+            if mode == "log":
+                t += 1
+            ax.plot(t, D, marker="s", color=cmap(num % n), label="{:d}".format(i))
+            ax.legend(frameon=False)
+    def plot_volume_fraction_evolution(self, n=5, mode="log"):
+        """Plot droplet size vs. time.
+        Use the time of first video as 0 (or 1 in log mode)
+        n: number of curves on each plot
+        mode: the scale of time axis, can be 'lin' or 'log' (default)"""
+        self.find_lifetime_data()
+        cmap = plt.cm.get_cmap("Set1")
+
+        for num, i in enumerate(self.lifetime_data_list):
+            if num % n == 0:
+                fig, ax = plt.subplots(figsize=(3.5, 2), dpi=100)
+                ax.set_xlabel("time (min)")
+                ax.set_ylabel("volume fraction")
+                ax.set_xlim([0, 60])
+                if mode == "log":
+                    ax.set_xlim([1, 60])
+                    ax.set_xscale("log")
+                ax.set_ylim([0.1, 0.3])
+            subdata = self.data.loc[self.data["Droplet#"]==i]
+            initial_droplet_volume = 4/3 * np.pi * (subdata["Droplet size"].iloc[0]/2) ** 3
+            bacterial_volume = subdata["Bacterial concentration"].iloc[0] * self.OD_to_nc * initial_droplet_volume * 1e-12 * self.single_bacterial_volume
+
+            t = subdata["Time in minutes"]
+            t -= subdata["Time in minutes"].min()
+            vf = bacterial_volume / (4/3 * np.pi * (subdata["Droplet size"]/2) ** 3)
+            if mode == "log":
+                t += 1
+            ax.plot(t, vf, marker="s", color=cmap(num % n), label="{:d}".format(i))
+            ax.legend(frameon=False)
+    def plot_velocity_volume_fraction_correlation(self, time_bins=5):
+        """Plot the correlation between mean velocity and volume fraction
+        time_bins: number of time bins"""
+        self.find_lifetime_data()
+        cmap = plt.cm.get_cmap("Set1")
+        bin_size = 60 // time_bins
+        bin_starts = range(0, 60, bin_size)
+        plot_data_list = []
+        for num, i in enumerate(self.lifetime_data_list):
+            subdata = self.data.loc[self.data["Droplet#"]==i]
+            initial_droplet_volume = 4/3 * np.pi * (subdata["Droplet size"].iloc[0]/2) ** 3
+            bacterial_volume = subdata["Bacterial concentration"].iloc[0] * self.OD_to_nc * initial_droplet_volume * 1e-12 * self.single_bacterial_volume
+            t = subdata["Time in minutes"]
+            t -= subdata["Time in minutes"].min()
+            vf = bacterial_volume / (4/3 * np.pi * (subdata["Droplet size"]/2) ** 3)
+            plot_data = subdata.assign(t=t, vf=vf)
+            plot_data_list.append(plot_data)
+        data = pd.concat(plot_data_list, axis=0)
+        fig, ax = plt.subplots(figsize=(3.5, 3), dpi=100)
+        for num, start in enumerate(bin_starts):
+            subdata = data.loc[(data.t>start)&(data.t<=start+bin_size)]
+            ax.scatter(subdata.vf, subdata["Initial mean velocity (10 s)"],
+                       color=cmap(num), label="{0:.0f}-{1:.0f}".format(start, start+bin_size))
+        ax.set_xlabel("volume fraction")
+        ax.set_ylabel("mean velocity")
+        ax.legend()
+
 
 # %% codecell
 if __name__=="__main__":
+    # test de_data class
     # %% codecell
     log_dir = r"..\Data\structured_log_DE.ods"
     log = pd.read_excel(io=log_dir, sheet_name="main")
     data = de_data(log)
     # %% codecell
     data.generate_msd_repo(component="z")
+
+
+
+    # %% codecell
+    # test drop_data class
+    # create drop_data object
+    log_dir = r"..\Data\structured_log.ods"
+    log = pd.read_excel(io=log_dir, sheet_name="main")
+    dd = drop_data(log)
+    # %% codecell
+    dd
+    # test find_lifetime_data()
+    dd.find_lifetime_data()
+    # %% codecell
+    dd.plot_mean_velocity_evolution(n=6, mode="log")
+    # %% codecell
+    dd.plot_droplet_size_evolution(n=6, mode="log")
+    # %% codecell
+    dd.plot_volume_fraction_evolution(n=6, mode="lin")
+    # %% codecell
+    dd.plot_velocity_volume_fraction_correlation(time_bins=6)
