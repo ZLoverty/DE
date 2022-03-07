@@ -485,7 +485,7 @@ class drop_data:
             subdata = self.data.loc[self.data["Droplet#"]==i]
             if len(subdata) >= n:
                 self.lifetime_data_list.append(i)
-        print("Lifetime data located: {}".format(str(self.lifetime_data_list)))
+        # print("Lifetime data located: {}".format(str(self.lifetime_data_list)))
     def plot_mean_velocity_evolution(self, n=5, mode="log"):
         """Plot mean velocity vs. time.
         Use the time of first video as 0 (or 1 in log mode)
