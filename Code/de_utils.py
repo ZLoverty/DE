@@ -112,6 +112,7 @@ def load_xyz_traj(log_entry, folder):
     else:
         print('Data not found')
 
+# %% codecell
 class de_data():
     """
     Double emulsion data plotting tool.
@@ -478,6 +479,12 @@ class drop_data:
         self.single_bacterial_volume = 1 # um^3
     def __repr__(self):
         return self.data.__repr__()
+    def parameter_space(self):
+        """Plot the parameter space of current data, D vs. OD"""
+        fig, ax = plt.subplots(figsize=(3.5, 3), dpi=100)
+        ax.scatter(self.data["Bacterial concentration"], self.data["Droplet size"])
+        ax.set_xlabel("OD")
+        ax.set_ylabel("$D$ (um)")
     def find_lifetime_data(self, n=5):
         """Return the Droplet#'s of droplets with more than n videos, n is 5 by default"""
         self.lifetime_data_list = []
@@ -595,16 +602,30 @@ class drop_data:
         ax.set_xlabel("volume fraction")
         ax.set_ylabel("mean velocity")
         ax.legend()
+# %% codecell
 
 
 # %% codecell
 if __name__=="__main__":
     # test de_data class
     # %% codecell
+    # make all the plots
     log_dir = r"..\Data\structured_log_DE.ods"
     log = pd.read_excel(io=log_dir, sheet_name="main")
     data = de_data(log)
+    data.parameter_space(highlight_Chile_data=True) # 1
+    data.plot_MSD_model_Cristian() # 3
+    data.scatter_0(mode="log", highlight_Chile_data=True) # 2
+    data.plot_0(nbins=5, overlap=0, mode="log") # 4
+    data.scatter_1(mode="log", highlight_Chile_data=True) # 5
+    data.plot_1(nbins=5, overlap=0, mode="log") # 6
+    data.Rinf2_tau() # 7
+    data.Rinf2_over_tau() # 8
+    data.rescale_Rinf_OD() # 9
+    data.rescale_Rinf_freespace() # 10
     # %% codecell
+    # generate_msd_repo method generates .jpg images, and take longer time to run
+    # (several minutes), use caution when running this block
     data.generate_msd_repo(component="z")
 
 
@@ -616,7 +637,8 @@ if __name__=="__main__":
     log = pd.read_excel(io=log_dir, sheet_name="main")
     dd = drop_data(log)
     # %% codecell
-    dd
+    dd.parameter_space()
+    # %% codecell
     # test find_lifetime_data()
     dd.find_lifetime_data()
     # %% codecell
