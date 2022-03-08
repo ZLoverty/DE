@@ -636,14 +636,9 @@ if __name__=="__main__":
     log_dir = r"..\Data\structured_log.ods"
     log = pd.read_excel(io=log_dir, sheet_name="main")
     dd = drop_data(log)
-    # %% codecell
     dd.parameter_space()
-    # %% codecell
-    # test find_lifetime_data()
     dd.find_lifetime_data()
-    # %% codecell
     dd.plot_mean_velocity_evolution(n=6, mode="log")
-    # %% codecell
     dd.plot_droplet_size_evolution(n=6, mode="log")
     # %% codecell
     dd.plot_volume_fraction_evolution(n=6, mode="lin")
