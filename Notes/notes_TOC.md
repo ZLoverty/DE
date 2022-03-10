@@ -12,7 +12,7 @@
 9. [Discussion of the spring model - zero-memory limit](2022-02-23_spring-model-cont.pdf)
 10. [Reorganize trajectory data and MSD repo](2022-02-23_msd-data-reorganization.pdf)
 11. [SUMMARY: data and spring model](2022-02-25_model-discussion-summary.pdf)
-12. [Questions for theorists Mar 1](Notes\2022-03-01_questions-for-theorists.pdf)
+12. [Questions for theorists Mar 1](2022-03-01_questions-for-theorists.pdf)
 ---
 
 ##### Flow in concentrated bacterial suspensions
