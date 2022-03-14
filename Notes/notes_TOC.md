@@ -40,3 +40,4 @@
 ##### Miscellaneous
 1. [Arbitrary shape light attenuation - answer reviewer's questions](arbitrary-shape-attenuation.pdf)
 2. [Numerical solution of Poisson equation](poisson-equation.pdf)
+3. [Committee meeting notes](2022-03-14_meeting-advisors-notes.pdf)
