@@ -13,6 +13,7 @@
 10. [Reorganize trajectory data and MSD repo](2022-02-23_msd-data-reorganization.pdf)
 11. [SUMMARY: data and spring model](2022-02-25_model-discussion-summary.pdf)
 12. [Questions for theorists Mar 1](2022-03-01_questions-for-theorists.pdf)
+13. [Committee meeting notes - prevent evaporation](2022-03-14_meeting-advisors-notes.pdf)
 ---
 
 ##### Flow in concentrated bacterial suspensions
@@ -35,6 +36,7 @@
 6. [A Python class for plotting DE data](2022-02-28_de-plotting-tools.pdf)
 7. [Moving mask PIV](2022-03-02_moving-mask-droplet-frame-piv.pdf)
 8. [`droplet_image` class note](2022-03-03_droplet-image-class.pdf)
+9. [Compare moving mask PIV and fixed mask PIV](2022-03-14_compare-piv-of-fixed-and-moving-mask.pdf)
 ---
 
 ##### Miscellaneous
