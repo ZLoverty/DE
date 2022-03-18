@@ -14,6 +14,7 @@
 11. [SUMMARY: data and spring model](2022-02-25_model-discussion-summary.pdf)
 12. [Questions for theorists Mar 1](2022-03-01_questions-for-theorists.pdf)
 13. [Committee meeting notes - prevent evaporation](2022-03-14_meeting-advisors-notes.pdf)
+14. [Spring approximation assessment](2022-03-18_spring-assumption-assessment.pdf)
 ---
 
 ##### Flow in concentrated bacterial suspensions
@@ -24,6 +25,7 @@
 5. [How much do edge data affect mean velocity?](2022-02-21_mean-velocity-and-mask.pdf)
 6. [Analysis of collective motions in droplets](Analysis_of_collective_motions_in_droplets.pdf)
 7. [Droplet shrinking - a possible cause of jamming](2022-03-04_droplet-shrinking.pdf)
+8. [Active turbulence in droplets - correlation time analysis]()
 
 ---
 
@@ -42,4 +44,4 @@
 ##### Miscellaneous
 1. [Arbitrary shape light attenuation - answer reviewer's questions](arbitrary-shape-attenuation.pdf)
 2. [Numerical solution of Poisson equation](poisson-equation.pdf)
-3. [Committee meeting notes](2022-03-14_meeting-advisors-notes.pdf)
+3. [Committee meeting notes - 2022-03-14](2022-03-14_meeting-advisors-notes.pdf)
