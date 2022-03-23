@@ -39,6 +39,7 @@
 7. [Moving mask PIV](2022-03-02_moving-mask-droplet-frame-piv.pdf)
 8. [`droplet_image` class note](2022-03-03_droplet-image-class.pdf)
 9. [Compare moving mask PIV and fixed mask PIV](2022-03-14_compare-piv-of-fixed-and-moving-mask.pdf)
+10. [Adaptive smoothing test `smoothn`](2022-03-23_adaptive-smoothing.pdf)
 ---
 
 ##### Miscellaneous

@@ -8,23 +8,11 @@ import json
 from pivLib import piv_data
 import scipy
 from deLib import de_data
-# %% codecell
+from corrLib import autocorr1d
+from openpiv.smoothn import smoothn
+
 folder = r"C:\Users\liuzy\Documents\01192022"
-image_folder = os.path.join(folder, "02", "8-bit")
-l = readdata(image_folder, "tif")
-DI = droplet_image(l)
-# %% codecell
-piv_folder = os.path.join(folder, "moving_mask_piv", "02")
-piv_params = pd.read_json(os.path.join(piv_folder, "piv_params.json"))
-out_folder = os.path.join(folder, "piv_overlay_moving", "02")
-traj = pd.read_json(os.path.join(piv_folder, "droplet_traj.json"))
-with open(os.path.join(piv_folder, "piv_params.json"), "r") as f:
-    piv_params = json.load(f)
-DI.piv_overlay_moving(piv_folder, out_folder, traj, piv_params)
-# %% codecell
-piv_folder = os.path.join(folder, "piv_drop", "02")
-out_folder = os.path.join(folder, "piv_overlay", "02")
-DI.piv_overlay_fixed(piv_folder, out_folder, sparcity=1)
+
 # %% codecell
 piv_folder = os.path.join(folder, "piv_drop", "02")
 l = readdata(piv_folder, "csv")
@@ -119,6 +107,9 @@ for i in range(0, 7):
     # ax.plot(ac.index, ac.corry)
 ax.set_xlim([0, 3])
 ax.legend()
+ax.set_xlabel("$\Delta t$ (s)")
+ax.set_ylabel("VACF")
+
 # %% codecell
 x = np.linspace(0, 1)
 y = x * np.sqrt(1-x**2)
@@ -203,14 +194,118 @@ ax.set_xlabel("$(D-d)/d^2$")
 ax.set_ylabel("$\\tau^*$ (s)")
 ax.grid(which="both", ls=":")
 # %% codecell
+def vacf(uvstack, dt=0.04, mode="direct", smooth_method="gaussian", smooth_window=3, xlim=None, plot=False):
+    """Compute averaged vacf from PIV data.
+    This is a wrapper of function autocorr1d(), adding the averaging over all the velocity spots.
+    Args:
+    mode -- the averaging method, can be "direct" or "weighted".
+            "weighted" will use mean velocity as the averaging weight, whereas "direct" uses 1.
+    smooth_window -- window size for gaussian smoothing in time
+    xlim -- xlim for plotting the VACF, does not affect the return value
+    Returns:
+    corrData -- DataFrame of (t, corrx, corry)
+    """
+    # rearrange vstack from (f, h, w) to (f, h*w), then transpose
+    corr_components = []
+    for name, stack in zip(["corrx", "corry"], uvstack):
+        stack_r = stack.reshape((stack.shape[0], -1)).T
+        stack_r = stack_r[~np.isnan(stack_r).any(axis=1)]
+        if smooth_method == "gaussian":
+            stack_r = scipy.ndimage.gaussian_filter(stack_r, (0, smooth_window/4))
+        elif smooth_method == "smoothn":
+            stack_r = smoothn(stack_r, axis=1)[0]
+        # compute autocorrelation
+        corr_list = []
+        weight = 1
+        normalizer = 0
+        for x in stack_r:
+            if np.isnan(x[0]) == False: # masked out part has velocity as nan, which cannot be used for correlation computation
+                if mode == "weighted":
+                    weight = abs(x).mean()
+                corr = autocorr1d(x) * weight
+                if np.isnan(corr.sum()) == False:
+                    normalizer += weight
+                    corr_list.append(corr)
+        corr_mean = np.nansum(np.stack(corr_list, axis=0), axis=0) / normalizer
+        corr_components.append(pd.DataFrame({"c": corr_mean, "t": np.arange(len(corr_mean)) * dt}).set_index("t").rename(columns={"c": name}))
+    ac = pd.concat(corr_components, axis=1)
+    return ac
 # %% codecell
+folder = r"C:\Users\liuzy\Documents\01192022\moving_mask_piv\06"
+l = readdata(folder, "csv")
+piv = piv_data(l, cutoff=1000)
+# uvstack = piv.load_stack(cutoff=1000)
 # %% codecell
+corr_components = []
+smooth_window = 3
+for name, stack in zip(["corrx", "corry"], uvstack):
+    # stack = scipy.ndimage.gaussian_filter(stack, (smooth_window/4,0,0))
+    # stack = smoothn(stack, axis=0)[0]
+    # stack = smoothn(stack)[0]
+    stack_r = stack.reshape((stack.shape[0], -1)).T
+    stack_r = stack_r[~np.isnan(stack_r).any(axis=1)]
+    stack_r = smoothn(stack_r, axis=1)[0]
+    # compute autocorrelation
+    corr_list = []
+    weight = 1
+    normalizer = 0
+    for x in stack_r:
+        if np.isnan(x.mean()) == False and x.mean() != 0: # masked out part has velocity as nan, which cannot be used for correlation computation
+            # x = smoothn(x)[0]
+            corr = autocorr1d(x) * weight
+            if np.isnan(corr.sum()) == False:
+                normalizer += weight
+                corr_list.append(corr)
+    corr_mean = np.nansum(np.stack(corr_list, axis=0), axis=0) / normalizer
+    corr_components.append(pd.DataFrame({"c": corr_mean, "t": np.arange(len(corr_mean)) * 0.04}).set_index("t").rename(columns={"c": name}))
+acn = pd.concat(corr_components, axis=1)
 # %% codecell
+# ac.plot()
+plt.plot(acn.index, acn.mean(axis=1))
+plt.xlim([0, 3])
 # %% codecell
+x.shape
+stack_r.shape
+smoothn(x)
+
 # %% codecell
+plt.figure(dpi=150)
+sws = range(0, 50, 10)
+colors = plt.cm.get_cmap("viridis", len(sws))
+for num, sw in enumerate(sws):
+    ac = piv.vacf(smooth_window=sw)
+    plt.plot(ac.index, ac.mean(axis=1), color=colors(num), label=sw, lw=1)
+acn = piv.vacf(uvstack, smooth_method="smoothn")
+plt.plot(acn.index, acn.mean(axis=1), color="red", label="smoothn", lw=2)
+plt.xlim(0, 5)
+plt.xlabel("$\Delta t$ (s)")
+plt.ylabel("VACF")
+plt.legend()
 # %% codecell
+folder = r"C:\Users\liuzy\Documents\01192022\moving_mask_piv\06"
+l = readdata(folder, "csv")
+piv = piv_data(l, cutoff=1000)
 # %% codecell
+# review vacf data
+n = 0
+
+
 # %% codecell
+folder = r"C:\Users\liuzy\Documents\01172022\velocity_autocorr"
+l = readdata(folder, "csv")
+for num, i in l.iterrows():
+    if num % 6 == 0:
+        plt.figure()
+        plt.xlim(0, 3)
+    ac = pd.read_csv(i.Dir).set_index("t")
+    plt.plot(ac.index, ac.mean(axis=1), label=i.Name)
+    if num % 6 == 5:
+        plt.legend()
+
+
+
+
+
 # %% codecell
 # %% codecell
 # %% codecell
