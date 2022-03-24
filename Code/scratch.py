@@ -359,8 +359,12 @@ log = log.assign(tau=tau_list)
 # %% codecell
 log.to_csv("corrtimetmp.csv")
 # %% codecell
-plt.scatter(log["Initial mean velocity (10 s)"], log["tau"])
-plt.ylim(0, 2)
+plt.figure(figsize=(5, 3), dpi=150)
+plt.scatter(log["Initial mean velocity (10 s)"], log["tau"], c=log["Droplet size"])
+plt.colorbar()
+plt.ylim(0, 1)
+plt.xlabel("mean velocity (um/s)")
+plt.ylabel("correlation time (s)")
 # %% codecell
 # %% codecell
 # %% codecell
