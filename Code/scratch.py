@@ -10,6 +10,7 @@ import scipy
 from deLib import de_data
 from corrLib import autocorr1d
 from openpiv.smoothn import smoothn
+from scipy.optimize import curve_fit
 
 folder = r"C:\Users\liuzy\Documents\01192022"
 
@@ -307,15 +308,59 @@ for num, i in l.iterrows():
 
 
 # %% codecell
+# fit VACF with exponential decay exp(-t/tau)
+def fit_exp(x, y, plot=False):
+    """Fit input data x, y with exponential decay exp(-t/tau).
+    Optionally plot."""
+    def exp(x, tau):
+        return np.exp(-x/tau)
+    popt, pcov = curve_fit(exp, x, y)
+    if plot == True:
+        plt.plot(x, y, color="black")
+        plt.plot(x, exp(x, *popt), color="red", ls="--")
+    return popt[0]
 # %% codecell
+fit_exp(ac.index, ac.corry, plot=True)
 # %% codecell
+log = pd.read_excel(io=r"..\Data\structured_log.ods", sheet_name="main")
 # %% codecell
+# fit nth entry in the main log
+i = 43
+folder = r"C:\Users\liuzy\Documents"
+num = log["Video#"][i]
+date = log.Date[i].strftime("%m%d%Y")
+ac = pd.read_csv(os.path.join(folder, date, "velocity_autocorr", "{:02d}.csv".format(num))).set_index("t")
+ac = ac[:5]
+fit_exp(ac.index, ac.corry, plot=True)
 # %% codecell
+tmpfigdir = r"C:\Users\liuzy\Pictures"
+folder = r"C:\Users\liuzy\Documents"
+tau_list = []
+for i in log.index:
+    if i < 0:
+        continue
+    num = log["Video#"][i]
+    date = log.Date[i].strftime("%m%d%Y")
+    try:
+        ac = pd.read_csv(os.path.join(folder, date, "velocity_autocorr", "{:02d}.csv".format(num))).set_index("t")
+    except:
+        ac = pd.read_csv(os.path.join(folder, date, "velocity_autocorr", "{:03d}.csv".format(num))).set_index("t")
+    ac = ac[:5]
+    tau = fit_exp(ac.index, ac.corry, plot=True)
+    tau_list.append(tau)
+    plt.savefig(os.path.join(tmpfigdir, "{:02d}.jpg".format(i)))
+    plt.close()
 # %% codecell
+    i
+len(tau_list)
+len(log)
 # %% codecell
+log = log.assign(tau=tau_list)
 # %% codecell
+log.to_csv("corrtimetmp.csv")
 # %% codecell
-# %% codecell
+plt.scatter(log["Initial mean velocity (10 s)"], log["tau"])
+plt.ylim(0, 2)
 # %% codecell
 # %% codecell
 # %% codecell
