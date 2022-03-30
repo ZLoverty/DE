@@ -25,7 +25,7 @@
 5. [How much do edge data affect mean velocity?](2022-02-21_mean-velocity-and-mask.pdf)
 6. [Analysis of collective motions in droplets](Analysis_of_collective_motions_in_droplets.pdf)
 7. [Droplet shrinking - a possible cause of jamming](2022-03-04_droplet-shrinking.pdf)
-8. [Active turbulence in droplets - correlation time analysis]()
+8. [Active turbulence in droplets - correlation time analysis](2022-03-24_correlation-time-analysis-using-smoothn.pdf)
 
 ---
 
