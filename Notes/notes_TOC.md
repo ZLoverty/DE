@@ -15,6 +15,8 @@
 12. [Questions for theorists Mar 1](2022-03-01_questions-for-theorists.pdf)
 13. [Committee meeting notes - prevent evaporation](2022-03-14_meeting-advisors-notes.pdf)
 14. [Spring approximation assessment](2022-03-18_spring-assumption-assessment.pdf)
+15. [Simulation data summary](2022-03-30_simulation-data-summary.pdf)
+16. [Possible explanation for the large slope in $\tau^*$](2022-04-01_ways-to-understand-the-large-slope.pdf)
 ---
 
 ##### Flow in concentrated bacterial suspensions
