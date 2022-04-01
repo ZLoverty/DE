@@ -12,6 +12,84 @@ from corrLib import autocorr1d
 from openpiv.smoothn import smoothn
 from scipy.optimize import curve_fit
 
+# preprocess the simulation data from Cristian
+# %% codecell
+folder = r"..\Data\simulation"
+l = readdata(folder, "xls")
+data = {}
+for num, i in l.iterrows():
+    data[i.Name] = np.array(pd.read_excel(io=i.Dir, header=None))
+# %% codecell
+data["pi1"]
+# %% codecell
+data["saturation"].shape
+# %% codecell
+plt.plot(np.squeeze(data["pi1"]))
+plt.plot(np.squeeze(data["pi2"]))
+# %% codecell
+p2, p1 = np.meshgrid(data["pi1"], data["pi2"])
+# %% codecell
+plt.imshow(p2)
+# %% codecell
+df = pd.DataFrame({"pi1": p1.flatten(),
+                   "pi2": p2.flatten(),
+                   "saturation": data["saturation"].flatten(),
+                   "t1": data["t1"].flatten(),
+                   "t2": data["t2"].flatten(),
+                   "v2": data["v2"].flatten()})
+# %% codecell
+df
+# %% codecell
+plt.rcParams.update({
+    "text.usetex": True,
+    "font.family": "serif",
+    "font.serif": ["Palatino"],
+})
+plt.figure(figsize=(3.5, 3), dpi=150)
+plt.scatter(df.pi1/df.pi2, df.t2)
+plt.xlabel("$\Pi_1/\Pi_2$")
+plt.ylabel("t2")
+plt.loglog()
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+# %% codecell
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 folder = r"C:\Users\liuzy\Documents\01192022"
 
 # %% codecell
