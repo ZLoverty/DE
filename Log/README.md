@@ -14,6 +14,8 @@ Summarize the progress regularly to remind myself the next steps.
   yyyy-mm-dd_(optional description).md
   yyyy-mm-dd_(optional description).md
 ```
+##### Apr 08, 2022: Focus on $\tau^*$, try to access all the variables ($\eta$, $\Delta\rho$)
+
 ##### Mar 21, 2022: MSCA proposal rejected
 
 ##### Mar 14, 2022: Join the swimming droplet project
