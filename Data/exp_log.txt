@@ -54,3 +54,21 @@ February
 02092022 -- Some high concentration double emulsion experiments (the best pool from GR is broken, need new ones)
 02162022 -- No video is taken today. Aquapel is up and pool is broken. All need to be fixed before starting the next experiment. (T_T)
 02242022 -- Do more double emulsion at high concentration (OD~100). Test new Aquapel, OK. Pluronic seems to cause cluster, too.
+
+=====
+March
+=====
+03242022 -- Bacteria swimming in dense droplets (with Kartik)
+03252022 -- Bacteria swimming in dense droplets (with Kartik)
+
+=====
+April
+=====
+04052022 -- Bacteria swimming in dense droplets (with Kartik)
+04072022 -- Pluronic F-127 concentration test
+04082022 -- DE experiment, use percoll density match and fix OD=80
+04112022 -- DE experiment, use percoll density match and fix OD=80
+04132022 -- DE experiment, use percoll density match and fix OD=80
+04142022 -- DE experiment, use percoll density match and fix OD=80 (wetting issue)
+04192022 -- Bacteria swimming in dense droplets (with Kartik)
+04202022 -- Bacteria swimming in dense droplets (with Kartik)
