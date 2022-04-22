@@ -49,3 +49,4 @@
 1. [Arbitrary shape light attenuation - answer reviewer's questions](arbitrary-shape-attenuation.pdf)
 2. [Numerical solution of Poisson equation](poisson-equation.pdf)
 3. [Committee meeting notes - 2022-03-14](2022-03-14_meeting-advisors-notes.pdf)
+4. [Droplet wall experiment summary](2022-04-21_droplet-wall-experiment-summary.pdf)
