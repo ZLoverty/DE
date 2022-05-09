@@ -11,6 +11,28 @@ from deLib import de_data
 from corrLib import autocorr1d
 from openpiv.smoothn import smoothn
 from scipy.optimize import curve_fit
+import trackpy as tp
+# %% codecell
+# Fit MSD with Langevin model
+traj = pd.read_csv(r"..\Data\traj\24.csv")
+msd = tp.msd(traj, mpp=0.11, fps=50, max_lagtime=3000)
+msd = msd.dropna()
+plt.plot(msd.lagt, msd.msd)
+def msd_model(lagt, DA, tau, tau_star):
+    """This is the mean square displacement predicted by the langevin model with exponentially correlated active noise.
+    """
+    dy2 = 2*DA*tau_star * (1-np.exp(-lagt/tau_star) - tau/tau_star*(1-np.exp(lagt/tau))) / (1 - (tau/tau_star)**2)
+    return dy2
+
+popt, pcov = curve_fit(msd_model, msd.lagt, msd.msd, p0=[10, 0.8, 1.2], method="dogbox")
+popt
+plt.plot(msd.lagt, msd.msd)
+plt.plot(msd.lagt, msd_model(msd.lagt, *popt))
+plt.xlim([0, 60])
+plt.ylim([0, 200])
+
+msd.lagt
+
 
 # preprocess the simulation data from Cristian
 # %% codecell
