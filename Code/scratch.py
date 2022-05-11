@@ -12,11 +12,37 @@ from corrLib import autocorr1d
 from openpiv.smoothn import smoothn
 from scipy.optimize import curve_fit
 import trackpy as tp
+
+# %% codecell
+6e-6 * np.pi * 0.001 * 0.5e-6 * 0.3e-12 / 1.38e-23
+k = 4 / 3 * np.pi * 1650 * 10 * (3.5e-6)**3 / (25e-6-3.5e-6)
+U = k * 10e-12 / 4
+T = 2 * U / 1.38e-23
+mu = 0.36 / k
+T
+U
+k
+T = 1 / 1.38e-23 * (0.025e-12 / mu + 0.31e-12 / mu / (1+0.036))
+2*1.4e-7*0.1e-12/1.38e-23
+4 / 3 * np.pi * (0.5e-6)**3
+6e-6*55*5.2e-19*10/1.38e-23
+# %% codecell
+# weird motions and MSD
+traj = pd.read_csv(r"..\Data\traj\60.csv")
+msd = tp.msd(traj, mpp=0.33, fps=50, max_lagtime=3000)
+msd = msd.dropna()
+plt.plot(msd.lagt, msd.msd)
+# %% codecell
+# y distribution
+hist, bin_edges = np.histogram(traj.y, bins=20, density=True)
+plt.plot(bin_edges[:-1], hist)
+plt.plot([237, 237], [0, 0.015])
+plt.xlabel("position (pixel)")
+plt.ylabel("PDF")
+
 # %% codecell
 # Fit MSD with Langevin model
-traj = pd.read_csv(r"..\Data\traj\24.csv")
-msd = tp.msd(traj, mpp=0.11, fps=50, max_lagtime=3000)
-msd = msd.dropna()
+
 plt.plot(msd.lagt, msd.msd)
 def msd_model(lagt, DA, tau, tau_star):
     """This is the mean square displacement predicted by the langevin model with exponentially correlated active noise.
@@ -24,17 +50,24 @@ def msd_model(lagt, DA, tau, tau_star):
     dy2 = 2*DA*tau_star * (1-np.exp(-lagt/tau_star) - tau/tau_star*(1-np.exp(lagt/tau))) / (1 - (tau/tau_star)**2)
     return dy2
 
-popt, pcov = curve_fit(msd_model, msd.lagt, msd.msd, p0=[10, 0.8, 1.2], method="dogbox")
+def msd_model_simp(lagt, DA, tau_star):
+    """Simplified model 1"""
+    tau = 0.15
+    dy2 = 2* DA *tau_star * (1/ ( 1 + tau/tau_star) - np.exp(-lagt/tau_star)/(1-(tau/tau_star)**2))
+    return dy2
+# %% codecell
+traj = pd.read_csv(r"..\Data\traj\25.csv")
+msd = tp.msd(traj, mpp=0.11, fps=50, max_lagtime=3000)
+msd = msd.dropna()
+popt, pcov = curve_fit(msd_model_simp, msd.lagt, msd["<y^2>"], p0=[10, 0.8], method="dogbox")
 popt
-plt.plot(msd.lagt, msd.msd)
-plt.plot(msd.lagt, msd_model(msd.lagt, *popt))
-plt.xlim([0, 60])
-plt.ylim([0, 200])
-
-msd.lagt
-
-
+plt.plot(msd.lagt, msd["<y^2>"])
+plt.plot(msd.lagt, msd_model_simp(msd.lagt, *popt))
+# plt.xlim([0, 60])
+# plt.ylim([0, 200])
+1.38e-23*300/(6*np.pi*0.001*3.5e-6)
 # preprocess the simulation data from Cristian
+popt
 # %% codecell
 folder = r"..\Data\simulation"
 l = readdata(folder, "xls")
