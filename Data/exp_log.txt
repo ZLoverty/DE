@@ -72,3 +72,11 @@ April
 04142022 -- DE experiment, use percoll density match and fix OD=80 (wetting issue)
 04192022 -- Bacteria swimming in dense droplets (with Kartik)
 04202022 -- Bacteria swimming in dense droplets (with Kartik)
+
+===
+May
+===
+05092022 -- Show Guillaume capillary microfluidics
+05102022 -- Show Guillaume capillary microfluidics
+05122022 -- Make new pool 200 um and 50 um with Zhibo in IPGG
+05132022 -- Test Kartik's new droplets and density matching
