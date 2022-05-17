@@ -17,3 +17,5 @@ The corresponding video (11102021/02) shows that the inner droplet occasionally 
 ![sketch of weird inner droplet motion](../images/2022/05/sketch-of-weird-inner-droplet-motion.png)
 
 ![pdf of inner droplet](../images/2022/05/pdf-of-inner-droplet.png)
+
+##### The 1-D motion of inner droplets we observed is a projection. How is this projection different between droplet and cylinder?
