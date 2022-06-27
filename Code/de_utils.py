@@ -425,19 +425,27 @@ def correct_traj(folder, n, filename, correction_params, save_step=100):
         f.write(json.dumps(correction_params))
     corrected_traj.to_csv(os.path.join(folder, "Analysis", "{:02d}".format(n), "{}c.csv".format(filename)))
     
-def generate_correction_report(folder, n, filename):
-    """working function for generating correction report"""
-    traj_folder = os.path.join(folder, "Analysis", "{:02d}".format(n))
-    original_traj = pd.read_csv(os.path.join(traj_folder, 
-                                         "{}.csv".format(filename)))
-    original_traj.frame = original_traj.frame.astype("int")
-    original_traj = original_traj.set_index("frame")
-    corrected_traj = pd.read_csv(os.path.join(traj_folder, 
-                                              "{}c.csv".format(filename)))
-    corrected_traj.frame = corrected_traj.frame.astype("int")
-    corrected_traj = corrected_traj.set_index("frame")
+def generate_correction_report(original_traj, corrected_traj, img_folder, analysis_folder, report_name="correction-report.jpg"):
+    """working function for generating correction report
+    Args:
+    original_traj -- the original trajectory (x, y, frame), DataFrame with "frame" as index
+    corrected_traj -- the corrected trajectory, with additional columns (original_quality, corrected_quality)
+    img_folder -- the folder to randomly sample a frame for visual comparison
+    analysis_folder -- folder to save report
+    report_name -- report file name
+    Edit:
+    06232022 -- Change input arguments to original_traj, corrected_traj, img_folder"""
+#     traj_folder = os.path.join(folder, "Analysis", "{:02d}".format(n))
+#     original_traj = pd.read_csv(os.path.join(traj_folder, 
+#                                          "{}.csv".format(filename)))
+#     original_traj.frame = original_traj.frame.astype("int")
+#     original_traj = original_traj.set_index("frame")
+#     corrected_traj = pd.read_csv(os.path.join(traj_folder, 
+#                                               "{}c.csv".format(filename)))
+#     corrected_traj.frame = corrected_traj.frame.astype("int")
+#     corrected_traj = corrected_traj.set_index("frame")
     frame = corrected_traj.sample().index[0]
-    raw_img = io.imread(os.path.join(folder, "{:02d}".format(n), "{:05d}.tif".format(frame)))
+    raw_img = io.imread(os.path.join(img_folder, "{:05d}.tif".format(frame)))
 
     fig = plt.figure(figsize=(9, 6), dpi=120)
     ax1 = fig.add_subplot(231)
@@ -499,15 +507,45 @@ def generate_correction_report(folder, n, filename):
     ax6.set_ylim([original_traj.loc[frame].y - roi_factor*original_traj.loc[frame].r, original_traj.loc[frame].y + roi_factor*original_traj.loc[frame].r])
     ax6.annotate(frame, (0.5, 0.5), xycoords="axes fraction", horizontalalignment="center")
     plt.tight_layout()
-    fig.savefig(os.path.join(traj_folder, "{}c-report.jpg".format(filename)))
+    fig.savefig(os.path.join(analysis_folder, "{}".format(report_name)))
     
 
-# folder = r"C:\Users\liuzy\Documents\06012022"
-# n = 1
-# correction_params = {"range_factor": 0.2,
-#                      "thres": 10,
-#                      "method": "minimum",
-#                      "plot": True}
-# filename = "t0"
-# correct_traj(folder, n, filename, correction_params)
-# generate_correction_report(os.path.join(folder, "Analysis", "{:02}".format(n)), filename)
+# test
+# analysis_folder = r"C:\Users\liuzy\Documents\05312022\Analysis\00"
+# original_traj = pd.read_csv(os.path.join(analysis_folder, "fulltraj_t0l.csv")).set_index("frame")
+# corrected_traj = pd.read_csv(os.path.join(analysis_folder, "fulltraj_t0lc.csv")).set_index("frame")
+# img_folder = r"D:\DE\05312022\00\8-bit"
+# generate_correction_report(original_traj, corrected_traj, img_folder, analysis_folder, report_name="correction-report-t0.jpg")
+
+def subtract_traj(t1, t0):
+    """Compute the inner droplet trajectory in outer droplet frame.
+    This will fix the constant downward slow motion.
+    Args:
+    t1 -- inner droplet trajectory, lab frame
+    t0 -- outer droplet motion, lab frame
+    Returns:
+    t -- t1 - t0"""
+    combine = pd.concat([t1, t0], axis=1, keys=["t1", "t0"])
+    t = pd.DataFrame({"frame": combine.index, 
+                      "x": combine["t1"].x - combine["t0"].x, 
+                      "y": combine["t1"].y - combine["t0"].y}).set_index("frame")
+    return t
+
+# test sbutract_traj()
+# folder = r"C:\Users\liuzy\Documents\05312022\Analysis\00"
+# t0 = pd.read_csv(os.path.join(folder, "t0c.csv"))
+# if t0.original_quality.mean() > t0.corrected_quality.mean()+0.1:
+#     t0 = pd.read_csv(os.path.join(folder, "t0.csv"))
+# t0.frame = t0.frame.astype("int")
+# t0 = t0.set_index("frame")
+
+# t1 = pd.read_csv(os.path.join(folder, "t1c.csv"))
+# if t1.original_quality.mean() > t1.corrected_quality.mean()+0.1:
+#     t1 = pd.read_csv(os.path.join(folder, "t1.csv"))
+# t1.frame = t1.frame.astype("int")
+# t1 = t1.set_index("frame")
+
+# t = subtract_traj(t1, t0)
+
+# plt.scatter(t1.x-t1.x.iloc[0], t1.y-t1.y.iloc[0], color="red", alpha=0.5)
+# plt.scatter(t.x-t.x.iloc[0], t.y-t.y.iloc[0], color="green", alpha=0.5)
