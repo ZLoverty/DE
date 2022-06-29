@@ -10,6 +10,8 @@ import trackpy as tp
 from scipy.ndimage import gaussian_filter1d
 from fit_circle_utils import fit_circle
 import matplotlib.patches as mpatch
+from myImageLib import bestcolor
+
 # %% codecell
 def tangent_unit(point, center):
     """Compute tangent unit vector based on point coords and center coords.
@@ -243,7 +245,7 @@ def subpixel_correction_(original_circle, raw_img, range_factor=0.6, plot=True, 
     return corrected_circle
 
 # wrap the subpixel correction in a function
-def subpixel_correction(original_circle, raw_img, range_factor=0.6, plot=True, thres=10, method="gaussian", sample=10):
+def subpixel_correction(original_circle, raw_img, range_factor=0.6, plot=True, thres=10, method="gaussian", sample=10, sample_range=(0, 2*np.pi)):
     """Use gaussian fitting of cross-boundary pixel intensities to give circle detections subpixel accuracy. 
     Args:
     original_circle -- dict of {"x", "y", "r"}
@@ -264,13 +266,21 @@ def subpixel_correction(original_circle, raw_img, range_factor=0.6, plot=True, t
                 Note that sometimes more profiles does not mean more accuracy.
                 If the outer droplet boundary is very dark, 
                 and some profiles contain the outer droplet boundary,
-                significant deviation will result. 
+                significant deviation will result.
+    06282022 -- Add argument "sample_range".
+                In most DE images, the upper boundary of inner and outer droplets overlap.
+                As a result, when sampling across the upper boundaries, the profile will likely include both boundaries.
+                This leads to big error for the "minimum" method.
+                Therefore, it is desired to sample bottom boundaries.
+                sample_range allows specifying the range of boundary samples (in terms of angle).
+                The x-axis corresponds to 0 in sample_range. Then it increases in the CW direction.
+                Up to 2*np.pi where it comes back to the x-axis. 
     """
     
     x0, y0, r0 = original_circle["x"], original_circle["y"], original_circle["r"]
     # samples
     new_points = []
-    for t in np.linspace(0, 2*np.pi, sample, endpoint=False):
+    for t in np.linspace(*sample_range, sample, endpoint=False):
         xc = x0 + r0 * np.cos(t)
         yc = y0 + r0 * np.sin(t)
         x1 = xc - r0 * range_factor * np.cos(t)
@@ -315,14 +325,15 @@ def subpixel_correction(original_circle, raw_img, range_factor=0.6, plot=True, t
 
 
 # test function subpixel_correction_
-# folder = r"C:\Users\liuzy\Documents\06022022"
-# n = 2
-# raw_img = io.imread(os.path.join(folder, "{:02d}".format(n), "00000.tif"))
-# inner_traj = pd.read_csv(os.path.join(folder, "Analysis", "{:02d}".format(n), "t1.csv"))
-# x0, y0, r0 = inner_traj.x.iloc[0], inner_traj.y.iloc[0], inner_traj.r.iloc[0]
+# analysis_folder = r"C:\Users\liuzy\Documents\06012022\Analysis\00"
+# img_folder = r"D:\DE\06012022\00\8-bit"
+# frame = 6222
+# raw_img = io.imread(os.path.join(img_folder, "{:05d}.tif".format(frame)))
+# inner_traj = pd.read_csv(os.path.join(analysis_folder, "fulltraj_t1l.csv")).set_index("frame")
+# x0, y0, r0 = inner_traj.x.loc[frame], inner_traj.y.loc[frame], inner_traj.r.loc[frame]
 # original_circle = {"x": x0, "y": y0, "r": r0}
-# corrected_circle = subpixel_correction(original_circle, raw_img, range_factor=0.6, 
-#                                          plot=True, thres=15, method="minimum", sample=4)
+# corrected_circle = subpixel_correction(original_circle, raw_img, range_factor=0.2, 
+#                                          plot=True, thres=10, method="minimum", sample=10, sample_range=(np.pi/2, 3/2*np.pi))
 # fig = plt.figure(figsize=(3, 3), dpi=150)
 # ax = fig.add_axes([0,0,1,1])
 # ax.imshow(raw_img, cmap="gray")
@@ -331,8 +342,12 @@ def subpixel_correction(original_circle, raw_img, range_factor=0.6, plot=True, t
 # ccor = mpatch.Circle((corrected_circle["x"], corrected_circle["y"]), corrected_circle["r"], fill=False, ec="yellow", lw=1)
 # ax.add_patch(ccor)
 
+# oq = circle_quality_std(raw_img, original_circle)
+# cq = circle_quality_std(raw_img, corrected_circle)
+# print("oq: {0:.2f}, cq: {1:.2f}".format(oq, cq))
 
-def circle_quality_std(raw_img, circle, distsq_thres=10):
+
+def circle_quality_std(raw_img, circle):
     """Quantify circle detection quality by computing boundary pixel standard deviation.
     Args:
     raw_img -- raw image
@@ -341,19 +356,18 @@ def circle_quality_std(raw_img, circle, distsq_thres=10):
     Returns:
     quality -- 1 - (circle pixel std) / (image pixel std)
                 The idea is to normalize the results from images of different contrast,
-                and larger quality value means better tracking.                
+                and larger quality value means better tracking.
+    Edit:
+    06282022 -- use skimage.draw to get circle perimeter pixel coords
     """
     x, y, r = circle["x"], circle["y"], circle["r"]
     # 1. make X, Y coordinates of all image pixels
     Y, X = np.mgrid[0:raw_img.shape[0], 0:raw_img.shape[1]]
     # 2. compute distance (square) matrix from each pixel to circle center
     dist = (X-x) ** 2 + (Y-y) ** 2 - r ** 2 
-    # 3. make a boolean matrix ind where the distance is smaller than 5 (note that 5 is an arbitrary number and need revision)
-    distsq_thres = 10
-    ind = abs(dist) < distsq_thres
-    # 4. use the ind matrix to get all the pixel intensity values on the detected circle
-    circle_pixels = raw_img[ind]
-    # 5. compute standard deviation of circle_pixels
+    # 3. get all the pixel intensity values on the detected circle
+    circle_pixels = raw_img[draw.circle_perimeter(int(np.round(y)), int(np.round(x)), int(np.round(r)), shape=raw_img.shape)]
+    # 4. compute standard deviation of circle_pixels
     std = circle_pixels.std()
     std_img = raw_img.std()
     
@@ -549,3 +563,119 @@ def subtract_traj(t1, t0):
 
 # plt.scatter(t1.x-t1.x.iloc[0], t1.y-t1.y.iloc[0], color="red", alpha=0.5)
 # plt.scatter(t.x-t.x.iloc[0], t.y-t.y.iloc[0], color="green", alpha=0.5)
+
+# wrap in a function
+def subtraction_report(analysis_folder, img_folder):
+    """Subtraction report generator"""
+    outer_traj = pd.read_csv(os.path.join(analysis_folder, "fulltraj_t0lc.csv")).set_index("frame")
+    inner_traj = pd.read_csv(os.path.join(analysis_folder, "fulltraj_t1lc.csv")).set_index("frame")
+    
+    outer_traj.index = outer_traj.index.astype("int")
+    inner_traj.index = inner_traj.index.astype("int")
+    
+    
+    x0, y0, r0 = outer_traj.x.iloc[0], outer_traj.y.iloc[0], outer_traj.r.iloc[0]
+    x1, y1, r1 = inner_traj.x.iloc[0], inner_traj.y.iloc[0], inner_traj.r.iloc[0]
+    # offset x with respective initial position
+    outer_traj.x -= x0
+#     inner_traj.x -= x1
+    # offset y with initial outer position
+#     inner_traj.y -= y0
+    outer_traj.y -= y0
+    
+    combine_traj = pd.concat([inner_traj, outer_traj], axis=1, keys=["inner", "outer"]).dropna()
+    
+    frame = combine_traj.index[0]
+    img = io.imread(os.path.join(img_folder, "{:05d}.tif".format(frame)))
+    # x time series
+    fig = plt.figure(figsize=(9, 6), dpi=120)
+    ax1 = fig.add_subplot(231)
+    ax1.set_title("x time series")
+    ax1.plot(combine_traj.index, combine_traj["inner"].x, color=bestcolor(0))
+    ax1.plot(combine_traj.index, combine_traj["outer"].x, color=bestcolor(1))
+    ax1.plot(combine_traj.index, combine_traj["inner"].x-combine_traj["outer"].x, color="black")
+    ax1.set_xlabel("frame")
+    ax1.set_ylabel("x (px)")
+
+    # y time series
+    ax2 = fig.add_subplot(232)
+    ax2.set_title("y time series")
+    ax2.plot(combine_traj.index, combine_traj["inner"].y, color=bestcolor(0))
+    ax2.plot(combine_traj.index, combine_traj["outer"].y, color=bestcolor(1))
+    ax2.plot(combine_traj.index, combine_traj["inner"].y-combine_traj["outer"].y, color="black")
+    ax2.set_xlabel("frame")
+    ax2.set_ylabel("y (px)")
+
+    # droplet size time series
+    ax3 = fig.add_subplot(233)
+    ax3.set_title("droplet size time series")
+    ax3.plot(combine_traj.index, combine_traj["outer"].r, color="black")
+    ax3.set_ylabel("outer radius (px)")
+    ax3r = ax3.twinx()
+    ax3r.spines["right"].set_color("red")
+    ax3r.yaxis.label.set_color("red")
+    ax3r.tick_params(axis="y", colors="red")
+    ax3r.plot(combine_traj.index, combine_traj["inner"].r, color="red")
+    ax3r.set_ylabel("inner radius (px)")
+    ax3.set_xlabel("frame")
+
+    # sketch of inner droplet trajectory, offset by outer droplet 
+    ax4 = fig.add_subplot(234)
+    ax4.set_title("sketch inner droplet trajectory")
+    ax4.imshow(img, cmap="gray")
+    ax4.scatter(combine_traj["inner"].x+x1-combine_traj["outer"].x, combine_traj["inner"].y-combine_traj["outer"].y+y0,
+               alpha=0.5)
+    outer_circle = mpatch.Circle((x0, y0), r0, fill=False, ec="red", lw=1)
+    ax4.add_patch(outer_circle)
+    inner_circle = mpatch.Circle((x1, y1), r1, fill=False, ec="red", lw=1)
+    ax4.add_patch(inner_circle)
+    ax4.axis("off")
+
+    # subpixel bias x
+    ax5 = fig.add_subplot(235)
+    ax5.set_title("subpixel bias x")
+    histx, bin_edges = np.histogram(combine_traj["inner"].x - combine_traj["inner"].x.apply(np.floor),
+                                   bins=np.linspace(0, 1, 11))
+    ax5.bar(bin_edges[:-1], histx, align="edge", width=bin_edges[1]-bin_edges[0], alpha=0.5, label="inner")
+    histx, bin_edges = np.histogram(combine_traj["outer"].x - combine_traj["outer"].x.apply(np.floor),
+                                   bins=np.linspace(0, 1, 11))
+    ax5.bar(bin_edges[:-1], histx, align="edge", width=bin_edges[1]-bin_edges[0], alpha=0.5, label="outer")
+    histx, bin_edges = np.histogram(combine_traj["inner"].x - combine_traj["outer"].x - (combine_traj["inner"].x - combine_traj["outer"].x).apply(np.floor),
+                                   bins=np.linspace(0, 1, 11))
+    ax5.bar(bin_edges[:-1], histx, align="edge", width=bin_edges[1]-bin_edges[0], alpha=0.5, label="subtr")
+
+    ax5.set_xlim([0, 1])
+    ax5.grid(ls="--")
+    ax5.set_xlabel("subpixel value")
+    ax5.set_ylabel("count")
+
+    # subpixel bias y
+    ax6 = fig.add_subplot(236)
+    ax6.set_title("subpixel bias y")
+    histy, bin_edges = np.histogram(combine_traj["inner"].y - combine_traj["inner"].y.apply(np.floor),
+                                   bins=np.linspace(0, 1, 11))
+    ax6.bar(bin_edges[:-1], histy, align="edge", width=bin_edges[1]-bin_edges[0], alpha=0.5, label="inner")
+    histy, bin_edges = np.histogram(combine_traj["outer"].y - combine_traj["outer"].y.apply(np.floor),
+                                   bins=np.linspace(0, 1, 11))
+    ax6.bar(bin_edges[:-1], histy, align="edge", width=bin_edges[1]-bin_edges[0], alpha=0.5, label="outer")
+    histy, bin_edges = np.histogram(combine_traj["inner"].y - combine_traj["outer"].y - (combine_traj["inner"].y - combine_traj["outer"].y).apply(np.floor),
+                                   bins=np.linspace(0, 1, 11))
+    ax6.bar(bin_edges[:-1], histy, align="edge", width=bin_edges[1]-bin_edges[0], alpha=0.5, label="subtr")
+
+    ax6.set_xlim([0, 1])
+    ax6.grid(ls="--")
+    ax6.set_xlabel("subpixel value")
+    ax6.set_ylabel("count")
+    ax6.legend(frameon=False, fontsize=6)
+
+    plt.tight_layout()
+    
+    fig.savefig(os.path.join(analysis_folder, "subtract-report.jpg"))
+    t = subtract_traj(inner_traj, outer_traj)
+    t = t.assign(particle=0)
+    t.to_csv(os.path.join(analysis_folder, "final_traj.csv"))
+    
+# test subtraction_report()
+# analysis_folder = r"C:\Users\liuzy\Documents\06012022\Analysis\03"
+# img_folder = r"D:\DE\06012022\03\8-bit"
+# subtraction_report(analysis_folder, img_folder)
