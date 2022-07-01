@@ -19,6 +19,7 @@
 16. [Possible explanation for the large slope in $\tau^*$](2022-04-01_ways-to-understand-the-large-slope.pdf)
 17. [Literature review -- active motion in a harmonic trap](2022-04-29_active-motion-in-a-harmonic-trap.pdf)
 18. [Literature review -- effective temperature and active noise](2022-05-04_effective-temperature.pdf)
+19. [SUMMARY2: low conc data and mean velocity - 07012022](2022-07-01_de-data-summary.pdf)
 ---
 
 ##### Flow in concentrated bacterial suspensions
