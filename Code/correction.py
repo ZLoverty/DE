@@ -21,6 +21,9 @@ import sys
 """
 Subpixel correction of droplet trajectory data, based on cross-boundary fitting and circle fitting.
 
+Edit:
+Jul 05, 2022 -- If corrected_quality < 0.5, repeat the correction process once.
+                This can effectively correct trackings that are very far off.
 """
 
 analysis_folder = sys.argv[1]
@@ -50,6 +53,9 @@ for tname in correction_params:
         corrected_circle = subpixel_correction(original_circle, raw_img, **correction_params[tname])
         original_quality = circle_quality_std(raw_img, original_circle)
         corrected_quality = circle_quality_std(raw_img, corrected_circle)
+        if corrected_quality < 0.5:
+            corrected_circle = subpixel_correction(corrected_circle, raw_img, **correction_params[tname])
+            corrected_quality = circle_quality_std(raw_img, corrected_circle)
         corrected_circle["frame"] = num
         corrected_circle["original_quality"] = original_quality
         corrected_circle["corrected_quality"] = corrected_quality
