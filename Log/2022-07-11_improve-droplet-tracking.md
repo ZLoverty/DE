@@ -88,10 +88,70 @@ To quantify the tracking quality of the whole image, we can count the number of 
 
 ![quality ts](../images/2022/07/quality-ts.png)
 
-##### Circle fitting
+##### Circle fitting methods
+
+The above procedure gives a bunch of coordinates that are likely to be on a circle. However, these coordinates are not yet the ultimate circle properties we want. A circle fitting step is necessary to convert these coordinates into circle center coordinates, as well as circle radius.
+
+**1. Naive method**
 
 Circle fitting turns out to be an important technique in this correction. I used to apply a gradient descent algorithm to find an optimization with the least square error from data points to fitted circle edge. Formally, the optimization tries to find $a$, $b$ and $r$ that minimize the residual
 $$
 f(a, b, r) = \sum_{i=1}^{n} [(x_i-a)^2+(y_i-b)^2 - \bar r^2]
 $$
-where $\bar r = \frac{1}{n}\sum_{i=1}^{n}\sqrt{(x_i-a)^2+(y_i-b)^2}$.
+where $\bar r = \frac{1}{n}\sum_{i=1}^{n}\sqrt{(x_i-a)^2+(y_i-b)^2}$. Using some linear transformation, the problem can be reduced to
+$$
+\min_{a,b} F(a, b) = a^2 + b^2 - \bar r^2
+$$
+This is the traditional circle fitting formulation. As a first attempt to do this optimization, I implement a simple gradient descent as the following:
+$$
+a_{i+1} = a_{i} - \lambda \frac{\partial F}{\partial a},
+$$
+$$
+b_{i+1} = b_{i} - \lambda \frac{\partial F}{\partial b},
+$$
+where $\lambda$ is the updating rate that can be chosen empirically. The gradient of $F(a,b)$ takes the following form:
+$$
+\nabla F = \left[ \begin{aligned}
+                  & \partial F/\partial a \\
+                  & \partial F/\partial b \end{aligned} \right] =
+           \left[ \begin{aligned}
+                  & a + \bar u \bar r \\
+                  & b + \bar v \bar r \end{aligned} \right]    ,    
+$$
+where
+$$
+u_i = \frac{x_i - a}{r_i}, \, v_i = \frac{x_i - b}{r_i}.
+$$
+
+Here, let $\bm{p_i} = (a_i, b_i)$, we can express each updating step $\bm{h}$ as:
+$$
+\bm{h_i} = \bm{p_{i+1}} - \bm{p_i} = \lambda\nabla F(\bm{p_i}),
+$$
+
+
+**2. Fast method (Abdul-Rahman 2014)**
+
+In this method, $\bm{h}$ is slightly modified, for better speed and stability:
+$$
+\bm{h_i} = -\mathcal{H}_\lambda^{-1}\cdot \nabla F
+$$
+where
+$$
+\mathcal{H}_\lambda = \mathcal{H} + \lambda\bm{I}.
+$$
+$\mathcal{H}$ is the Hessian matrix of function $F(a, b)$, taking the following form:
+$$
+\frac{1}{2}\mathcal{H} =
+\left[
+\begin{aligned}
+& 1-\bar u^2 - \bar r \overline{vv/r} & - \bar u\bar v + \bar r \overline{uv/r} \\
+& -\bar u\bar v + \bar r \overline{uv/r} & 1 - \bar v^2 - \bar r \overline{uu/r}
+\end{aligned}
+\right]
+$$
+
+**3. Convert to linear least square problem (Coope 1993)**
+
+##### Circle fitting test set
+
+There are two properties we want to test in particular: i) speed, ii) susceptibility to outliers.
