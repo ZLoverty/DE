@@ -102,7 +102,31 @@ where $\bar r = \frac{1}{n}\sum_{i=1}^{n}\sqrt{(x_i-a)^2+(y_i-b)^2}$. Using some
 $$
 \min_{a,b} F(a, b) = a^2 + b^2 - \bar r^2
 $$
-This is the traditional circle fitting formulation. As a first attempt to do this optimization, I implement a simple gradient descent as the following:
+This is the traditional circle fitting formulation. Below is a visualization of the minimization problem:
+
+![circle fitting problem vis](../images/2022/07/circle-fitting-problem-vis.png)
+
+```python
+import plotly.graph_object as go
+import numpy as np
+
+points = ((1, 1), (1, -1), (-1, -1))
+X, Y = np.meshgrid(np.linspace(-1.5, 1.5), np.linspace(-1.5, 1.5))
+F = X ** 2 + Y ** 2
+s = []
+for point in points:
+    s.append(((X - point[0]) ** 2 + (Y - point[1]) ** 2) ** 0.5)
+stack = np.stack(s, axis=0)
+mean = stack.mean(axis=0)
+Z = F + mean
+fig = go.Figure(data=[go.Surface(x=X, y=Y, z=(F+mean)/2)])
+fig.update_layout(title='Circle fitting problem visulization', autosize=True,
+                  width=500, height=500,
+                  margin=dict(l=65, r=50, b=65, t=90))
+fig.show()
+```
+
+As a first attempt to do this optimization, I implement a simple gradient descent as the following:
 $$
 a_{i+1} = a_{i} - \lambda \frac{\partial F}{\partial a},
 $$
@@ -150,8 +174,104 @@ $$
 \right]
 $$
 
+Note that $\lambda$ in this method is very similar to the naive method. In fact, if we are at a local minimum, where $\mathcal{H}=0$, the two methods are equivalent.
+
 **3. Convert to linear least square problem (Coope 1993)**
+
+The starting point of the problem is still to minimize the residue function
+$$
+\min_{\bm{x},r} \sum_{j=1}^m {f_j(\bm{x}, r)} ^ 2,
+$$
+where
+$$
+f_j(\bm{x}, r) = |\bm{x}-\bm{a_j}|^2 - r^2.
+$$
+We can expand $f_j(\bm{x}, r)$ as
+$$
+f_j(x, r) = x^Tx - 2x^Ta_j+a_j^Ta_j-r^2.
+$$
+We notice that $a_j^Ta_j$ is a constant, so we can neglect it in the minimization problem. The left over terms can be rewritten as
+$$
+x^Tx - 2x^Ta_j-r^2 = \left[-2x^T, x^Tx-r^2 \right]
+\left[ \begin{aligned} & a_j \\ &1 \end{aligned}\right].
+$$
+Let
+$$
+y_i = 2x_i, \, i =1, ..., n, \,\,\, y_{n+1} = r^2 - x^Tx
+$$
+$$
+b_j = \left[ \begin{aligned} & a_j \\ &1 \end{aligned}\right],
+$$
+the problem reduces to
+$$
+\min_y \sum_{j=1}^m (a_j^Ta_j -b_j^Ty)^2 = \min_y |By - d|^2,
+$$
+where $B^T = [b_1, b_2, ..., b_m]$, and $d$ is the vector with components $d_j=|a_j|^2$.
+
+Now, the nonlinear least square problem is converted to a linear least square problem and can be easily solved for $y$. Then, the solution $x$ and $r$ can be recovered by:
+$$
+x_i = y_i / 2, \, r = \sqrt{y_{n+1} + x^Tx}
+$$
+```python
+import numpy as np
+from scipy.optimize import minimize
+
+# Function to minimize
+def fun(y, *args):
+    B = args[0]
+    d = args[1]     
+    return ((np.matmul(B, y) - d) ** 2).sum()
+
+# Fitting
+points = np.array(((1, 1), (1, -1), (-1, -1))) # given points coords
+B = np.concatenate((points, np.ones((points.shape[0], 1))), axis=1) # construct B
+d = (points ** 2).sum(axis=1) # construct d
+x0 = np.append(points.mean(axis=0), 0) # initial guess of y
+res = minimize(fun, x0, args=(B, d)) # minimize
+y = res["x"]
+a, b = y[0]/2, y[1]/2 # recover results
+r = (y[2] + a**2 + b**2) ** 0.5
+print("a: {0:.2f}, b: {1:.2f}, r: {2:.2f}".format(a, b, r))
+```
 
 ##### Circle fitting test set
 
-There are two properties we want to test in particular: i) speed, ii) susceptibility to outliers.
+There are two properties we want to test in particular: i) speed, ii) susceptibility to outliers. The following data set will be used to test the three methods.
+
+![circle fitting test data](../images/2022/07/circle-fitting-test-data.png)
+
+Table for method comparison:
+
+T1
+
+| Method | Speed | iteration | susceptibility |
+| :----- | :---- |:---       |:---            |
+| Naive(1)  |       |    44       |                |
+| abdul(.01)  |       |     71      |                |
+| linear |       |      9     |                |
+
+T2
+
+| Method | Speed | iteration | susceptibility |
+| :----- | :---- |:---       |:---            |
+| Naive(1)  |       |   52        |                |
+| abdul(.01)  |       |    79       |                |
+| linear |       |      6     |                |
+
+T3
+
+| Method | Speed | iteration | susceptibility |
+| :----- | :---- |:---       |:---            |
+| Naive(1)  |       |   14        |       0.04         |
+| abdul(.01)  |       |     36      |     0.04           |
+| linear |       |      4     |      0.078          |
+
+T4
+
+| Method | Speed | iteration | susceptibility |
+| :----- | :---- |:---       |:---            |
+| Naive(1)  |       |   12        |        0.06        |
+| abdul(.01)  |       |    38       |         0.06       |
+| linear |       |      4     |        0.007        |
+
+I also need to test the scenario where most points are on one side of the circle, since this is relevant to our goal.
