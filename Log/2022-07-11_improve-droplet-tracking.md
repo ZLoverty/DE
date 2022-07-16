@@ -102,7 +102,7 @@ where $\bar r = \frac{1}{n}\sum_{i=1}^{n}\sqrt{(x_i-a)^2+(y_i-b)^2}$. Using some
 $$
 \min_{a,b} F(a, b) = a^2 + b^2 - \bar r^2
 $$
-This is the traditional circle fitting formulation. Below is a visualization of the minimization problem:
+This is the traditional circle fitting formulation. Below is a visualization of the minimization problem, when given points are `(1, 1), (1, -1), (-1, -1)`, centered at `(0, 0)`. We can see from the surface plot that the minima is roughly around `(0, 0)`.
 
 ![circle fitting problem vis](../images/2022/07/circle-fitting-problem-vis.png)
 
@@ -234,7 +234,7 @@ r = (y[2] + a**2 + b**2) ** 0.5
 print("a: {0:.2f}, b: {1:.2f}, r: {2:.2f}".format(a, b, r))
 ```
 
-##### Circle fitting test set
+##### Circle fitting test simple
 
 There are two properties we want to test in particular: i) speed, ii) susceptibility to outliers. The following data set will be used to test the three methods.
 
@@ -275,3 +275,39 @@ T4
 | linear |       |      4     |        0.007        |
 
 I also need to test the scenario where most points are on one side of the circle, since this is relevant to our goal.
+
+This test is not very systematic, since the point numbers are too small and the outlier deviation is not quantified very well. However, we can have a rough idea how the three methods work in the presence of outliers:
+
+- when outliers are close to the center, linear method works better
+- when outliers are far from center, quadratic method works better
+
+None of these methods is superior in all cases.
+
+##### Circle fitting test systematic
+
+The point sets can be described by number of points, radial noise and angular noise. We can systematically vary these 3 parameters and compare 3 methods, in terms of efficiency and accuracy. The outlier susceptiblity is similar to the accuracy at strong radial noise.
+
+**1. Number of points**
+
+Fix radial noise at 0.1, and angular noise at 0. Vary number of points from 4 to 20.
+
+3 methods achieve very similar accuracy, while the linear method uses the least number of iterations.
+
+![n points](../images/2022/07/n-points.png)
+
+**2. Radial noise**
+Fix number of points at 19, angular noise at 0. Vary radial noise from 0.1 to 0.6 (for larger noise, abdul method diverges).
+
+Linear method is again most accurate and requires least number of iterations.
+
+![radial noise](../images/2022/07/radial-noise.png)
+
+**3. Angular noise**
+
+Fix number of points at 19, radial noise at 0.1. Vary angular noise from 0 to $2\pi$ .
+
+3 methods show similar accuracy. Linear method requires least number of iterations.
+
+![angular noise](../images/2022/07/angular-noise.png)
+
+With this systematic test, we conclude that the _linear_ method is the best among the three. While it always gives similar accuracy as the other two methods, it requires less, sometimes far less number of iterations to find the minimum.

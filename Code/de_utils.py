@@ -274,7 +274,8 @@ def subpixel_correction(original_circle, raw_img, range_factor=0.6, plot=True, t
                 Therefore, it is desired to sample bottom boundaries.
                 sample_range allows specifying the range of boundary samples (in terms of angle).
                 The x-axis corresponds to 0 in sample_range. Then it increases in the CW direction.
-                Up to 2*np.pi where it comes back to the x-axis. 
+                Up to 2*np.pi where it comes back to the x-axis.
+    07132022 -- Use linear method for circle fitting, for better efficiency and less susceptibility to outliers.
     """
     
     x0, y0, r0 = original_circle["x"], original_circle["y"], original_circle["r"]
@@ -312,7 +313,7 @@ def subpixel_correction(original_circle, raw_img, range_factor=0.6, plot=True, t
             
     # fit circle
     xy = np.array(new_points)
-    c = fit_circle(xy[:, 0], xy[:, 1])
+    c, n_iter = fit_circle(xy[:, 0], xy[:, 1], method="linear")
     corrected_circle = {"x": c["a"], "y": c["b"], "r": c["r"]}
     
     if plot == True:
