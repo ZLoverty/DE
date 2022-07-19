@@ -245,7 +245,7 @@ def subpixel_correction_(original_circle, raw_img, range_factor=0.6, plot=True, 
     return corrected_circle
 
 # wrap the subpixel correction in a function
-def subpixel_correction(original_circle, raw_img, range_factor=0.6, plot=True, thres=10, method="gaussian", sample=10, sample_range=(0, 2*np.pi)):
+def subpixel_correction(original_circle, raw_img, range_factor=0.5, plot=False, thres=5, method="gaussian", sample=5, sample_range=(0, 2*np.pi), ax=None):
     """Use gaussian fitting of cross-boundary pixel intensities to give circle detections subpixel accuracy. 
     Args:
     original_circle -- dict of {"x", "y", "r"}
@@ -276,12 +276,22 @@ def subpixel_correction(original_circle, raw_img, range_factor=0.6, plot=True, t
                 The x-axis corresponds to 0 in sample_range. Then it increases in the CW direction.
                 Up to 2*np.pi where it comes back to the x-axis.
     07132022 -- Use linear method for circle fitting, for better efficiency and less susceptibility to outliers.
+    07192022 -- i) Back to "naive" fitting
+                ii) Add cross-boundary lines, chosen peaks on the profiles, fitted corrected circles to plot
+                iii) add argument ax for making subplots outside the function
+                iv) set default of plot param to False
     """
     
+    
+    if ax == None and plot:
+        fig, ax = plt.subplots(dpi=150)
+    if plot:
+        ax.imshow(raw_img, cmap="gray")
+        
     x0, y0, r0 = original_circle["x"], original_circle["y"], original_circle["r"]
     # samples
     new_points = []
-    for t in np.linspace(*sample_range, sample, endpoint=False):
+    for t in np.linspace(*sample_range, sample, endpoint=True):
         xc = x0 + r0 * np.cos(t)
         yc = y0 + r0 * np.sin(t)
         x1 = xc - r0 * range_factor * np.cos(t)
@@ -292,7 +302,10 @@ def subpixel_correction(original_circle, raw_img, range_factor=0.6, plot=True, t
         x2 = int(np.round(x2))
         y1 = int(np.round(y1))
         y2 = int(np.round(y2))
+        
         y, x = draw.line(y1, x1, y2, x2)
+        if plot:
+            ax.plot(x, y, color="yellow")
         indx = (x >= 0) & (x < raw_img.shape[1])
         indy = (y >= 0) & (y < raw_img.shape[0])
         ind = indx * indy
@@ -313,16 +326,19 @@ def subpixel_correction(original_circle, raw_img, range_factor=0.6, plot=True, t
             
     # fit circle
     xy = np.array(new_points)
-    c, n_iter = fit_circle(xy[:, 0], xy[:, 1], method="linear")
+    c, n_iter = fit_circle(xy[:, 0], xy[:, 1], method="naive")
     corrected_circle = {"x": c["a"], "y": c["b"], "r": c["r"]}
     
-    if plot == True:
+    if plot:
         points = np.array(new_points)
-        fig, ax = plt.subplots(dpi=150)
-        ax.imshow(raw_img, cmap="gray")
-        ax.scatter(points[:, 0], points[:, 1])
+        ax.scatter(points[:, 0], points[:, 1], s=10, color="red")
+        ocirc = mpatch.Circle((x0, y0), r0, fill=False, color="red", lw=1)
+        ax.add_patch(ocirc)
+        ccirc = mpatch.Circle((c["a"], c["b"]), c["r"], fill=False, color="green", lw=1)
+        ax.add_patch(ccirc)
         
     return corrected_circle
+
 
 
 # test function subpixel_correction_

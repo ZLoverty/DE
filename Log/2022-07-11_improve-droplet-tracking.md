@@ -311,3 +311,7 @@ Fix number of points at 19, radial noise at 0.1. Vary angular noise from 0 to $2
 ![angular noise](../images/2022/07/angular-noise.png)
 
 With this systematic test, we conclude that the _linear_ method is the best among the three. While it always gives similar accuracy as the other two methods, it requires less, sometimes far less number of iterations to find the minimum.
+
+The linear method is in general 2 times slower than the fast method, despite the less iterations it requires. <font color="red"> The underlying reason is not yet clear. I will continue using the fast method, and save this issue for future investigation. </font>
+
+##### An iterative workflow
