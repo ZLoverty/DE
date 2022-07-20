@@ -315,3 +315,36 @@ With this systematic test, we conclude that the _linear_ method is the best amon
 The linear method is in general 2 times slower than the fast method, despite the less iterations it requires. <font color="red"> The underlying reason is not yet clear. I will continue using the fast method, and save this issue for future investigation. </font>
 
 ##### An iterative workflow
+
+A single set of parameters does not always give perfect correction on every frame. Different parameter sets can work in different situations. For example: .....
+
+I come up with criteria of good corrections and bad corrections. First, a good correction should improve the circle quality compared to the original tracking. This is implementted by
+```python
+corrected_traj.corrected_quality < corrected_traj.original_quality
+```
+Moreover, the size of the detected circle should not be too far off from the mean value
+```python
+(corrected_traj.r<r_mean-3*r_std) | (corrected_traj.r>r_mean+3*r_std)
+```
+Lastly, sometimes the initial correction is already good. In a typical case, the circle quality is greater than 0.5 in the first round. In this case, we consider it good even if the correction quality is less than the original. In fact, we should use the original tracking instead.
+
+Applying these criteria to a correction result, we get the proportions of the good and bad trackings:
+
+![proportions of good and bad tracking](../images/2022/07/proportions-of-good-and-bad-tracking.png)
+
+Then, we cut out only the bad resutls and experiment new parameter sets, to see if the bad ones can be improved. For the good corrections, we just keep them for the final results. An example of experimenting new params is shown below, where we have two paramter sets for correction
+
+```python
+params_used = {'range_factor': 0.4, 'thres': 10, 'method': 'minimum'}
+params = {'range_factor': 0.3, 'thres': 20, 'method': 'minimum', 'sample': 20, "sample_range": [1.5, 4.7]}
+```
+
+The results are
+
+![compare parameter sets](../images/2022/07/compare-parameter-sets.png)
+
+We can see that the new parameter set only improve the tracking very slightly, indicating that we should keep searching for better parameter set. After we get a good parameter set, we can apply it on the whole bad correction set, and merge the new correction to the original data. At this point, the bad correction rate should decrease:
+
+![improved proportion](../images/2022/07/improved-proportion.png)
+
+This process can then be iterated several times to make bad corrections vanish!

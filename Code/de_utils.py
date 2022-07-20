@@ -640,7 +640,7 @@ def subtraction_report(analysis_folder, img_folder):
     ax4 = fig.add_subplot(234)
     ax4.set_title("sketch inner droplet trajectory")
     ax4.imshow(img, cmap="gray")
-    ax4.scatter(combine_traj["inner"].x+x1-combine_traj["outer"].x, combine_traj["inner"].y-combine_traj["outer"].y+y0,
+    ax4.scatter(combine_traj["inner"].x, combine_traj["inner"].y,
                alpha=0.5)
     outer_circle = mpatch.Circle((x0, y0), r0, fill=False, ec="red", lw=1)
     ax4.add_patch(outer_circle)
