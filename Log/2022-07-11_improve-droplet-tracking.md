@@ -348,3 +348,15 @@ We can see that the new parameter set only improve the tracking very slightly, i
 ![improved proportion](../images/2022/07/improved-proportion.png)
 
 This process can then be iterated several times to make bad corrections vanish!
+
+##### Difficulty
+
+Although I put a lot of effort on correcting the trajectory, the short time MSD still bends upward.
+
+![corrected msd](../images/2022/07/corrected-msd.png)
+
+In fact, this bending could be due to a systematic detection error, and cannot be eliminated simply by correcting the circle detection. Such bending can be reproduced by imposing artificial white noise to a good trajectory. For example, we take the trajectory for the green curve and impose white noise of amplitude 1 and 1.3. The resulting MSD curves are shown below.
+
+![artificial MSD](../images/2022/07/artificial-msd.png)
+
+Such error may be intrinsic to our method, and cannot be completely removed. A possible way to deal with the error is to model the noise theoretically with some assumptions, as Cristian noted before. This will be done in the next note.
