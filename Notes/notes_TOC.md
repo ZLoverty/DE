@@ -46,6 +46,7 @@
 9. [Compare moving mask PIV and fixed mask PIV](2022-03-14_compare-piv-of-fixed-and-moving-mask.pdf)
 10. [Adaptive smoothing test `smoothn`](2022-03-23_adaptive-smoothing.pdf)
 11. [Pluronic F-127 concentration for double emulsions](2022-04-13_best-surfactant-concentration-for-double-emulsion.pdf)
+12. [Droplet tracking correction](2022-07-11_improve-droplet-tracking.pdf)
 ---
 
 ##### Miscellaneous
