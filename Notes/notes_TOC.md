@@ -20,6 +20,9 @@
 17. [Literature review -- active motion in a harmonic trap](2022-04-29_active-motion-in-a-harmonic-trap.pdf)
 18. [Literature review -- effective temperature and active noise](2022-05-04_effective-temperature.pdf)
 19. [SUMMARY2: low conc data and mean velocity - 07012022](2022-07-01_de-data-summary.pdf)
+21. [Pluronic F-127 concentration for double emulsions](2022-04-13_best-surfactant-concentration-for-double-emulsion.pdf)
+22. [Droplet tracking correction](2022-07-11_improve-droplet-tracking.pdf)
+23. [Deal with detection noise](2022-07-21_deal-with-detection-noise.pdf)
 ---
 
 ##### Flow in concentrated bacterial suspensions
@@ -45,8 +48,7 @@
 8. [`droplet_image` class note](2022-03-03_droplet-image-class.pdf)
 9. [Compare moving mask PIV and fixed mask PIV](2022-03-14_compare-piv-of-fixed-and-moving-mask.pdf)
 10. [Adaptive smoothing test `smoothn`](2022-03-23_adaptive-smoothing.pdf)
-11. [Pluronic F-127 concentration for double emulsions](2022-04-13_best-surfactant-concentration-for-double-emulsion.pdf)
-12. [Droplet tracking correction](2022-07-11_improve-droplet-tracking.pdf)
+
 ---
 
 ##### Miscellaneous

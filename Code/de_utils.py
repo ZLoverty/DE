@@ -696,3 +696,42 @@ def subtraction_report(analysis_folder, img_folder):
 # analysis_folder = r"C:\Users\liuzy\Documents\06012022\Analysis\03"
 # img_folder = r"D:\DE\06012022\03\8-bit"
 # subtraction_report(analysis_folder, img_folder)
+
+def identify_bad_correction(corrected_traj, plot=True):
+    """Identify bad corrections in a corrected traj.
+    Args:
+    corrected_traj -- DataFrame containing [frame, x, y, r, original_quality, corrected_quality].
+                      This is an initial correction data.
+    Returns:
+    bad_correction -- DataFrame, with rows that pass certain filters.
+    
+    Edit:
+    07252022 -- determine bad_ind at the beginning
+    
+    Comment:
+    1. It would be nice to visualize in detail the compositions of bad correction - which are due to size and which are due to quality."""
+    
+    r_mean = corrected_traj.r.mean()
+    r_std = corrected_traj.r.std()
+    bad_ind = (corrected_traj.corrected_quality < corrected_traj.original_quality) | (corrected_traj.r<r_mean-3*r_std) | (corrected_traj.r>r_mean+3*r_std)
+    # exclude those with q > 0.5 would be nice
+    bad_ind.loc[corrected_traj.original_quality >= 0.5] = False
+    bad_correction = corrected_traj.loc[bad_ind]
+#     bad_correction = bad_correction.loc[bad_correction.original_quality < 0.5]
+    good_correction = corrected_traj.loc[~bad_ind]
+    if plot:
+        fig, ax = plt.subplots(1, 2, figsize=(6, 3), dpi=300)
+        ax[0].scatter(bad_correction.x, bad_correction.y, color=bestcolor(1), label="bad")
+        ax[0].scatter(good_correction.x, good_correction.y, color=bestcolor(0), label="good")
+        ax[0].set_xlabel("$x$ (px)")
+        ax[0].set_ylabel("$y$ (px)")
+        ax[0].legend()
+        ax[0].axis("equal")
+
+        sizes = [len(good_correction), len(bad_correction)]
+        print(sizes)
+        labels = "good", "bad"
+        explode = 0, 0.2
+        a = ax[1].pie(sizes, explode=explode, labels=labels, autopct="%1.1f%%",
+                  shadow=False, startangle=90)
+    return bad_correction
