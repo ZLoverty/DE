@@ -24,6 +24,7 @@
 22. [Droplet tracking correction](2022-07-11_improve-droplet-tracking.pdf)
 23. [Deal with detection noise](2022-07-21_deal-with-detection-noise.pdf)
 24. [1D projection of trajectory and MSD in a sphere](2022-07-27_1d-projection-in-a-sphere.pdf)
+25. [Diffusivity data from literature](2022-07-27_diffusivity-data-from-literature.pdf)
 ---
 
 ##### Flow in concentrated bacterial suspensions
