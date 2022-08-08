@@ -80,3 +80,15 @@ May
 05102022 -- Show Guillaume capillary microfluidics
 05122022 -- Make new pool 200 um and 50 um with Zhibo in IPGG
 05132022 -- Test Kartik's new droplets and density matching
+
+=========
+June-July
+=========
+Not recorded in detail, but mainly working on presentations.
+Occasionally, I work on active nematics with Claire and porous-media with Kartik.
+
+======
+August
+======
+08022022 -- 2 color in porous-media.
+08032022 -- 2 color in porous-media.
