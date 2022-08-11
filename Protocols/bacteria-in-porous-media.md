@@ -2,6 +2,10 @@
 
 This protocol describes the motility assay of _E. coli_ in 2D porous media.
 
+##### Edit
+- Aug 2, 2022: First version.
+- Aug 11, 2022: More details added after a few days of practice, 2-color imaging in particular.
+
 ##### 1. Ingredients
 
 - Fluorinert FC-40 oil droplets (3 $\mu$m and 10 $\mu$m in diameter)
@@ -19,16 +23,24 @@ This protocol describes the motility assay of _E. coli_ in 2D porous media.
 
 _Note: numbers are for 3 (10) $\mu$m droplets_
 
-1. Transfer 195 (170) $\mu$l SDS solution to an eppendorf tube.
-2. From the big droplet vial, transfer 5 (30) $\mu$l droplets to the SDS solution.
-3. Mix well by stirring with a pipette tip.
+1. Transfer 195 (180) $\mu$l SDS solution to an eppendorf tube.
+2. From the big droplet vial, transfer 5 (20) $\mu$l droplets to the SDS solution.
+
+_Note: let droplet suspension rest for several hours so that all droplets sediment to the bottom of the vial. Take droplets from the upper part of the sediment._
+
+![take droplets here](../images/2022/08/take-droplets-here.png)
+
+3. Mix well by stirring with a pipette tip. Do NOT mix by pipetting up and down because it likely causes coalescence.
 4. Transfer 180 $\mu$l droplet suspension to another eppendorf tube.
 5. Transfer 20 $\mu$l bacterial suspension (OD $\approx 0.2$) to the droplet suspension (final OD $\approx 0.02$).
+
+_Note: for each sample, prepare a fresh dilution from the original bacterial suspension (which is washed by centrifugation and is not yet diluted). This gives good motility._
+
 6. Now we have 200 $\mu$l of bacteria-droplet mixture.
 
 **Load mixture to the swimming pool**
 
-1. Carefully press and spread 100 $\mu$l mixture on the bottom substrate of the swimming pool, make sure to cover all the surface.
+1. Carefully spread 100 $\mu$l mixture on the bottom substrate of the swimming pool, make sure to cover all the surface.
 2. Cover the coverslip at a 45$^\circ$ angle, to avoid trapping air bubbles in the pool.
 
 ![coverslip](../images/2022/08/coverslip.png)
@@ -36,6 +48,9 @@ _Note: numbers are for 3 (10) $\mu$m droplets_
 3. Move the coverslip to cover the whole pool.
 
 ![coverslip 2](../images/2022/08/coverslip-2.png)
+
+4. Clean the leftover liquid with tissue.
+5. (Optional) Cover the coverslip edges with glycerol to avoid evaporation. Only do this when using long WD lenses, like 20X or 40X. For 63X, this is not possible because the substrate glass of the swimming pool thickness is 500 um, larger than the WD of the lens (~400 um). It's possible to invert the specimen to observe through the coverslip. However, evaporation happens earlier compared to samples covered by glycerol.
 
 **Imaging - confocal**
 
@@ -47,7 +62,15 @@ _Note: numbers are for 3 (10) $\mu$m droplets_
 
 **Imaging - two color**
 
-Refer to Eric lab's handbook.
+1. First fill the pool with just bacterial suspension to: i) chcek motility, ii) adjust focal plane to the correct position to speed the following tests.
+2. Put the beam splitter set in place to the two color imaging.
+3. Load bacteria-droplet mixture sample, turn on red and violet fluorescent light and set filter to 90 HE DAPI.
+4. Adjust the light intensity to have an satisfactory contrast.
+
+Note: the noise level of the tracking device is around 100-200. In order to have a good contrast, the max intensity of the fluorescence should be >500.
+
+5. Turn off the fluorescent light. Adjust the bright field light so that the droplet packing structure is visible.
+6. Turn on fluorescent light again, find a region of desired droplet structure. Take videos of 3000 frames (10 fps, 5 min).
 
 #### Appendix
 
