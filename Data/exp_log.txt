@@ -86,9 +86,15 @@ June-July
 =========
 Not recorded in detail, but mainly working on presentations.
 Occasionally, I work on active nematics with Claire and porous-media with Kartik.
+0531-0603 -- OD 20-40 DE data set.
+07222022 -- Try active nematics experiment alone and get good videos.
+07282022 -- Learn Kartik's experiment. Write protocol.
 
 ======
 August
 ======
-08022022 -- 2 color in porous-media.
-08032022 -- 2 color in porous-media.
+08022022 -- 2 color in porous-media. (staining unsuccessful)
+08032022 -- 2 color in porous-media. (staining unsuccessful)
+08082022 -- 2 color in porous-media. (staining successful)
+08092022 -- 2 color in porous-media. (staining unsuccessful) Prob due to contamination.
+08102022 -- 2 color in porous-media.
