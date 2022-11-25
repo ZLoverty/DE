@@ -19,8 +19,9 @@
 %  4)  latex apssamp.tex
 %
 \documentclass[%
- reprint,
-%superscriptaddress,
+ % reprint,
+superscriptaddress,
+% twocolumn,
 %groupedaddress,
 %unsortedaddress,
 %runinaddress,
@@ -43,6 +44,7 @@
 \usepackage{graphicx}% Include figure files
 \usepackage{dcolumn}% Align table columns on decimal point
 \usepackage{bm}% bold math
+\usepackage{xcolor}
 %\usepackage{hyperref}% add hypertext capabilities
 %\usepackage[mathlines]{lineno}% Enable numbering of text and display math
 %\linenumbers\relax % Commence numbering lines
@@ -62,16 +64,24 @@
 \title{Bacterial Dynamics in Curved Spaces}% Force line breaks with \\
 
 \author{Zhengyang Liu}
+
+\affiliation{%
+ Laboratoire PMMH, UMR 7636 CNRS-ESPCI-Sorbonne Université-Université Paris Diderot, 7-9 quai Saint-Bernard, 75005 Paris, France.
+ }%
+\affiliation{Laboratoire Gulliver, UMR 7083 CNRS, ESPCI Paris, PSL Research University, 75005 Paris, France.}
+
+\author{Cristian Villalobos Concha}
+\author{Maria Luisa Cordero}
+\author{Rodrigo Soto}
+\affiliation{Departamento de Física, FCFM, Universidad de Chile, Santiago, Chile.}
+
 % \altaffiliation[Also at ]{Laboratoire Gulliver, UMR 7083 CNRS, ESPCI Paris, PSL Research University, 75005 Paris, France.}%Lines break automatically or can be forced with \\
 \author{Anke Lindner}
 \author{Eric Clément}
 \affiliation{%
  Laboratoire PMMH, UMR 7636 CNRS-ESPCI-Sorbonne Université-Université Paris Diderot, 7-9 quai Saint-Bernard, 75005 Paris, France.
  }%
- \author{Cristian Villalobos Concha}
- \author{Maria Luisa Cordero}
- \author{Rodrigo Soto}
- \affiliation{Departamento de Física, FCFM, Universidad de Chile, Santiago, Chile.}
+
 
 \author{Teresa Lopez-Leon}
 
@@ -80,7 +90,7 @@
              %  but any date may be explicitly specified
 
 \begin{abstract}
-The interplay between complex environments and active matter suggests a possibility to control and engineer active matter by carefully designing the confinement structures. It is now well established that confinement may influence transport, rheology, pressure, spatial distribution and collective motion of active matter. Curved confining walls, which are ubiquitous in biological systems, show their own, specific rich and intriguing effects on active matter. Here, using a double emulsion system, where the inner and outer droplet sizes can be independently controlled, we experimentally investigate the influence of curved confinement on an active bath of \textit{Escherichia coli} bacteria. In particular, we analyze the fluctuations of the inner droplet using the framework of a stochastic ``active noise'' model, and show that the strength of active noise is not an intrinsic property of an active bath, but depends on the confinement curvature. Our results pose new challenge to active matter theory and suggest new methods to control active matter.
+The interplay between complex environments and active matter suggests a possibility to control and engineer active matter by carefully designing the confinement structures. It is now well established that confinement may influence transport, rheology, pressure, spatial distribution and collective motion of active matter. Curved confining walls, which are ubiquitous in biological systems, show their own, specific rich and intriguing effects on active matter. Here, using a double emulsion system, where the inner and outer droplet sizes can be independently controlled, we experimentally investigate the influence of curved confinement on an active bath of \textit{Escherichia coli} bacteria. In particular, we analyze the fluctuations of the inner droplet using the framework of a stochastic ``active noise'' model, and show that the strength of active noise is not an intrinsic property of an active bath, but depends on the confinement curvature. \textcolor{red}{Our numerical simulations revealed the origin of this dependence on confinement.} Our results pose new challenge to active matter theory and suggest new methods to control active matter.
 
 \end{abstract}
 
@@ -88,7 +98,29 @@ The interplay between complex environments and active matter suggests a possibil
                               %display desired
 \maketitle
 
+% Use "Active noise" key word to label all the literatures related to this project
+The interactions between active and passive objects are always intriguing. On the one hand, passive objects are often used as a probe to assess the properties, in particular activity, which are sometimes challenging to measure directly. On the other hand, the capabilities of activity to ehance mixing of fluids and transport of nutrients show great ecological significance and can potentially enable important biomedical applications \cite{Kurtuldu2011, Pushkin2013, Saintillan2008a, Sokolov2009a}.
 
+On the most elementary level, the interaction between an active particle and a passive particle can be described as ``scattering''. In this process, the active particle swims by the passive particle results in a closed-loop trajectory, due to the head-rear symmetry of the model swimmer \cite{Dunkel2010}. In the presence of a confining wall, the flow field generated by an active swimmer is modified, as if there is a mirror image of the swimmer, with force singularities pointing in opposite directions \cite{Blake1974}. The head-rear symmetry is broken in the modified flow field, leading to net displacement of passive object in a single scattering event. Based on this picture, Mino et al. successfully modeled the confinement effect on the diffusivity of passive particles in active bath \cite{Mino2011, Mino2013}.
+
+\bibliography{ref}
 \end{document}
 %
 % ****** End of file apssamp.tex ******
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% place holder
