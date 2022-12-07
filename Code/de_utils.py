@@ -5,12 +5,12 @@ import os
 from scipy.signal import savgol_filter
 from pivLib import read_piv
 from skimage import io, draw, filters
-from corrLib import divide_windows, readdata
+from corrLib import divide_windows
 import trackpy as tp
 from scipy.ndimage import gaussian_filter1d
 from fit_circle_utils import fit_circle
 import matplotlib.patches as mpatch
-from myImageLib import bestcolor
+from myImageLib import bestcolor, readdata
 
 # %% codecell
 def tangent_unit(point, center):
