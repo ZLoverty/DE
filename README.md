@@ -1,4 +1,4 @@
-![cover](Illustrations/project-cover/v0.png)
+![cover](images/project-cover/v0.png)
 # DE
 
 DE stands for **D**ouble **E**mulsion.
@@ -11,9 +11,8 @@ In this repository, I save the notes, code, illustrations and eventually the dra
   |- Code
   |- Illustrations (deprecated)
   |- Images (automated image folder for Markdown writer)  
-  |- Notes
-  |- (Draft)
-  |- Log
+  |- Notes (note product, blog-like summary)
+  |- Log (note draft)
   |- Protocols
   |- MSCA (the EU commission Marie Curie fellowship proposal)
 ```
@@ -23,52 +22,6 @@ In this repository, I save the notes, code, illustrations and eventually the dra
 
 ---
 
-## To-do list
-
-### Data analysis
-- [x] PIV should be run again with `PIV_masked()` instead of `piv_drop`, batch script needs to be implemented
-- [x] compare BF and fluorescence image PIV
-- [x] temporal evolution of velocity: does bacterial activity decay with time in droplets? What's the typical time scale?
-- [x] order parameter
-- [x] PIV movies
-- [x] Compare bright field and confocal PIV
-- [x] temporal autocorrelation
-- [x] Integrate Cristian's DE data
-- [ ] Compare max velocity?
-- [ ] Order parameter in different regions
-- [ ] spatial autocorrelation length: this can be the first observable for temporal activity evolution
-
-### Experiment
-- [x] Compare bacterial motility in MB with and without L-serine, especially long time. (serine makes a **big difference**)
-- [x] Compare the motility decreasing characteristics with and without pumping oxygen into oil. A [simple calculation](Notes\oxygen_diffusion_calculation.md) shows this is a possible solution to the oxygen gradient.
-- [x] Laser on and off periodically to test the effect of laser on the motility
-- [x] Density match the bacterial suspensions using percoll (what do I expect to see if the density is matched? How can I tell if density is matched?)
-- [ ] Use PDMS (instead of glass) as the specimen chamber lid.
-
-
-
 ### Development
 
-- [ ] a merged file system solution, such as [mergerfs](https://github.com/trapexit/mergerfs) (long term)
-- [ ] Try out object-oriented programming (OOP), by enclose a video (dir) along with all the analyses as the methods in the object. Use the file system as database. (long term)
-
----
-
-## I. "Thermometer" in an active bath
-April 19, 2021
-#### Project summary
-
-We devise a "thermometer" for an active bath using double emulsions.
-Specifically, we confine swimming *E. coli* bacteria in the aqueous phase of oil/water/oil double emulsions and examine the motions of the inner oil droplets.
-Surrounded by swimming bacteria, the inner oil droplets exhibit stronger fluctuations, deviating from familiar Brownian motion.
-In this study, we combine microfluidic techniques and advanced imaging techniques to investigate:
-- generalized temperature in active matter systems
-- whether boundary conditions, especially curvature, affect the temperature
-- to what extent thermodynamic tools can be generalized to active matter systems
-
-## II. Collective motion in droplets
-Jan 12, 2022
-
-## III. Sliding on soft interface
-
-## IV. Wobbling in droplets
+- [x] a merged file system solution, such as [mergerfs](https://github.com/trapexit/mergerfs). (Some remarks after implementation: the document looks overwelming at the first glance. There seemed to be a lot of configurations to )
