@@ -729,3 +729,13 @@ def identify_bad_correction(corrected_traj, plot=True):
         a = ax[1].pie(sizes, explode=explode, labels=labels, autopct="%1.1f%%",
                   shadow=False, startangle=90)
     return bad_correction
+
+def traj_length_distribution(traj):
+    """
+    Plot trajectory length distribution.
+    """
+    count_list = []
+    for _, g in traj.groupby("particle"):
+        count_list.append(len(g))
+    plt.bar(traj.particle.drop_duplicates().astype("string"), count_list)
+    plt.xticks(traj.particle.drop_duplicates().astype("string"))
